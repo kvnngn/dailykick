@@ -3,10 +3,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/kvnngn/dailykicks">
-    <img src="images/logo.png" alt="Logo" width="120" height="80">
-  </a>
-
 <h3 align="center">Daily Kicks Website</h3>
 
   <p align="center">
@@ -52,8 +48,7 @@
 
 ### Built With
 
-* [Node.js](https://nodejs.org/en/)
-* [Sequelize](https://sequelize.org/)
+* [React.js](https://reactjs.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -63,10 +58,6 @@
 
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
-
-### Usage of sequelize-cli
-With sequelize-cli package, you can manage model, migration and seed files.
-You can find more information with [document](https://sequelize.org/v5/manual/migrations.html). 
 
 ## Quick Start
 
@@ -125,19 +116,6 @@ Nguyen Kevin - knguyen@ngkdevelopment.fr
 Project Link: [https://github.com/kvnngn/dailykicks](https://github.com/kvnngn/dailykicks)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

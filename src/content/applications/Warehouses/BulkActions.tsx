@@ -43,24 +43,24 @@ function BulkActions() {
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" alignItems="center">
           <Typography variant="h5" color="text.secondary">
-            Bulk actions:
+            Actions:
           </Typography>
           <ButtonError
             sx={{ ml: 1 }}
             startIcon={<DeleteTwoToneIcon />}
             variant="contained"
           >
-            Delete
+            Supprimer
           </ButtonError>
         </Box>
-        <IconButton
+        {/* <IconButton
           color="primary"
           onClick={openMenu}
           ref={moreRef}
           sx={{ ml: 2, p: 1 }}
         >
           <MoreVertTwoToneIcon />
-        </IconButton>
+        </IconButton> */}
       </Box>
 
       <Menu

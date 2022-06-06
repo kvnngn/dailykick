@@ -1,10 +1,10 @@
 import { Card } from '@mui/material';
 import { CryptoOrder } from 'src/models/crypto_order';
-import RecentOrdersTable from './RecentOrdersTable';
+import WarehousesTable from './WarehousesTable'
 import { subDays } from 'date-fns';
 
-function RecentOrders() {
-  const cryptoOrders: CryptoOrder[] = [
+function Warehouses() {
+  const warehouses: CryptoOrder[] = [
     {
       id: '1',
       orderDetails: 'Fiat Deposit',
@@ -139,9 +139,9 @@ function RecentOrders() {
 
   return (
     <Card>
-      <RecentOrdersTable cryptoOrders={cryptoOrders} />
+      <WarehousesTable warehouses={warehouses} />
     </Card>
   );
 }
 
-export default RecentOrders;
+export default Warehouses;

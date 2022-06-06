@@ -3,8 +3,8 @@ import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import { Grid, Container } from '@mui/material';
 import Footer from 'src/components/Footer';
+import Warehouses from './Warehouses';
 
-import RecentOrders from './RecentOrders';
 
 function ApplicationsWarehouses() {
   return (
@@ -24,7 +24,7 @@ function ApplicationsWarehouses() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <RecentOrders />
+            <Warehouses />
           </Grid>
         </Grid>
       </Container>

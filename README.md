@@ -3,23 +3,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/kvnngn/Daily Kicks-backend">
+  <a href="https://github.com/kvnngn/dailykicks">
     <img src="images/logo.png" alt="Logo" width="120" height="80">
   </a>
 
-<h3 align="center">Daily Kicks Backend</h3>
+<h3 align="center">Daily Kicks Website</h3>
 
   <p align="center">
     This is Daily Kicks back-end repository
     <br />
-    <a href="https://github.com/kvnngn/Daily Kicks-backend"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/kvnngn/dailykicks"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/kvnngn/Daily Kicks-backend">View Demo</a>
+    <a href="https://github.com/kvnngn/dailykicks">View Demo</a>
     ·
-    <a href="https://github.com/kvnngn/Daily Kicks-backend/issues">Report Bug</a>
+    <a href="https://github.com/kvnngn/dailykicks/issues">Report Bug</a>
     ·
-    <a href="https://github.com/kvnngn/Daily Kicks-backend/issues">Request Feature</a>
+    <a href="https://github.com/kvnngn/dailykicks/issues">Request Feature</a>
   </p>
 </div>
 
@@ -90,21 +90,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/kvnngn/Daily Kicks-backend/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -137,7 +122,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Nguyen Kevin - knguyen@ngkdevelopment.fr
 
-Project Link: [https://github.com/kvnngn/Daily Kicks-backend](https://github.com/kvnngn/Daily Kicks-backend)
+Project Link: [https://github.com/kvnngn/dailykicks](https://github.com/kvnngn/dailykicks)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -156,16 +141,16 @@ Project Link: [https://github.com/kvnngn/Daily Kicks-backend](https://github.com
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
-[contributors-url]: https://github.com/kvnngn/Daily Kicks-backend/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
-[forks-url]: https://github.com/kvnngn/Daily Kicks-backend/network/members
-[stars-shield]: https://img.shields.io/github/stars/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
-[stars-url]: https://github.com/kvnngn/Daily Kicks-backend/stargazers
-[issues-shield]: https://img.shields.io/github/issues/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
-[issues-url]: https://github.com/kvnngn/Daily Kicks-backend/issues
-[license-shield]: https://img.shields.io/github/license/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
-[license-url]: https://github.com/kvnngn/Daily Kicks-backend/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/kvnngn/dailykicks.svg?style=for-the-badge
+[contributors-url]: https://github.com/kvnngn/dailykicks/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/kvnngn/dailykicks.svg?style=for-the-badge
+[forks-url]: https://github.com/kvnngn/dailykicks/network/members
+[stars-shield]: https://img.shields.io/github/stars/kvnngn/dailykicks.svg?style=for-the-badge
+[stars-url]: https://github.com/kvnngn/dailykicks/stargazers
+[issues-shield]: https://img.shields.io/github/issues/kvnngn/dailykicks.svg?style=for-the-badge
+[issues-url]: https://github.com/kvnngn/dailykicks/issues
+[license-shield]: https://img.shields.io/github/license/kvnngn/dailykicks.svg?style=for-the-badge
+[license-url]: https://github.com/kvnngn/dailykicks/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png

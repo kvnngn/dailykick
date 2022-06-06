@@ -1,47 +1,76 @@
-<p align="center">
-    <a href="https://bloomui.com" title="BloomUI.com">
-        <img src="https://bloomui.s3.us-east-2.amazonaws.com/tokyo-logo.png" alt="Daily Kicks Typescript React Admin Dashboard">
-    </a>
-</p>
-<h1 align="center">
-    <b>Daily Kicks Typescript React Admin Dashboard</b>
-    <br>
-    <a href="https://twitter.com/intent/tweet?url=https://bloomui.com&text=I like this React admin dashboard">
-        <img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" />
-    </a>
-</h1>
+<div id="top"></div>
+
+<!-- PROJECT LOGO -->
+<br />
 <div align="center">
+  <a href="https://github.com/kvnngn/Daily Kicks-backend">
+    <img src="images/logo.png" alt="Logo" width="120" height="80">
+  </a>
 
-![version](https://img.shields.io/badge/version-2.0.0-blue.svg)
-![license](https://img.shields.io/badge/license-MIT-blue.svg)
+<h3 align="center">Daily Kicks Backend</h3>
 
-<a href="https://bloomui.com/product/tokyo-free-white-react-typescript-material-ui-admin-dashboard/"><img src="https://bloomui.s3.us-east-2.amazonaws.com/tokyo-free-white-react-typescript-material-ui-admin-dashboard.jpg" /></a>
+  <p align="center">
+    This is Daily Kicks back-end repository
+    <br />
+    <a href="https://github.com/kvnngn/Daily Kicks-backend"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/kvnngn/Daily Kicks-backend">View Demo</a>
+    ·
+    <a href="https://github.com/kvnngn/Daily Kicks-backend/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/kvnngn/Daily Kicks-backend/issues">Request Feature</a>
+  </p>
 </div>
 
-<a href="https://bloomui.com/product/tokyo-free-white-react-typescript-material-ui-admin-dashboard/"><h3>Free React Typescript Admin Dashboard Template built with Material-UI</h3></a>
-<p>
-    This free and open source admin dashboard template is built for React and it’s bootstrapped from Facebook’s create-react-app. All NPM dependencies are up to date and it contains multiple fully customized components based on the popular frontend components framework, Material-UI.
-</p>
-<p>
-Daily Kicks Typescript Dashboard features a nice classic light & clean design and color scheme.
-</p>
-<p>
-You can customize the color scheme and style by editing a single variables files. This Typescript admin dashboard doesn’t use SCSS stylesheets but the more modern approach with styled-components.
-</p>
-<p>
-We’ve included a few page examples for most used user flows that will give you a solid base for getting started with your new project’s development. With very light modifications you can even integrate Daily Kicks Typescript Dashboard into existing projects giving them a much deserved makeover.
-</p>
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
----
-<h3>Updrade to PRO</h3>
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-<p>If you're looking for more features like translations, complex user flows, redux examples and more,  we recommend taking a look at the premium version (Tokyo White Typescript Dashboard) on <a href="https://bloomui.com">bloomui.com</a></p>
+### Built With
 
----
+* [Node.js](https://nodejs.org/en/)
+* [Sequelize](https://sequelize.org/)
 
-<h2>
-    Quick Start
-</h2>
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
+
+### Usage of sequelize-cli
+With sequelize-cli package, you can manage model, migration and seed files.
+You can find more information with [document](https://sequelize.org/v5/manual/migrations.html). 
+
+## Quick Start
+
+
 <ol>
     <li>Make sure you have the latest stable versions for Node.js and NPM installed</li>
     <li>Clone repository: <code>git clone https://github.com/bloomui/tokyo-free-white-react-admin-dashboard.git</code></li>
@@ -49,13 +78,94 @@ We’ve included a few page examples for most used user flows that will give you
     <li>Start dev server: After the install finishes, run <code>npm run start</code>. A browser window will open on http://localhost:3000 where you''ll see the live preview</li>
 </ol>
 
----
 
-<h2>
-    Technical Support
-</h2>
-<p>
-    You can open a support ticket by sending an email here: <a href="mailto:support@bloomui.freshdesk.com" title="Open Support Ticket">
-        support@bloomui.freshdesk.com
-    </a>
-</p>
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+
+_For more examples, please refer to the [Documentation](https://example.com)_
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- ROADMAP -->
+## Roadmap
+
+- [ ] Feature 1
+- [ ] Feature 2
+- [ ] Feature 3
+    - [ ] Nested Feature
+
+See the [open issues](https://github.com/kvnngn/Daily Kicks-backend/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Nguyen Kevin - knguyen@ngkdevelopment.fr
+
+Project Link: [https://github.com/kvnngn/Daily Kicks-backend](https://github.com/kvnngn/Daily Kicks-backend)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+* []()
+* []()
+* []()
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
+[contributors-url]: https://github.com/kvnngn/Daily Kicks-backend/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
+[forks-url]: https://github.com/kvnngn/Daily Kicks-backend/network/members
+[stars-shield]: https://img.shields.io/github/stars/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
+[stars-url]: https://github.com/kvnngn/Daily Kicks-backend/stargazers
+[issues-shield]: https://img.shields.io/github/issues/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
+[issues-url]: https://github.com/kvnngn/Daily Kicks-backend/issues
+[license-shield]: https://img.shields.io/github/license/kvnngn/Daily Kicks-backend.svg?style=for-the-badge
+[license-url]: https://github.com/kvnngn/Daily Kicks-backend/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/linkedin_username
+[product-screenshot]: images/screenshot.png

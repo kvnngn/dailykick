@@ -1,8 +1,8 @@
-export type CryptoOrderStatus = 'completed' | 'pending' | 'failed';
+export type WarehouseStatus = 'completed' | 'pending' | 'failed';
 
-export interface CryptoOrder {
+export interface Warehouse {
   id: string;
-  status: CryptoOrderStatus;
+  status: WarehouseStatus;
   orderDetails: string;
   orderDate: number;
   orderID: string;

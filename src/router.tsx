@@ -6,6 +6,8 @@ import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const Loader = (Component) => (props) =>
   (
@@ -14,39 +16,26 @@ const Loader = (Component) => (props) =>
     </Suspense>
   );
 
-// Pages
-
-const Overview = Loader(lazy(() => import('src/content/overview')));
-
 // Dashboards
 
-const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
+const Overview = Loader(lazy(() => import('src/pages/Crypto')));
 
 // Applications
 
 const Warehouses = Loader(
-  lazy(() => import('src/content/applications/Warehouses'))
+  lazy(() => import('src/pages/applications/Warehouses'))
 );
 const UserProfile = Loader(
-  lazy(() => import('src/content/applications/Users/profile'))
+  lazy(() => import('src/pages/applications/Users/profile'))
 );
 const UserSettings = Loader(
-  lazy(() => import('src/content/applications/Users/settings'))
+  lazy(() => import('src/pages/applications/Users/settings'))
 );
 
 // Status
 
 const Status404 = Loader(
-  lazy(() => import('src/content/pages/Status/Status404'))
-);
-const Status500 = Loader(
-  lazy(() => import('src/content/pages/Status/Status500'))
-);
-const StatusComingSoon = Loader(
-  lazy(() => import('src/content/pages/Status/ComingSoon'))
-);
-const StatusMaintenance = Loader(
-  lazy(() => import('src/content/pages/Status/Maintenance'))
+  lazy(() => import('src/pages/Status/Status404'))
 );
 
 const routes: RouteObject[] = [
@@ -55,37 +44,16 @@ const routes: RouteObject[] = [
     element: <BaseLayout />,
     children: [
       {
-        path: '/',
-        element: <Overview />
+        path: '',
+        element: <Navigate to="/login" replace />
       },
       {
-        path: 'overview',
-        element: <Navigate to="/" replace />
+        path: 'login',
+        element: <Login/>
       },
       {
-        path: 'status',
-        children: [
-          {
-            path: '',
-            element: <Navigate to="404" replace />
-          },
-          {
-            path: '404',
-            element: <Status404 />
-          },
-          {
-            path: '500',
-            element: <Status500 />
-          },
-          {
-            path: 'maintenance',
-            element: <StatusMaintenance />
-          },
-          {
-            path: 'coming-soon',
-            element: <StatusComingSoon />
-          }
-        ]
+        path: 'register',
+        element: <Register/>
       },
       {
         path: '*',
@@ -99,7 +67,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '',
-        element: <Crypto />
+        element: <Overview />
       },
     ]
   },

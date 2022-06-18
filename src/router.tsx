@@ -23,13 +23,13 @@ const Overview = Loader(lazy(() => import('src/pages/dashboard')));
 // Applications
 
 const Warehouses = Loader(
-  lazy(() => import('src/pages/applications/Warehouses'))
+  lazy(() => import('src/pages/management/Warehouses'))
 );
 const UserProfile = Loader(
-  lazy(() => import('src/pages/applications/Users/profile'))
+  lazy(() => import('src/pages/management/Users/profile'))
 );
 const UserSettings = Loader(
-  lazy(() => import('src/pages/applications/Users/settings'))
+  lazy(() => import('src/pages/management/Users/settings'))
 );
 
 // Status

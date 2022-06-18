@@ -3,7 +3,7 @@ import { Navigate, Routes, Route } from 'react-router-dom';
 import { useQueryClientDefaultOptions } from 'src/hooks/common';
 import BaseLayout from 'src/layouts/BaseLayout';
 import SidebarLayout from 'src/layouts/SidebarLayout';
-import Warehouses from './applications/Warehouses';
+import Warehouses from './management/Warehouses';
 import DashboardOverview from './dashboard';
 import Login from './Login';
 import Register from './Register';

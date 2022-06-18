@@ -1,6 +1,7 @@
 export default {
   OVERVIEW: '/overview',
   PROFILE: '/profile',
+  WAREHOUSE: '/warehouse',
   AUTH: '/auth',
   COMPANIES: '/companies',
   STORES: '/apiapi/stores',

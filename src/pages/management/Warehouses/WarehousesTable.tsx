@@ -19,7 +19,6 @@ import {
   useTheme
 } from '@mui/material';
 
-import { Warehouse, WarehouseStatus } from 'src/models/crypto_order';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { fr } from 'date-fns/locale';
@@ -30,20 +29,13 @@ interface RecentOrdersTableProps {
   warehouses: Warehouse[];
 }
 
-interface Filters {
-  status?: WarehouseStatus;
-}
-
-const applyFilters = (
-  warehouses: Warehouse[],
-  filters: Filters
-): Warehouse[] => {
+const applyFilters = (warehouses: Warehouse[], filters: any): Warehouse[] => {
   return warehouses.filter((item) => {
     let matches = true;
 
-    if (filters.status && item.status !== filters.status) {
-      matches = false;
-    }
+    // if (filters.status && item.status !== filters.status) {
+    //   matches = false;
+    // }
 
     return matches;
   });
@@ -58,23 +50,17 @@ const applyPagination = (
 };
 
 const WarehousesTable: FC<RecentOrdersTableProps> = ({ warehouses }) => {
-  const [selectedItems, setSelectedItems] = useState<string[]>(
-    []
-  );
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const selectedBulkActions = selectedItems.length > 0;
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(10);
-  const [filters, setFilters] = useState<Filters>({
+  const [filters, setFilters] = useState<any>({
     status: null
   });
 
-  const handleSelectAllItems = (
-    event: ChangeEvent<HTMLInputElement>
-  ): void => {
+  const handleSelectAllItems = (event: ChangeEvent<HTMLInputElement>): void => {
     setSelectedItems(
-      event.target.checked
-        ? warehouses.map((item) => item.id)
-        : []
+      event.target.checked ? warehouses.map((item) => item._id) : []
     );
   };
 
@@ -83,10 +69,7 @@ const WarehousesTable: FC<RecentOrdersTableProps> = ({ warehouses }) => {
     itemId: string
   ): void => {
     if (!selectedItems.includes(itemId)) {
-      setSelectedItems((prevSelected) => [
-        ...prevSelected,
-        itemId
-      ]);
+      setSelectedItems((prevSelected) => [...prevSelected, itemId]);
     } else {
       setSelectedItems((prevSelected) =>
         prevSelected.filter((id) => id !== itemId)
@@ -103,16 +86,10 @@ const WarehousesTable: FC<RecentOrdersTableProps> = ({ warehouses }) => {
   };
 
   const filteredItems = applyFilters(warehouses, filters);
-  const paginatedItems = applyPagination(
-    filteredItems,
-    page,
-    limit
-  );
+  const paginatedItems = applyPagination(filteredItems, page, limit);
   const selectedSomeItems =
-    selectedItems.length > 0 &&
-    selectedItems.length < warehouses.length;
-  const selectedAllItems =
-    selectedItems.length === warehouses.length;
+    selectedItems.length > 0 && selectedItems.length < warehouses.length;
+  const selectedAllItems = selectedItems.length === warehouses.length;
   const theme = useTheme();
 
   return (
@@ -145,21 +122,15 @@ const WarehousesTable: FC<RecentOrdersTableProps> = ({ warehouses }) => {
           </TableHead>
           <TableBody>
             {paginatedItems.map((warehouse) => {
-              const isItemSelected = selectedItems.includes(
-                warehouse.id
-              );
+              const isItemSelected = selectedItems.includes(warehouse._id);
               return (
-                <TableRow
-                  hover
-                  key={warehouse.id}
-                  selected={isItemSelected}
-                >
+                <TableRow hover key={warehouse._id} selected={isItemSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isItemSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneItem(event, warehouse.id)
+                        handleSelectOneItem(event, warehouse._id)
                       }
                       value={isItemSelected}
                     />
@@ -172,7 +143,7 @@ const WarehousesTable: FC<RecentOrdersTableProps> = ({ warehouses }) => {
                       gutterBottom
                       noWrap
                     >
-                      {warehouse.orderID}
+                      {warehouse._id}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -183,7 +154,7 @@ const WarehousesTable: FC<RecentOrdersTableProps> = ({ warehouses }) => {
                       gutterBottom
                       noWrap
                     >
-                      {format(warehouse.orderDate, 'dd MMMM yyyy', {
+                      {format(warehouse.createdAt, 'dd MMMM yyyy', {
                         locale: fr
                       })}
                     </Typography>
@@ -196,7 +167,7 @@ const WarehousesTable: FC<RecentOrdersTableProps> = ({ warehouses }) => {
                       gutterBottom
                       noWrap
                     >
-                      {warehouse.orderDetails}
+                      {warehouse.name}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
@@ -207,7 +178,7 @@ const WarehousesTable: FC<RecentOrdersTableProps> = ({ warehouses }) => {
                       gutterBottom
                       noWrap
                     >
-                      {warehouse.amountCrypto}
+                      0
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

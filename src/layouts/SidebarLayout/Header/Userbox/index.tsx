@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import {
   Avatar,
@@ -16,12 +16,14 @@ import {
   Typography
 } from '@mui/material';
 
-import InboxTwoToneIcon from '@mui/icons-material/InboxTwoTone';
 import { styled } from '@mui/material/styles';
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
+import { GLOBAL } from 'src/constants';
+import { ROUTES } from 'src/routes';
+import { useCurrentInfo } from 'src/hooks/api/common';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -59,11 +61,7 @@ const UserBoxDescription = styled(Typography)(
 );
 
 function HeaderUserbox() {
-  const user = {
-    name: 'Nguyen Kevin',
-    avatar: '/static/images/avatars/4.jpg',
-    jobtitle: 'Administrateur'
-  };
+  const { currentUser, currentRole } = useCurrentInfo();
 
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -76,15 +74,27 @@ function HeaderUserbox() {
     setOpen(false);
   };
 
+  const navigate = useNavigate();
+  const signOut = useCallback(() => {
+    localStorage.removeItem(GLOBAL.ACCESS_TOKEN);
+    localStorage.removeItem(GLOBAL.REFRESH_TOKEN);
+    localStorage.removeItem(GLOBAL.REFRESH_TOKEN_EXPIRED);
+    navigate(ROUTES.AUTH.SIGNIN);
+  }, []);
+
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+        <Avatar
+          variant="rounded"
+          alt={currentUser.firstname}
+          src={currentUser.avatar}
+        />
         <Hidden mdDown>
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{currentUser.firstname}</UserBoxLabel>
             <UserBoxDescription variant="body2">
-              {user.jobtitle}
+              {currentRole}
             </UserBoxDescription>
           </UserBoxText>
         </Hidden>
@@ -106,11 +116,15 @@ function HeaderUserbox() {
         }}
       >
         <MenuUserBox sx={{ minWidth: 210 }} display="flex">
-          <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+          <Avatar
+            variant="rounded"
+            alt={currentUser.firstname}
+            src={currentUser.avatar}
+          />
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{currentUser.firstname}</UserBoxLabel>
             <UserBoxDescription variant="body2">
-              {user.jobtitle}
+              {currentRole}
             </UserBoxDescription>
           </UserBoxText>
         </MenuUserBox>
@@ -131,7 +145,7 @@ function HeaderUserbox() {
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth>
+          <Button color="primary" fullWidth onClick={signOut}>
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
             Me déconnecter
           </Button>

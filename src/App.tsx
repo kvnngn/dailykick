@@ -6,17 +6,35 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import { CssBaseline } from '@mui/material';
 import ThemeProvider from './theme/ThemeProvider';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Suspense } from 'react';
+import { Splash } from './components/common';
+import { SnackbarProvider } from 'notistack';
+import Pages from './pages';
 
 function App() {
-  const content = useRoutes(router);
+  const queryClient = new QueryClient();
 
   return (
-    <ThemeProvider>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <CssBaseline />
-        {content}
-      </LocalizationProvider>
-    </ThemeProvider>
+    <Suspense fallback={<Splash />}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <CssBaseline />
+            <SnackbarProvider
+              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+              maxSnack={5}
+              classes={{
+                containerRoot: 'cc-snackbar-root',
+                containerAnchorOriginTopRight: 'cc-snackbar-top-right'
+              }}
+            >
+              <Pages />
+            </SnackbarProvider>
+          </LocalizationProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </Suspense>
   );
 }
 export default App;

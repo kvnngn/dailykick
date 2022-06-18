@@ -1,37 +1,70 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormHelperText,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router';
+import Logo from 'src/components/LogoSign';
+import { useSignUp } from 'src/hooks/api/auth';
+import { hashPassword } from 'src/utils';
+import { GLOBAL } from 'src/constants';
+import { useSnackbar } from 'src/hooks/common';
 
 const Register = () => {
-  const formik = useFormik({
+  const navigate = useNavigate();
+  const { mutateAsync: signUp } = useSignUp();
+  const { showErrorSnackbar } = useSnackbar();
+
+  const {
+    values,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    errors,
+    touched,
+    isSubmitting,
+    setFieldError
+  } = useFormik({
     initialValues: {
       email: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      policy: false
+      firstname: '',
+      lastname: '',
+      password: ''
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email('Must be a valid email')
+        .email("L'email doit etre valide")
         .max(255)
-        .required('Email is required'),
-      firstName: Yup.string().max(255).required('First name is required'),
-      lastName: Yup.string().max(255).required('Last name is required'),
-      password: Yup.string().max(255).required('Password is required'),
-      policy: Yup.boolean().oneOf([true], 'This field must be checked')
+        .required("L'email est obligatoire"),
+      firstname: Yup.string().max(255).required('Le prénom est obligatoire'),
+      lastname: Yup.string().max(255).required('Le nom est obligatoire'),
+      password: Yup.string().max(255).required('Password est obligatoire')
     }),
-    onSubmit: () => {
-      console.log('in');
+    onSubmit: async (v) => {
+      try {
+        const data = await signUp({
+          ...v,
+          password: hashPassword(v.password)
+        });
+        console.log({ data });
+        localStorage.setItem(GLOBAL.ACCESS_TOKEN, data.token);
+        localStorage.setItem(GLOBAL.USER_ID, data.userId);
+        navigate('/dashboard');
+      } catch (e: any) {
+        if (e.response?.data?.message) {
+          switch (e.response.data.message) {
+            case 'User already exists':
+              showErrorSnackbar('Compte déja existant');
+              setFieldError(
+                'email',
+                'Un utilisateur avec cette adresse mail existe déja'
+              );
+              break;
+            default:
+              showErrorSnackbar('Une erreur est survenue');
+              break;
+          }
+        }
+      }
     }
   });
 
@@ -48,8 +81,10 @@ const Register = () => {
         }}
       >
         <Container maxWidth="sm">
-          <form onSubmit={formik.handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <Box sx={{ my: 3 }}>
+              <Logo />
+
               <Typography color="textPrimary" variant="h4">
                 Créer un nouveau compte
               </Typography>
@@ -58,64 +93,59 @@ const Register = () => {
               </Typography>
             </Box>
             <TextField
-              error={Boolean(
-                formik.touched.firstName && formik.errors.firstName
-              )}
+              error={Boolean(touched.firstname && errors.firstname)}
               fullWidth
-              helperText={formik.touched.firstName && formik.errors.firstName}
+              helperText={touched.firstname && errors.firstname}
               label="Nom"
               margin="normal"
-              name="firstName"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.firstName}
+              name="firstname"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.firstname}
               variant="outlined"
             />
             <TextField
-              error={Boolean(formik.touched.lastName && formik.errors.lastName)}
+              error={Boolean(touched.lastname && errors.lastname)}
               fullWidth
-              helperText={formik.touched.lastName && formik.errors.lastName}
+              helperText={touched.lastname && errors.lastname}
               label="Prenom"
               margin="normal"
-              name="lastName"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.lastName}
+              name="lastname"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.lastname}
               variant="outlined"
             />
             <TextField
-              error={Boolean(formik.touched.email && formik.errors.email)}
+              error={Boolean(touched.email && errors.email)}
               fullWidth
-              helperText={formik.touched.email && formik.errors.email}
+              helperText={touched.email && errors.email}
               label="Adresse Email"
               margin="normal"
               name="email"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onBlur={handleBlur}
+              onChange={handleChange}
               type="email"
-              value={formik.values.email}
+              value={values.email}
               variant="outlined"
             />
             <TextField
-              error={Boolean(formik.touched.password && formik.errors.password)}
+              error={Boolean(touched.password && errors.password)}
               fullWidth
-              helperText={formik.touched.password && formik.errors.password}
+              helperText={touched.password && errors.password}
               label="Mot de passe"
               margin="normal"
               name="password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onBlur={handleBlur}
+              onChange={handleChange}
               type="password"
-              value={formik.values.password}
+              value={values.password}
               variant="outlined"
             />
-            {Boolean(formik.touched.policy && formik.errors.policy) && (
-              <FormHelperText error>{formik.errors.policy}</FormHelperText>
-            )}
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
-                disabled={formik.isSubmitting}
+                disabled={isSubmitting}
                 fullWidth
                 size="large"
                 type="submit"
@@ -124,7 +154,12 @@ const Register = () => {
                 Je m'inscris
               </Button>
             </Box>
-            <Typography color="textSecondary" variant="body2">
+            <Typography
+              variant="caption"
+              color="primary"
+              onClick={() => navigate('/signin', { replace: true })}
+              sx={{ cursor: 'pointer' }}
+            >
               J'ai déja un compte
             </Typography>
           </form>

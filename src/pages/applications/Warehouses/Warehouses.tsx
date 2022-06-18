@@ -7,7 +7,7 @@ function Warehouses() {
   const warehouses: Warehouse[] = [
     {
       id: '1',
-      orderDetails: 'Fiat Deposit',
+      orderDetails: 'Depot 1',
       orderDate: new Date().getTime(),
       status: 'completed',
       orderID: 'VUVX709ET7BY',
@@ -20,7 +20,7 @@ function Warehouses() {
     },
     {
       id: '2',
-      orderDetails: 'Fiat Deposit',
+      orderDetails: 'Depot 2',
       orderDate: subDays(new Date(), 1).getTime(),
       status: 'completed',
       orderID: '23M3UOG65G8K',
@@ -33,7 +33,7 @@ function Warehouses() {
     },
     {
       id: '3',
-      orderDetails: 'Fiat Deposit',
+      orderDetails: 'Depot 3',
       orderDate: subDays(new Date(), 5).getTime(),
       status: 'failed',
       orderID: 'F6JHK65MS818',
@@ -46,7 +46,7 @@ function Warehouses() {
     },
     {
       id: '4',
-      orderDetails: 'Fiat Deposit',
+      orderDetails: 'Depot 1',
       orderDate: subDays(new Date(), 55).getTime(),
       status: 'completed',
       orderID: 'QJFAI7N84LGM',
@@ -59,7 +59,7 @@ function Warehouses() {
     },
     {
       id: '5',
-      orderDetails: 'Fiat Deposit',
+      orderDetails: 'Depot 1',
       orderDate: subDays(new Date(), 56).getTime(),
       status: 'pending',
       orderID: 'BO5KFSYGC0YW',
@@ -72,7 +72,7 @@ function Warehouses() {
     },
     {
       id: '6',
-      orderDetails: 'Fiat Deposit',
+      orderDetails: 'Depot 1',
       orderDate: subDays(new Date(), 33).getTime(),
       status: 'completed',
       orderID: '6RS606CBMKVQ',
@@ -85,7 +85,7 @@ function Warehouses() {
     },
     {
       id: '7',
-      orderDetails: 'Fiat Deposit',
+      orderDetails: 'Depot 1',
       orderDate: new Date().getTime(),
       status: 'pending',
       orderID: '479KUYHOBMJS',
@@ -98,7 +98,7 @@ function Warehouses() {
     },
     {
       id: '8',
-      orderDetails: 'Paypal Withdraw',
+      orderDetails: 'Depot 12',
       orderDate: subDays(new Date(), 22).getTime(),
       status: 'completed',
       orderID: 'W67CFZNT71KR',
@@ -111,7 +111,7 @@ function Warehouses() {
     },
     {
       id: '9',
-      orderDetails: 'Fiat Deposit',
+      orderDetails: 'Depot 1',
       orderDate: subDays(new Date(), 11).getTime(),
       status: 'completed',
       orderID: '63GJ5DJFKS4H',
@@ -124,11 +124,11 @@ function Warehouses() {
     },
     {
       id: '10',
-      orderDetails: 'Wallet Transfer',
+      orderDetails: 'Depot 9',
       orderDate: subDays(new Date(), 123).getTime(),
       status: 'failed',
       orderID: '17KRZHY8T05M',
-      sourceName: 'Wallet Transfer',
+      sourceName: 'Depot 9',
       sourceDesc: "John's Cardano Wallet",
       amountCrypto: 765,
       amount: 7567,

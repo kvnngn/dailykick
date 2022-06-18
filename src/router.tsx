@@ -18,7 +18,7 @@ const Loader = (Component) => (props) =>
 
 // Dashboards
 
-const Overview = Loader(lazy(() => import('src/pages/Crypto')));
+const Overview = Loader(lazy(() => import('src/pages/dashboard')));
 
 // Applications
 
@@ -34,9 +34,7 @@ const UserSettings = Loader(
 
 // Status
 
-const Status404 = Loader(
-  lazy(() => import('src/pages/Status/Status404'))
-);
+const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
 
 const routes: RouteObject[] = [
   {
@@ -45,15 +43,15 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '',
-        element: <Navigate to="/login" replace />
+        element: <Navigate to="/signin" replace />
       },
       {
-        path: 'login',
-        element: <Login/>
+        path: 'signin',
+        element: <Login />
       },
       {
         path: 'register',
-        element: <Register/>
+        element: <Register />
       },
       {
         path: '*',
@@ -68,7 +66,7 @@ const routes: RouteObject[] = [
       {
         path: '',
         element: <Overview />
-      },
+      }
     ]
   },
   {

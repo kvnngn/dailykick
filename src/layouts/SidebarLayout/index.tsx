@@ -4,6 +4,8 @@ import { Outlet } from 'react-router-dom';
 
 import Sidebar from './Sidebar';
 import Header from './Header';
+import PageHeader from 'src/layouts/SidebarLayout/PageHeader';
+import PageTitleWrapper from 'src/layouts/SidebarLayout/PageTitleWrapper';
 
 interface SidebarLayoutProps {
   children?: ReactNode;
@@ -56,6 +58,9 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
           }}
         >
           <Box display="block">
+            <PageTitleWrapper>
+              <PageHeader />
+            </PageTitleWrapper>
             <Outlet />
           </Box>
         </Box>

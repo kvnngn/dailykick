@@ -5,7 +5,7 @@ declare type PaginatedAxios<T = unknown> = (
   sort?: string,
   apm?: APMSource,
   period?: RecommendPeriod,
-  category?: EC2RecommendOption,
+  category?: EC2RecommendOption
 ) => Promise<T>;
 
 declare type PaginatedAxiosWithDate<T = unknown> = (
@@ -14,7 +14,7 @@ declare type PaginatedAxiosWithDate<T = unknown> = (
   startDate: string,
   endDate: string,
   filter?: string,
-  sort?: string,
+  sort?: string
 ) => Promise<T>;
 
 declare type PaginatedAxiosWithId<T = unknown> = (
@@ -22,7 +22,7 @@ declare type PaginatedAxiosWithId<T = unknown> = (
   limit: number,
   filter?: string,
   sort?: string,
-  id?: string,
+  id?: string
 ) => Promise<T>;
 
 declare type ContentRange = {
@@ -34,23 +34,20 @@ declare type ContentRange = {
 declare enum CCQueryStatus {
   NULL = '',
   OK = 'OK',
-  ERROR = 'Error',
+  ERROR = 'Error'
 }
 
 declare type CCQueryParams = {
   filter?: any;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: '1' | '-1';
   sortField?: string;
   pageNumber?: number;
   pageSize?: number;
 };
 
 declare type CCQueryResponse<T = unknown, R = unknown> = {
-  msg: string;
-  items: Array<T>;
-  totalCount: number;
-  status?: CCQueryStatus;
-  extras?: R;
+  data: Array<T>;
+  meta?: R;
 };
 
 declare type CCQuerySingleResponse<T = unknown, R = unknown> = {

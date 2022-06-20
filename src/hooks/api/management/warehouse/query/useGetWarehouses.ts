@@ -1,10 +1,13 @@
 import { WarehouseService } from 'src/api/services';
-import { useQuery } from 'react-query';
 import { QUERY_KEY } from 'src/constants';
+import { usePaginatedQuery } from 'src/hooks/api/base';
 
 export default () =>
-  useQuery(
+  usePaginatedQuery(
     QUERY_KEY.MANAGEMENT.WAREHOUSE.GET,
-    () => WarehouseService.getWarehouses(),
-    { suspense: true, useErrorBoundary: true }
+    WarehouseService.getWarehouses,
+    {
+      suspense: true,
+      useErrorBoundary: true
+    }
   );

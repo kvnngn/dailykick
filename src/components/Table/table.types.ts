@@ -2,10 +2,10 @@ import React from 'react';
 import { Column } from 'react-table';
 import { FilterProps } from '../filter';
 
-export type GrmtTableColumnInfo<D extends object = any> = Column<D>;
+export type DKTableColumnInfo<D extends object = any> = Column<D>;
 
 export type BaseTableProps<D extends object = any> = {
-  columnInfo: ReadonlyArray<GrmtTableColumnInfo<D>>;
+  columnInfo: ReadonlyArray<DKTableColumnInfo<D>>;
   data?: readonly D[];
   noDataText?: string;
   pageSize?: number;

@@ -39,6 +39,7 @@ const Login = () => {
         if (response) {
           const body = response;
           if (body.token && body.expires) {
+            console.log({ body });
             localStorage.setItem(GLOBAL.ACCESS_TOKEN, body.token);
             localStorage.setItem(GLOBAL.USER_ID, body.userId);
             localStorage.setItem(

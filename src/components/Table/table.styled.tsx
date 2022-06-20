@@ -1,24 +1,8 @@
 import React, { useMemo } from 'react';
-import { ReactComponent as FilterSortIcon } from '@assets/icons/common/FilterSort.svg';
-import { ReactComponent as FilterSortDownIcon } from '@assets/icons/common/FilterSortDown.svg';
-import { ReactComponent as FilterSortUpIcon } from '@assets/icons/common/FilterSortUp.svg';
-import {
-  Button,
-  ButtonProps,
-  IconButton,
-  IconButtonProps,
-  MenuItem,
-  outlinedInputClasses,
-  Select,
-  selectClasses,
-  SelectProps,
-  Stack,
-  styled,
-  SvgIcon
-} from '@mui/material';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Link } from 'react-router-dom';
+import { ReactComponent as FilterSortIcon } from '../../assets/icons/common/FilterSortDown.svg';
+import { ReactComponent as FilterSortDownIcon } from '../../assets/icons/common/FilterSortDown.svg';
+import { ReactComponent as FilterSortUpIcon } from '../../assets/icons/common/FilterSortUp.svg';
+import { SvgIcon } from '@mui/material';
 
 export const TableSortIcon = React.memo(
   ({

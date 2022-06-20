@@ -1,4 +1,5 @@
 import { API_URL } from 'src/constants';
+import { parseContentRange } from 'src/utils';
 import axios from 'src/utils/axios';
 import { treeShakeObject } from 'src/utils/common';
 
@@ -7,14 +8,37 @@ const getById = async (id: string): Promise<Warehouse> => {
   return data;
 };
 
-const getWarehouses = async (): Promise<CCQueryResponse<Warehouse>> => {
-  const { data } = await axios.get(API_URL.WAREHOUSE);
-  return data;
+const getWarehouses: PaginatedAxios<
+  WithContentRange<
+    CCQueryResponse<
+      Warehouse,
+      {
+        offset: number;
+        page: number;
+        limit: number;
+        searchQuery: string;
+        itemCount: number;
+        pageCount: number;
+        hasPreviousPage: boolean;
+        hasNextPage: boolean;
+      }
+    >
+  >
+> = async (skip, limit, filter, sort) => {
+  const { headers, data } = await axios.get(`${API_URL.WAREHOUSE}`, {
+    params: {
+      skip,
+      limit,
+      filter,
+      sort
+    }
+  });
+  return { headers: parseContentRange(headers), body: data };
 };
 
-const createWarehouse = async (nom: string, createdBy: string) => {
-  const { data } = await axios.post(API_URL.WAREHOUSE, {
-    nom,
+const createWarehouse = async (name: string, createdBy: string) => {
+  const { data } = await axios.post(`${API_URL.WAREHOUSE}/add`, {
+    name,
     createdBy
   });
   return data;

@@ -3,7 +3,6 @@ import { useState, useRef } from 'react';
 import {
   Box,
   Menu,
-  IconButton,
   Button,
   ListItemText,
   ListItem,
@@ -13,7 +12,6 @@ import {
 import { styled } from '@mui/material/styles';
 
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
 
 const ButtonError = styled(Button)(
   ({ theme }) => `
@@ -53,14 +51,6 @@ function BulkActions() {
             Supprimer
           </ButtonError>
         </Box>
-        {/* <IconButton
-          color="primary"
-          onClick={openMenu}
-          ref={moreRef}
-          sx={{ ml: 2, p: 1 }}
-        >
-          <MoreVertTwoToneIcon />
-        </IconButton> */}
       </Box>
 
       <Menu

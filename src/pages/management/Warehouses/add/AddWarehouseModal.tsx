@@ -27,7 +27,7 @@ function AddWarehouseModal(props) {
   const { mutateAsync: createWarehouse } = useCreateWarehouse();
   const { showErrorSnackbar } = useSnackbar();
   const currentUser = useCurrentUser();
-
+  console.log(currentUser);
   const {
     values,
     handleChange,
@@ -45,7 +45,7 @@ function AddWarehouseModal(props) {
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Le nom est obligatoire'),
-      createdBy: Yup.string().required('ID du user est obligatoire')
+      createdBy: Yup.string().required('Votre ID est obligatoire')
     }),
 
     onSubmit: async (v) => {
@@ -67,9 +67,9 @@ function AddWarehouseModal(props) {
     }
   });
   return (
-    <form onSubmit={handleSubmit}>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Ajouter un nouveau dépot</DialogTitle>
+    <Dialog open={open} onClose={handleClose}>
+      <form onSubmit={handleSubmit}>
+        <DialogTitle>Création d'un nouveau dépot</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Veuillez indiquer le nom de votre dépot.
@@ -93,8 +93,8 @@ function AddWarehouseModal(props) {
             Créer
           </Button>
         </DialogActions>
-      </Dialog>
-    </form>
+      </form>
+    </Dialog>
   );
 }
 

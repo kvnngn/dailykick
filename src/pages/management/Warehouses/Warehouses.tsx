@@ -1,15 +1,11 @@
-import { Card } from '@mui/material';
 import WarehousesTable from './WarehousesTable';
-import { subDays } from 'date-fns';
-import { useGetWarehouses } from 'src/hooks/api/management/warehouse';
+import { SuspenseBox } from 'src/components/styled/suspense';
 
 function Warehouses() {
-  const { data } = useGetWarehouses();
-
   return (
-    <Card>
-      <WarehousesTable warehouses={data.items} />
-    </Card>
+    <SuspenseBox mt={8}>
+      <WarehousesTable />
+    </SuspenseBox>
   );
 }
 

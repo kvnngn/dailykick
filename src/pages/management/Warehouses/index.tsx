@@ -1,6 +1,4 @@
-import { Helmet } from 'react-helmet-async';
-import PageHeader from './PageHeader';
-import PageTitleWrapper from 'src/components/PageTitleWrapper';
+import PageTitleWrapper from 'src/layouts/SidebarLayout/PageTitleWrapper';
 import { Grid, Container } from '@mui/material';
 import Footer from 'src/components/Footer';
 import Warehouses from './Warehouses';
@@ -9,9 +7,6 @@ import Warehouses from './Warehouses';
 function ApplicationsWarehouses() {
   return (
     <>
-      <PageTitleWrapper>
-        <PageHeader />
-      </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid
           container

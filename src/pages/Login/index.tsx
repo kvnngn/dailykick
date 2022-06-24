@@ -28,7 +28,9 @@ const Login = () => {
         .email('Email invalide')
         .max(255)
         .required('Email est obligatoire'),
-      password: Yup.string().max(255).required('Le mot de passe est obligatoire')
+      password: Yup.string()
+        .max(255)
+        .required('Le mot de passe est obligatoire')
     }),
     onSubmit: async (v) => {
       try {
@@ -136,7 +138,7 @@ const Login = () => {
             <Typography
               variant="caption"
               color="primary"
-              onClick={() => navigate('/register', { replace: true })}
+              onClick={() => navigate(ROUTES.AUTH.SIGNUP, { replace: true })}
               sx={{ cursor: 'pointer' }}
             >
               Je n'ai pas de compte

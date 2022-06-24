@@ -8,6 +8,7 @@ import { useSignUp } from 'src/hooks/api/auth';
 import { hashPassword } from 'src/utils';
 import { GLOBAL } from 'src/constants';
 import { useSnackbar } from 'src/hooks/common';
+import { ROUTES } from '../../routes';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -50,9 +51,10 @@ const Register = () => {
         localStorage.setItem(GLOBAL.USER_ID, data.userId);
         navigate('/dashboard');
       } catch (e: any) {
+        console.log(e.response?.data?.message)
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
-            case 'User already exists':
+            case 'The account with the provided email currently exists. Please choose another one.':
               showErrorSnackbar('Compte déja existant');
               setFieldError(
                 'email',
@@ -157,7 +159,7 @@ const Register = () => {
             <Typography
               variant="caption"
               color="primary"
-              onClick={() => navigate('/signin', { replace: true })}
+              onClick={() => navigate(ROUTES.AUTH.SIGNIN, { replace: true })}
               sx={{ cursor: 'pointer' }}
             >
               J'ai déja un compte

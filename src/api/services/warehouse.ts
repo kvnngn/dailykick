@@ -3,7 +3,7 @@ import { parseContentRange } from 'src/utils';
 import axios from 'src/utils/axios';
 import { treeShakeObject } from 'src/utils/common';
 
-const getById = async (id: string): Promise<Warehouse> => {
+const getWarehouse = async (id: string): Promise<Warehouse> => {
   const { data } = await axios.get(`${API_URL.WAREHOUSE}/id/${id}`);
   return data;
 };
@@ -47,8 +47,8 @@ const createWarehouse = async (name: string, createdBy: string) => {
 const updateWarehouse = async (
   original: Warehouse,
   changes: Partial<Warehouse>
-): Promise<CCQueryResponse<Warehouse>> => {
-  const { data } = await axios.put(API_URL.WAREHOUSE, {
+): Promise<Warehouse> => {
+  const { data } = await axios.put(`${API_URL.WAREHOUSE}/id/${original._id}`, {
     ...treeShakeObject(original),
     ...changes
   });
@@ -68,7 +68,7 @@ const deleteWarehouses = (ids: string[]) =>
   });
 
 export default {
-  getById,
+  getWarehouse,
   getWarehouses,
   createWarehouse,
   updateWarehouse,

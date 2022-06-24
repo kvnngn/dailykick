@@ -9,10 +9,8 @@ import {
   styled,
   Divider,
   useTheme,
-  Button,
   lighten,
-  darken,
-  Tooltip
+  darken
 } from '@mui/material';
 
 import SidebarMenu from './SidebarMenu';
@@ -56,9 +54,7 @@ function Sidebar() {
       >
         <Scrollbar>
           <Box mt={3}>
-            <Box
-              mx={2}
-            >
+            <Box mx={2}>
               <Logo />
             </Box>
           </Box>
@@ -76,9 +72,7 @@ function Sidebar() {
             background: theme.colors.alpha.trueWhite[10]
           }}
         />
-        <Box p={2}>
-Version 1.0.0
-        </Box>
+        <Box p={2}>Version 1.0.0</Box>
       </SidebarWrapper>
       <Drawer
         sx={{

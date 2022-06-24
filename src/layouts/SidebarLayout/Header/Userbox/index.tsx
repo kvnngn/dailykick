@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -62,7 +62,7 @@ const UserBoxDescription = styled(Typography)(
 
 function HeaderUserbox() {
   const { currentUser, currentRole } = useCurrentInfo();
-
+  const navigate = useNavigate();
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
 
@@ -74,7 +74,6 @@ function HeaderUserbox() {
     setOpen(false);
   };
 
-  const navigate = useNavigate();
   const signOut = useCallback(() => {
     localStorage.removeItem(GLOBAL.ACCESS_TOKEN);
     localStorage.removeItem(GLOBAL.REFRESH_TOKEN);
@@ -82,75 +81,93 @@ function HeaderUserbox() {
     navigate(ROUTES.AUTH.SIGNIN);
   }, []);
 
+  useEffect(() => {
+    if (!currentUser) {
+      signOut();
+    }
+  }, [currentUser]);
+
   return (
     <>
-      <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <Avatar
-          variant="rounded"
-          alt={currentUser.firstname}
-          src={currentUser.avatar}
-        />
-        <Hidden mdDown>
-          <UserBoxText>
-            <UserBoxLabel variant="body1">{currentUser.firstname}</UserBoxLabel>
-            <UserBoxDescription variant="body2">
-              {currentRole}
-            </UserBoxDescription>
-          </UserBoxText>
-        </Hidden>
-        <Hidden smDown>
-          <ExpandMoreTwoToneIcon sx={{ ml: 1 }} />
-        </Hidden>
-      </UserBoxButton>
-      <Popover
-        anchorEl={ref.current}
-        onClose={handleClose}
-        open={isOpen}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-      >
-        <MenuUserBox sx={{ minWidth: 210 }} display="flex">
+      {currentUser && (
+        <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
           <Avatar
             variant="rounded"
             alt={currentUser.firstname}
             src={currentUser.avatar}
           />
-          <UserBoxText>
-            <UserBoxLabel variant="body1">{currentUser.firstname}</UserBoxLabel>
-            <UserBoxDescription variant="body2">
-              {currentRole}
-            </UserBoxDescription>
-          </UserBoxText>
-        </MenuUserBox>
-        <Divider sx={{ mb: 0 }} />
-        <List sx={{ p: 1 }} component="nav">
-          <ListItem button to="/management/profile/details" component={NavLink}>
-            <AccountBoxTwoToneIcon fontSize="small" />
-            <ListItemText primary="Mon profil" />
-          </ListItem>
-          <ListItem
-            button
-            to="/management/profile/settings"
-            component={NavLink}
-          >
-            <AccountTreeTwoToneIcon fontSize="small" />
-            <ListItemText primary="Paramètres" />
-          </ListItem>
-        </List>
-        <Divider />
-        <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth onClick={signOut}>
-            <LockOpenTwoToneIcon sx={{ mr: 1 }} />
-            Me déconnecter
-          </Button>
-        </Box>
-      </Popover>
+          <Hidden mdDown>
+            <UserBoxText>
+              <UserBoxLabel variant="body1">
+                {currentUser.firstname}
+              </UserBoxLabel>
+              <UserBoxDescription variant="body2">
+                {currentRole}
+              </UserBoxDescription>
+            </UserBoxText>
+          </Hidden>
+          <Hidden smDown>
+            <ExpandMoreTwoToneIcon sx={{ ml: 1 }} />
+          </Hidden>
+        </UserBoxButton>
+      )}
+      {currentUser && (
+        <Popover
+          anchorEl={ref.current}
+          onClose={handleClose}
+          open={isOpen}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+        >
+          <MenuUserBox sx={{ minWidth: 210 }} display="flex">
+            <Avatar
+              variant="rounded"
+              alt={currentUser.firstname}
+              src={currentUser.avatar}
+            />
+            <UserBoxText>
+              <UserBoxLabel variant="body1">
+                {currentUser.firstname}
+              </UserBoxLabel>
+              <UserBoxDescription variant="body2">
+                {currentRole}
+              </UserBoxDescription>
+            </UserBoxText>
+          </MenuUserBox>
+          <Divider sx={{ mb: 0 }} />
+          <List sx={{ p: 1 }} component="nav">
+            <ListItem
+              button
+              to="/management/profile/details"
+              component={NavLink}
+            >
+              <AccountBoxTwoToneIcon fontSize="small" />
+              <ListItemText primary="Mon profil" />
+            </ListItem>
+            <ListItem
+              button
+              to="/management/profile/settings"
+              component={NavLink}
+            >
+              <AccountTreeTwoToneIcon fontSize="small" />
+              <ListItemText primary="Paramètres" />
+            </ListItem>
+          </List>
+          <Divider />
+          <Box sx={{ m: 1 }}>
+            <Button color="primary" fullWidth onClick={signOut}>
+              <LockOpenTwoToneIcon sx={{ mr: 1 }} />
+              Me déconnecter
+            </Button>
+          </Box>
+        </Popover>
+      )}
     </>
   );
 }

@@ -23,14 +23,16 @@ const Pages: React.FC = () => {
       <Route element={<SidebarLayout />}>
         <Route path="dashboard" element={<DashboardOverview />} />
         <Route path="management">
-          <Route path="/management" element={<Navigate to="warehouses" replace />} />
+          <Route
+            path="/management"
+            element={<Navigate to="warehouses" replace />}
+          />
           <Route path="warehouses" element={<Warehouses />} />
-          <Route path="profile">
-            <Route index element={<Navigate to="details" replace />} />
-            <Route path="/management/profile" element={<Navigate to="details" replace />} />
-            <Route path="details" element={<ManagementUserProfile />} />
-            <Route path="settings" element={<ManagementUserSettings />} />
-          </Route>
+        </Route>
+        <Route path="profile">
+          <Route path="/profile" element={<Navigate to="details" replace />} />
+          <Route path="details" element={<ManagementUserProfile />} />
+          <Route path="settings" element={<ManagementUserSettings />} />
         </Route>
       </Route>
       <Route path="*" element={<Status404 />} />

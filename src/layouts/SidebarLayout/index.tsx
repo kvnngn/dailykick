@@ -1,11 +1,12 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useMemo } from 'react';
 import { Box, alpha, lighten, useTheme } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import Sidebar from './Sidebar';
 import Header from './Header';
 import PageHeader from 'src/layouts/SidebarLayout/PageHeader';
 import PageTitleWrapper from 'src/layouts/SidebarLayout/PageTitleWrapper';
+import { includesPath, ROUTES } from 'src/routes';
 
 interface SidebarLayoutProps {
   children?: ReactNode;
@@ -13,6 +14,41 @@ interface SidebarLayoutProps {
 
 const SidebarLayout: FC<SidebarLayoutProps> = () => {
   const theme = useTheme();
+
+  const { pathname } = useLocation();
+  const title = useMemo<string | undefined>(() => {
+    switch (true) {
+      case includesPath(ROUTES.DASHBOARD, pathname):
+        return "Vue d'ensemble";
+      case includesPath(ROUTES.MANAGEMENT, pathname):
+        return 'Dépots';
+      case includesPath(ROUTES.PROFILE, pathname):
+        return 'Mon profil';
+      default:
+        return undefined;
+    }
+  }, [pathname]);
+
+  const subTitle = useMemo<Array<string> | string | undefined>(() => {
+    switch (true) {
+      case includesPath(ROUTES.MANAGEMENT, pathname):
+      case pathname === ROUTES.MANAGEMENT.WAREHOUSES:
+        return 'Gérer vos différents entrepots';
+      default:
+        return undefined;
+    }
+  }, [pathname]);
+
+  const canGoBack = useMemo<boolean>(() => {
+    switch (true) {
+      // case includesPath(ROUTES.DETAILS, pathname):
+      // case pathname.startsWith(ROUTES.SETTINGS.ACCOUNTS_DETAIL):
+      // case pathname === ROUTES.SETTINGS.ACCOUNTS_ORGANIZATION:
+      //   return true;
+      default:
+        return false;
+    }
+  }, [pathname]);
 
   return (
     <>
@@ -58,9 +94,15 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
           }}
         >
           <Box display="block">
-            <PageTitleWrapper>
-              <PageHeader />
-            </PageTitleWrapper>
+            {title && (
+              <PageTitleWrapper>
+                <PageHeader
+                  title={title}
+                  subTitle={subTitle}
+                  canGoBack={canGoBack}
+                />
+              </PageTitleWrapper>
+            )}
             <Outlet />
           </Box>
         </Box>

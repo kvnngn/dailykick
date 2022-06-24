@@ -3,7 +3,7 @@ import { SuspenseBox } from 'src/components/styled/suspense';
 
 function Warehouses() {
   return (
-    <SuspenseBox mt={8}>
+    <SuspenseBox>
       <WarehousesTable />
     </SuspenseBox>
   );

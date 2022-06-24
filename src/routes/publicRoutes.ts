@@ -1,13 +1,13 @@
 const authRoutes = {
-  SIGNIN: '/signin',
-  SIGNUP: '/signup',
+  SIGNIN: '/login',
+  SIGNUP: '/register',
   FORGOT: '/auth/forgot-password',
   RESET: '/auth/reset-password',
-  RESEND: '/auth/resend',
+  RESEND: '/auth/resend'
 } as const;
 
 const PUBLIC_ROUTES = {
-  AUTH: authRoutes,
+  AUTH: authRoutes
 } as const;
 
 type AuthRoutes = ValueOf<typeof authRoutes>;

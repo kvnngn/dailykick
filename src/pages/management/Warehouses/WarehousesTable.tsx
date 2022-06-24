@@ -17,15 +17,34 @@ import { fr } from 'date-fns/locale';
 import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table';
 import { useGetWarehouses } from 'src/hooks/api/management/warehouse';
 import AddWarehouseModal from './add/AddWarehouseModal';
+import EditWarehouseModal from './edit/EditWarehouseModal';
+import { ConfirmDialog } from 'src/components/modal';
 
 const WarehousesTable: FC = () => {
   const theme = useTheme();
   const { data, onPageChange } = useGetWarehouses();
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [warehouseId, setWarehouseId] = useState<string>(null);
 
   const handleOpen = () => {
     if (!openModal) {
       setOpenModal(true);
+    }
+  };
+
+  const handleOpenEditModal = (id: string) => {
+    if (!openEditModal) {
+      setWarehouseId(id);
+      setOpenEditModal(true);
+    }
+  };
+
+  const handleOpenDeleteModal = (id: string) => {
+    if (!openDeleteModal) {
+      setWarehouseId(id);
+      setOpenDeleteModal(true);
     }
   };
 
@@ -55,12 +74,12 @@ const WarehousesTable: FC = () => {
         accessor: 'name' as const,
         disableSortBy: true
       },
-      {
-        Header: "Nombre d'articles",
-        accessor: 'updatedAt' as const,
-        disableSortBy: true,
-        align: 'right'
-      },
+      // {
+      //   Header: "Nombre d'articles",
+      //   accessor: 'updatedAt' as const,
+      //   disableSortBy: false,
+      //   align: 'right'
+      // },
       {
         Header: 'Actions',
         align: 'center',
@@ -78,6 +97,7 @@ const WarehousesTable: FC = () => {
                 }}
                 color="inherit"
                 size="small"
+                onClick={() => handleOpenEditModal(row.values._id)}
               >
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
@@ -111,7 +131,7 @@ const WarehousesTable: FC = () => {
         totalCount={data.body.meta.itemCount}
         enableSort
         enableSelect
-        noDataText='Aucun dépot existant.'
+        noDataText="Aucun dépot existant."
         ExtraElement={
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}
@@ -125,6 +145,23 @@ const WarehousesTable: FC = () => {
       />
       {openModal && (
         <AddWarehouseModal open={openModal} onClose={setOpenModal} />
+      )}
+      {warehouseId && openEditModal && (
+        <EditWarehouseModal
+          open={openEditModal}
+          onClose={setOpenEditModal}
+          warehouseId={warehouseId}
+        />
+      )}
+      {warehouseId && openDeleteModal && (
+        <ConfirmDialog
+          title="Suppression de dépot"
+          open={openDeleteModal}
+          setOpen={setOpenDeleteModal}
+          onConfirm={handleOpenDeleteModal}
+        >
+          Etes-vous sur de vouloir supprimer ce dépot?
+        </ConfirmDialog>
       )}
     </Card>
   );

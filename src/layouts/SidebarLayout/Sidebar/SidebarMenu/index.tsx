@@ -16,6 +16,7 @@ import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
 import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
+import { ROUTES } from 'src/routes';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -180,7 +181,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/dashboard"
+                  to={ROUTES.DASHBOARD.ROOT}
                   startIcon={<BrightnessLowTwoToneIcon />}
                 >
                   Vue d'ensemble
@@ -204,7 +205,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/warehouses"
+                  to={ROUTES.MANAGEMENT.WAREHOUSES}
                   startIcon={<TableChartTwoToneIcon />}
                 >
                   Dépots
@@ -215,7 +216,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/stores"
+                  to={ROUTES.MANAGEMENT.STORES}
                   startIcon={<TableChartTwoToneIcon />}
                 >
                   Magasins
@@ -226,7 +227,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/products"
+                  to={ROUTES.MANAGEMENT.PRODUCTS}
                   startIcon={<TableChartTwoToneIcon />}
                 >
                   Produits
@@ -237,7 +238,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/articles"
+                  to={ROUTES.MANAGEMENT.ARTICLES}
                   startIcon={<TableChartTwoToneIcon />}
                 >
                   Articles
@@ -261,7 +262,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/profile/details"
+                  to={ROUTES.PROFILE.DETAILS}
                   startIcon={<AccountCircleTwoToneIcon />}
                 >
                   Mon profil
@@ -272,7 +273,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/profile/settings"
+                  to={ROUTES.PROFILE.SETTINGS}
                   startIcon={<DisplaySettingsTwoToneIcon />}
                 >
                   Paramètres

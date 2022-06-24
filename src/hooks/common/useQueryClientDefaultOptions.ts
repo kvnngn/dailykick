@@ -17,6 +17,7 @@ export default () => {
   const queryClient = useQueryClient();
   const retryHandler = useCallback(
     (failureCount: number, error: any) => {
+      console.log({ error });
       if (isExpired(error)) {
         localStorage.removeItem(GLOBAL.REFRESH_TOKEN_EXPIRED);
         localStorage.removeItem(GLOBAL.REFRESH_TOKEN);
@@ -30,7 +31,7 @@ export default () => {
             ? 'La session a expiré.'
             : 'La session a expiré. Veuillez vous reconnecter'
         );
-        navigate('/signin');
+        navigate('/login');
       }
       return false;
     },

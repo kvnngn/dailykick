@@ -1,4 +1,3 @@
-import PageTitleWrapper from 'src/layouts/SidebarLayout/PageTitleWrapper';
 import { Grid, Container } from '@mui/material';
 import Footer from 'src/components/Footer';
 import Warehouses from './Warehouses';

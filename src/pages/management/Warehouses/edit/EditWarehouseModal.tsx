@@ -2,33 +2,35 @@ import PropTypes from 'prop-types';
 
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import {
-  DialogContent,
-  DialogContentText,
-  TextField,
-  DialogActions,
-  Button
-} from '@mui/material';
+import { DialogContent, TextField, DialogActions, Button } from '@mui/material';
 import { useFormik } from 'formik';
-import { GLOBAL } from 'src/constants';
-import { hashPassword } from 'src/utils';
 import * as Yup from 'yup';
 import { useSnackbar } from 'src/hooks/common';
-import { useCreateWarehouse } from 'src/hooks/api/management/warehouse';
+import { useGetWarehouse } from 'src/hooks/api/management/warehouse';
 import { useCurrentUser } from 'src/hooks/api/common';
+import { Dispatch, FC, SetStateAction } from 'react';
+import useUpdateWarehouse from 'src/hooks/api/management/warehouse/mutation/useUpdateWarehouse';
 import { LoadingButton } from '@mui/lab';
 
-function AddWarehouseModal(props) {
-  const { onClose, open } = props;
+declare type EditWarehouseModalProps = {
+  onClose: Dispatch<SetStateAction<boolean>>;
+  open: boolean;
+  warehouseId: string;
+};
 
+const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
+  onClose,
+  open,
+  warehouseId
+}) => {
   const handleClose = () => {
-    onClose();
+    onClose(false);
   };
 
-  const { mutateAsync: createWarehouse } = useCreateWarehouse();
+  const { mutateAsync: updateWarehouse } = useUpdateWarehouse();
+  const { data } = useGetWarehouse(warehouseId);
   const { showErrorSnackbar } = useSnackbar();
   const currentUser = useCurrentUser();
-  console.log(currentUser);
   const {
     values,
     handleChange,
@@ -41,7 +43,7 @@ function AddWarehouseModal(props) {
     setFieldError
   } = useFormik({
     initialValues: {
-      name: '',
+      name: data.name,
       createdBy: currentUser.data._id
     },
     validationSchema: Yup.object({
@@ -52,8 +54,9 @@ function AddWarehouseModal(props) {
     onSubmit: async (v) => {
       try {
         console.log({ v });
-        await createWarehouse({
-          ...v
+        await updateWarehouse({
+          original: data,
+          changes: v
         });
         handleClose();
       } catch (e: any) {
@@ -70,11 +73,8 @@ function AddWarehouseModal(props) {
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Création d'un nouveau dépot</DialogTitle>
+        <DialogTitle>Modification du dépot</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Veuillez indiquer le nom de votre dépot.
-          </DialogContentText>
           <TextField
             error={Boolean(touched.name && errors.name)}
             fullWidth
@@ -95,17 +95,18 @@ function AddWarehouseModal(props) {
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Créer
+            Mettre à jour
           </LoadingButton>
         </DialogActions>
       </form>
     </Dialog>
   );
-}
-
-AddWarehouseModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired
 };
 
-export default AddWarehouseModal;
+EditWarehouseModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  warehouseId: PropTypes.string.isRequired
+};
+
+export default EditWarehouseModal;

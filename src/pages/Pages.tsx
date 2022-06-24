@@ -10,6 +10,7 @@ import Register from './Register';
 import Status404 from './Status/Status404';
 import ManagementUserProfile from './management/Users/profile';
 import ManagementUserSettings from './management/Users/settings';
+import Products from './management/Products';
 
 const Pages: React.FC = () => {
   useQueryClientDefaultOptions();
@@ -28,6 +29,7 @@ const Pages: React.FC = () => {
             element={<Navigate to="warehouses" replace />}
           />
           <Route path="warehouses" element={<Warehouses />} />
+          <Route path="products" element={<Products />} />
         </Route>
         <Route path="profile">
           <Route path="/profile" element={<Navigate to="details" replace />} />

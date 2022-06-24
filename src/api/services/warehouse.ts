@@ -55,8 +55,8 @@ const updateWarehouse = async (
   return data;
 };
 
-const deleteWarehouse = async (uid: string): Promise<CCQueryResponse<any>> => {
-  const { data } = await axios.delete(`${API_URL.WAREHOUSE}/${uid}`);
+const deleteWarehouse = async (id: string): Promise<any> => {
+  const { data } = await axios.delete(`${API_URL.WAREHOUSE}/id/${id}`);
   return data;
 };
 

@@ -2,30 +2,6 @@ export default {
   OVERVIEW: '/overview',
   PROFILE: '/profile',
   WAREHOUSE: '/warehouse',
-  AUTH: '/auth',
-  COMPANIES: '/companies',
-  STORES: '/apiapi/stores',
-  ROLES: '/roles',
-  PERMISSIONS: '/permissions',
-  ES_CLIENT: '/es/client',
-  OPTIMIZER: '/aws/optimizer',
-  OPTIMIZATION: '/optimization',
-  GROUPS: '/groups',
-  SMARTPLANNER: '/smartplanner',
-  PAYMENT: '/payments',
-  INTEGRATION: '/integrations',
-  SLACK: '/integrations/slack',
-  DATADOG: '/integrations/datadog',
-  NEWRELIC: '/integrations/newrelic',
-  DYNATRACE: '/integrations/dynatrace',
-  BILLING: '/billing',
-  DIAGNOSTIC: '/diagnostic',
-  AWS: {
-    ACCOUNTS: '/aws/accounts',
-    CLIENT: '/aws/client',
-    CLIENT_WITH_REGION: '/aws/client_with_region',
-    EC2: '/aws/ec2',
-    CUR: '/aws/cur',
-    REPORTS: '/aws/reports'
-  }
+  PRODUCT: '/product',
+  AUTH: '/auth'
 } as const;

@@ -16,21 +16,21 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { fr } from 'date-fns/locale';
 import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table';
 import {
-  useDeleteWarehouse,
-  useGetWarehouses
-} from 'src/hooks/api/management/warehouse';
-import AddWarehouseModal from './add/AddWarehouseModal';
-import EditWarehouseModal from './edit/EditWarehouseModal';
+  useDeleteProduct,
+  useGetProducts
+} from 'src/hooks/api/management/product';
+import AddProductModal from './add/AddProductModal';
 import { ConfirmDialog } from 'src/components/modal';
+import EditProductModal from './edit/EditProductModal';
 
-const WarehousesTable: FC = () => {
+const ProductsTable: FC = () => {
   const theme = useTheme();
-  const { data, onPageChange } = useGetWarehouses();
+  const { data, onPageChange } = useGetProducts();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-  const [warehouseId, setWarehouseId] = useState<string>(null);
-  const { mutateAsync: deleteWarehouse } = useDeleteWarehouse();
+  const [productId, setProductId] = useState<string>(null);
+  const { mutateAsync: deleteProduct } = useDeleteProduct();
 
   const handleOpen = () => {
     if (!openModal) {
@@ -40,20 +40,20 @@ const WarehousesTable: FC = () => {
 
   const handleOpenEditModal = (id: string) => {
     if (!openEditModal) {
-      setWarehouseId(id);
+      setProductId(id);
       setOpenEditModal(true);
     }
   };
 
   const handleOpenDeleteModal = (id: string) => {
     if (!openDeleteModal) {
-      setWarehouseId(id);
+      setProductId(id);
       setOpenDeleteModal(true);
     }
   };
 
-  const handleDeleteWarehouse = async () => {
-    await deleteWarehouse({ id: warehouseId });
+  const handleDeleteProduct = async () => {
+    await deleteProduct({ id: productId });
   };
 
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
@@ -78,7 +78,7 @@ const WarehousesTable: FC = () => {
         }
       },
       {
-        Header: 'Nom du dépot',
+        Header: 'Nom du produit',
         accessor: 'name' as const,
         disableSortBy: true
       },
@@ -95,7 +95,7 @@ const WarehousesTable: FC = () => {
         maxWidth: 84,
         Cell: ({ row }) => (
           <>
-            <Tooltip title="Modifier dépot" arrow>
+            <Tooltip title="Modifier produit" arrow>
               <IconButton
                 sx={{
                   '&:hover': {
@@ -110,7 +110,7 @@ const WarehousesTable: FC = () => {
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Supprimer dépot" arrow>
+            <Tooltip title="Supprimer produit" arrow>
               <IconButton
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
@@ -140,7 +140,7 @@ const WarehousesTable: FC = () => {
         totalCount={data.body.meta.itemCount}
         enableSort
         enableSelect
-        noDataText="Aucun dépot existant."
+        noDataText="Aucun produit existant."
         ExtraElement={
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}
@@ -148,40 +148,40 @@ const WarehousesTable: FC = () => {
             startIcon={<AddTwoToneIcon fontSize="small" />}
             onClick={() => handleOpen()}
           >
-            Ajouter un dépot
+            Ajouter un produit
           </Button>
         }
       />
       {openModal && (
-        <AddWarehouseModal open={openModal} onClose={setOpenModal} />
+        <AddProductModal open={openModal} onClose={setOpenModal} />
       )}
-      {warehouseId && openEditModal && (
-        <EditWarehouseModal
+      {productId && openEditModal && (
+        <EditProductModal
           open={openEditModal}
           onClose={setOpenEditModal}
-          warehouseId={warehouseId}
+          productId={productId}
         />
       )}
-      {warehouseId && openDeleteModal && (
+      {productId && openDeleteModal && (
         <ConfirmDialog
-          title="Suppression de dépot"
+          title="Suppression de produit"
           open={openDeleteModal}
           setOpen={setOpenDeleteModal}
-          onConfirm={handleDeleteWarehouse}
+          onConfirm={handleDeleteProduct}
         >
-          Etes-vous sur de vouloir supprimer ce dépot?
+          Etes-vous sur de vouloir supprimer ce produit?
         </ConfirmDialog>
       )}
     </Card>
   );
 };
 
-WarehousesTable.propTypes = {
-  warehouses: PropTypes.array.isRequired
+ProductsTable.propTypes = {
+  products: PropTypes.array.isRequired
 };
 
-WarehousesTable.defaultProps = {
-  warehouses: []
+ProductsTable.defaultProps = {
+  products: []
 };
 
-export default WarehousesTable;
+export default ProductsTable;

@@ -15,6 +15,11 @@ export default {
       ADD: 'ADD_WAREHOUSE',
       GET: 'GET_WAREHOUSES',
       DELETE: 'DELETE_WAREHOUSES'
+    },
+    PRODUCT: {
+      ADD: 'ADD_PRODUCT',
+      GET: 'GET_PRODUCTS',
+      DELETE: 'DELETE_PRODUCTS'
     }
   }
 } as const;

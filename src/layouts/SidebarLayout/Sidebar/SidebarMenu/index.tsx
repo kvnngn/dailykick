@@ -205,6 +205,17 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
+                  to={ROUTES.MANAGEMENT.PRODUCTS}
+                  startIcon={<TableChartTwoToneIcon />}
+                >
+                  Produits
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
                   to={ROUTES.MANAGEMENT.WAREHOUSES}
                   startIcon={<TableChartTwoToneIcon />}
                 >
@@ -220,28 +231,6 @@ function SidebarMenu() {
                   startIcon={<TableChartTwoToneIcon />}
                 >
                   Magasins
-                </Button>
-              </ListItem>
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to={ROUTES.MANAGEMENT.PRODUCTS}
-                  startIcon={<TableChartTwoToneIcon />}
-                >
-                  Produits
-                </Button>
-              </ListItem>
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to={ROUTES.MANAGEMENT.ARTICLES}
-                  startIcon={<TableChartTwoToneIcon />}
-                >
-                  Articles
                 </Button>
               </ListItem>
             </List>

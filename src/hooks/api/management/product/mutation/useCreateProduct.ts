@@ -9,14 +9,14 @@ export default () => {
     mutationFn: (variables: {
       brand: string;
       brandModel: string;
-      image_urls: string[];
+      image_url: string;
       colors: string[];
       createdBy: string;
     }) =>
       ProductService.createProduct(
         variables.brand,
         variables.brandModel,
-        variables.image_urls,
+        variables.image_url,
         variables.colors,
         variables.createdBy
       ),

@@ -11,7 +11,7 @@ export default () => {
       changes: Partial<
         Omit<
           Product,
-          '_id' | 'createdBy' | 'createdAt' | 'lastUpdated' | 'lastUpdatedBy'
+          '_id' | 'createdBy' | 'createdAt' | 'updatedAt' | 'updatedBy'
         >
       >;
     }) => ProductService.updateProduct(variables.original, variables.changes),

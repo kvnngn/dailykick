@@ -28,7 +28,7 @@ function AddWarehouseModal(props) {
   const { mutateAsync: createWarehouse } = useCreateWarehouse();
   const { showErrorSnackbar } = useSnackbar();
   const currentUser = useCurrentUser();
-  console.log(currentUser);
+
   const {
     values,
     handleChange,

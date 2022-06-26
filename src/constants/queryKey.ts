@@ -19,6 +19,8 @@ export default {
     PRODUCT: {
       ADD: 'ADD_PRODUCT',
       GET: 'GET_PRODUCTS',
+      GET_BRANDS: 'GET_BRANDS',
+      GET_BRANDMODELS: 'GET_BRANDMODELS',
       DELETE: 'DELETE_PRODUCTS'
     }
   }

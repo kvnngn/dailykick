@@ -40,14 +40,15 @@ declare type BrandModel = {
 declare type Product = {
   _id: string;
   name: string;
-  images_url: string[];
+  image_url: string;
   colors: string[];
   price: number;
-  brand: Brand;
-  model: Model;
-  createdBy: Profile;
+  [brand: string]: Brand;
+  [brandModel: string]: BrandModel;
+  [createdBy: string]: Profile;
   createdAt: Date;
   updatedAt: Date;
+  updatedBy: Date;
 };
 
 declare type LoginResponse = {

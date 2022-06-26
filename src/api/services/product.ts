@@ -8,6 +8,16 @@ const getProduct = async (id: string): Promise<Product> => {
   return data;
 };
 
+const getBrands = async (): Promise<Brand[]> => {
+  const { data } = await axios.get(`${API_URL.PRODUCT}/brands`);
+  return data;
+};
+
+const getBrandModels = async (): Promise<BrandModel[]> => {
+  const { data } = await axios.get(`${API_URL.PRODUCT}/brandModels`);
+  return data;
+};
+
 const getProducts: PaginatedAxios<
   WithContentRange<
     CCQueryResponse<
@@ -39,16 +49,24 @@ const getProducts: PaginatedAxios<
 const createProduct = async (
   brand: string,
   brandModel: string,
-  image_urls: string[],
+  image_url: string,
   colors: string[],
   createdBy: string
 ) => {
-  const { data } = await axios.post(`${API_URL.PRODUCT}/add`, {
-    brand,
-    brandModel,
-    image_urls,
-    colors,
-    createdBy
+  let formData = new FormData();
+  formData.append('brand', brand);
+  formData.append('brandModel', brandModel);
+  formData.append('image_url', image_url);
+  formData.append('colors', JSON.stringify(colors));
+  formData.append('createdBy', createdBy);
+  const { data } = await axios.post(`${API_URL.PRODUCT}/add`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Accept: 'application/json'
+    },
+    onUploadProgress: (progressEvent: ProgressEvent) => {
+      console.log(progressEvent);
+    }
   });
   return data;
 };
@@ -82,5 +100,7 @@ export default {
   createProduct,
   updateProduct,
   deleteProduct,
-  deleteProducts
+  deleteProducts,
+  getBrands,
+  getBrandModels
 };

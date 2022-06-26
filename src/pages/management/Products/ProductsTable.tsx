@@ -19,8 +19,8 @@ import {
   useDeleteProduct,
   useGetProducts
 } from 'src/hooks/api/management/product';
-import AddProductModal from './add/AddProductModal';
-import { ConfirmDialog } from 'src/components/modal';
+import AddProductModal, { productColors } from './add/AddProductModal';
+import { ConfirmDialog, InfoDialog } from 'src/components/modal';
 import EditProductModal from './edit/EditProductModal';
 
 const ProductsTable: FC = () => {
@@ -29,6 +29,8 @@ const ProductsTable: FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openViewImageModal, setOpenViewImageModal] = useState<boolean>(false);
+  const [row, setRow] = useState<Product>(null);
   const [productId, setProductId] = useState<string>(null);
   const { mutateAsync: deleteProduct } = useDeleteProduct();
 
@@ -50,6 +52,11 @@ const ProductsTable: FC = () => {
       setProductId(id);
       setOpenDeleteModal(true);
     }
+  };
+
+  const handleOpenViewImageModal = (row) => {
+    setRow(row);
+    setOpenViewImageModal(true);
   };
 
   const handleDeleteProduct = async () => {
@@ -82,12 +89,44 @@ const ProductsTable: FC = () => {
         accessor: 'name' as const,
         disableSortBy: true
       },
-      // {
-      //   Header: "Nombre d'articles",
-      //   accessor: 'updatedAt' as const,
-      //   disableSortBy: false,
-      //   align: 'right'
-      // },
+      {
+        Header: 'Marque',
+        accessor: 'brand' as const,
+        disableSortBy: true,
+        Cell: ({ value }) => value.name
+      },
+      {
+        Header: 'Modele',
+        accessor: 'brandModel' as const,
+        disableSortBy: true,
+        Cell: ({ value }) => value.name
+      },
+      {
+        Header: 'Couleurs',
+        accessor: 'colors' as const,
+        disableSortBy: true,
+        Cell: ({ value }) => {
+          const colors = value.map(
+            (v) =>
+              productColors.filter(
+                (productColor) => productColor.value === v
+              )[0].name
+          );
+          return colors.toString();
+        }
+      },
+      {
+        Header: 'Image',
+        accessor: 'image_url' as const,
+        disableSortBy: true,
+        Cell: ({ row }) => (
+          <>
+            <Button onClick={() => handleOpenViewImageModal(row.values)}>
+              Voir
+            </Button>
+          </>
+        )
+      },
       {
         Header: 'Actions',
         align: 'center',
@@ -152,9 +191,7 @@ const ProductsTable: FC = () => {
           </Button>
         }
       />
-      {openModal && (
-        <AddProductModal open={openModal} onClose={setOpenModal} />
-      )}
+      {openModal && <AddProductModal open={openModal} onClose={setOpenModal} />}
       {productId && openEditModal && (
         <EditProductModal
           open={openEditModal}
@@ -171,6 +208,15 @@ const ProductsTable: FC = () => {
         >
           Etes-vous sur de vouloir supprimer ce produit?
         </ConfirmDialog>
+      )}
+      {row && openViewImageModal && (
+        <InfoDialog
+          title={row.name}
+          open={openViewImageModal}
+          setOpen={setOpenViewImageModal}
+        >
+          <img src={row.image_url} width={500} />
+        </InfoDialog>
       )}
     </Card>
   );

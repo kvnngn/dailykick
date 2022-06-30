@@ -1,4 +1,5 @@
 import { Box, Button } from '@mui/material';
+import _ from 'lodash';
 import { useState, useEffect, FC } from 'react';
 
 type FileInputProps = {
@@ -10,9 +11,12 @@ const FileInput: FC<FileInputProps> = ({ selectedImage, setSelectedImage }) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    if (selectedImage) {
+    if (selectedImage && !_.isString(selectedImage)) {
+      console.log('object');
       setImageUrl(URL.createObjectURL(selectedImage));
-      console.log({ selectedImage });
+    } else {
+      console.log('string or null');
+      setImageUrl(selectedImage);
     }
   }, [selectedImage]);
 

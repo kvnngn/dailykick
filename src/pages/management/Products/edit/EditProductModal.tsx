@@ -25,6 +25,7 @@ import FileInput from '../../../../components/FileInput';
 import { productColors } from '../add/AddProductModal';
 import useGetBrands from '../../../../hooks/api/management/brand/query/useGetBrands';
 import useGetBrandModels from '../../../../hooks/api/management/brandModel/query/useGetBrandModels';
+import _ from 'lodash';
 
 declare type EditProductModalProps = {
   onClose: Dispatch<SetStateAction<boolean>>;
@@ -32,7 +33,7 @@ declare type EditProductModalProps = {
   productId: string;
 };
 
-const filter = createFilterOptions<Brand | BrandModel>();
+const filter = createFilterOptions<Brand | BrandModel | string>();
 
 const EditProductModal: FC<EditProductModalProps> = ({
   onClose,
@@ -62,25 +63,23 @@ const EditProductModal: FC<EditProductModalProps> = ({
     setFieldValue
   } = useFormik({
     initialValues: {
-      brand: data.brand.name,
-      brandModel: data.brandModel.name,
-      image_url: null,
+      brand: _.isObject(data.brand) ? data.brand.name : null,
+      brandModel: _.isObject(data.brandModel) ? data.brandModel.name : null,
+      image_url: data.image_url,
       colors: data.colors
     },
     validationSchema: Yup.object({
       brand: Yup.string().required('La marque est obligatoire'),
       brandModel: Yup.string().required('Le modele est obligatoire'),
-      image_url: Yup.string().required('Une photo est obligatoire'),
-      colors: Yup.array().required('Une couleur est obligatoire'),
-      createdBy: Yup.string().required('Votre ID est obligatoire')
+      // image_url: Yup.string().required('Une photo est obligatoire'),
+      colors: Yup.array().required('Une couleur est obligatoire')
     }),
 
     onSubmit: async (v) => {
       try {
-        console.log({ v });
         await updateProduct({
           original: data,
-          changes: {}
+          changes: v
         });
         handleClose();
       } catch (e: any) {
@@ -103,6 +102,7 @@ const EditProductModal: FC<EditProductModalProps> = ({
             Veuillez indiquer les informations de produit.
           </DialogContentText>
           <Autocomplete
+            value={values.brand}
             onChange={(e, value: Brand) => {
               if (value) {
                 setFieldValue('brand', value.name);
@@ -116,8 +116,10 @@ const EditProductModal: FC<EditProductModalProps> = ({
               const filtered = filter(options, params);
 
               const { inputValue } = params;
-              const isExisting = options.some(
-                (option) => inputValue === option.name
+              const isExisting = options.some((option) =>
+                _.isObject(option)
+                  ? inputValue === option.name
+                  : inputValue === option
               );
               if (inputValue !== '' && !isExisting) {
                 filtered.push({
@@ -129,7 +131,9 @@ const EditProductModal: FC<EditProductModalProps> = ({
 
               return filtered;
             }}
-            getOptionLabel={(option: Brand) => option.name}
+            getOptionLabel={(option: BrandModel | Brand | string) =>
+              _.isObject(option) ? option.name : option
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -147,6 +151,8 @@ const EditProductModal: FC<EditProductModalProps> = ({
             )}
           />
           <Autocomplete
+            value={values.brandModel}
+            onBlur={handleBlur}
             onChange={(e, value: BrandModel) => {
               if (value) {
                 setFieldValue('brandModel', value.name);
@@ -160,8 +166,10 @@ const EditProductModal: FC<EditProductModalProps> = ({
               const filtered = filter(options, params);
 
               const { inputValue } = params;
-              const isExisting = options.some(
-                (option) => inputValue === option.name
+              const isExisting = options.some((option) =>
+                _.isObject(option)
+                  ? inputValue === option.name
+                  : inputValue === option
               );
               if (inputValue !== '' && !isExisting) {
                 filtered.push({
@@ -173,7 +181,9 @@ const EditProductModal: FC<EditProductModalProps> = ({
 
               return filtered;
             }}
-            getOptionLabel={(option: Brand) => option.name}
+            getOptionLabel={(option: BrandModel | Brand | string) =>
+              _.isObject(option) ? option.name : option
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -231,7 +241,7 @@ const EditProductModal: FC<EditProductModalProps> = ({
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Créer
+            Mettre à jour
           </LoadingButton>
         </DialogActions>
       </form>

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { API_URL } from 'src/constants';
 import { parseContentRange } from 'src/utils';
 import axios from 'src/utils/axios';
@@ -75,10 +76,31 @@ const updateProduct = async (
   original: Product,
   changes: Partial<Product>
 ): Promise<Product> => {
-  const { data } = await axios.put(`${API_URL.PRODUCT}/id/${original._id}`, {
+  const product = {
     ...treeShakeObject(original),
     ...changes
-  });
+  };
+  let formData = new FormData();
+  formData.append('brand', _.isString(product.brand) ? product.brand : null);
+  formData.append(
+    'brandModel',
+    _.isString(product.brandModel) ? product.brandModel : null
+  );
+  formData.append('image_url', product.image_url);
+  formData.append('colors', JSON.stringify(product.colors));
+  const { data } = await axios.put(
+    `${API_URL.PRODUCT}/id/${original._id}`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json'
+      },
+      onUploadProgress: (progressEvent: ProgressEvent) => {
+        console.log(progressEvent);
+      }
+    }
+  );
   return data;
 };
 

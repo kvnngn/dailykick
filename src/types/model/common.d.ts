@@ -43,9 +43,9 @@ declare type Product = {
   image_url: string;
   colors: string[];
   price: number;
-  [brand: string]: Brand;
-  [brandModel: string]: BrandModel;
-  [createdBy: string]: Profile;
+  brand: string | Brand;
+  brandModel: string | BrandModel;
+  createdBy: Profile | string;
   createdAt: Date;
   updatedAt: Date;
   updatedBy: Date;

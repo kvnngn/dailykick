@@ -14,8 +14,12 @@ export default {
     WAREHOUSE: {
       ADD: 'ADD_WAREHOUSE',
       GET: 'GET_WAREHOUSES',
-      GET_ARTICLES: 'GET_ARTICLES',
       DELETE: 'DELETE_WAREHOUSES',
+    },
+    ARTICLE: {
+      ADD: 'ADD_ARTICLE',
+      GET: 'GET_ARTICLES',
+      DELETE: 'DELETE_ARTICLES',
     },
     PRODUCT: {
       ADD: 'ADD_PRODUCT',

@@ -1,67 +1,67 @@
-import { FC, useMemo, useState } from 'react';
-import { format } from 'date-fns';
-import PropTypes from 'prop-types';
+import { FC, useMemo, useState } from 'react'
+import { format } from 'date-fns'
+import PropTypes from 'prop-types'
 import {
   Tooltip,
   Divider,
   Card,
   IconButton,
   useTheme,
-  Button
-} from '@mui/material';
+  Button,
+} from '@mui/material'
 
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { fr } from 'date-fns/locale';
-import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table';
+import AddTwoToneIcon from '@mui/icons-material/AddTwoTone'
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
+import { fr } from 'date-fns/locale'
+import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table'
 import {
   useDeleteProduct,
-  useGetProducts
-} from 'src/hooks/api/management/product';
-import AddProductModal, { productColors } from './add/AddProductModal';
-import { ConfirmDialog, InfoDialog } from 'src/components/modal';
-import EditProductModal from './edit/EditProductModal';
+  useGetProducts,
+} from 'src/hooks/api/management/product'
+import AddProductModal, { productColors } from './add/AddProductModal'
+import { ConfirmDialog, InfoDialog } from 'src/components/modal'
+import EditProductModal from './edit/EditProductModal'
 
 const ProductsTable: FC = () => {
-  const theme = useTheme();
-  const { data, onPageChange } = useGetProducts();
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-  const [openViewImageModal, setOpenViewImageModal] = useState<boolean>(false);
-  const [row, setRow] = useState<Product>(null);
-  const [productId, setProductId] = useState<string>(null);
-  const { mutateAsync: deleteProduct } = useDeleteProduct();
+  const theme = useTheme()
+  const { data, onPageChange } = useGetProducts()
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false)
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [openViewImageModal, setOpenViewImageModal] = useState<boolean>(false)
+  const [row, setRow] = useState<Product>(null)
+  const [productId, setProductId] = useState<string>(null)
+  const { mutateAsync: deleteProduct } = useDeleteProduct()
 
   const handleOpen = () => {
     if (!openModal) {
-      setOpenModal(true);
+      setOpenModal(true)
     }
-  };
+  }
 
   const handleOpenEditModal = (id: string) => {
     if (!openEditModal) {
-      setProductId(id);
-      setOpenEditModal(true);
+      setProductId(id)
+      setOpenEditModal(true)
     }
-  };
+  }
 
   const handleOpenDeleteModal = (id: string) => {
     if (!openDeleteModal) {
-      setProductId(id);
-      setOpenDeleteModal(true);
+      setProductId(id)
+      setOpenDeleteModal(true)
     }
-  };
+  }
 
   const handleOpenViewImageModal = (row) => {
-    setRow(row);
-    setOpenViewImageModal(true);
-  };
+    setRow(row)
+    setOpenViewImageModal(true)
+  }
 
   const handleDeleteProduct = async () => {
-    await deleteProduct({ id: productId });
-  };
+    await deleteProduct({ id: productId })
+  }
 
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
@@ -70,36 +70,36 @@ const ProductsTable: FC = () => {
         accessor: '_id' as const,
         minWidth: 130,
         maxWidth: 130,
-        disableSortBy: true
+        disableSortBy: true,
       },
       {
-        Header: 'Date de création',
+        Header: 'Ajouté le',
         accessor: 'createdAt' as const,
         minWidth: 140,
         maxWidth: 140,
         disableSortBy: false,
         Cell: ({ value }) => {
           return format(new Date(value), 'dd MMMM yyyy', {
-            locale: fr
-          });
-        }
+            locale: fr,
+          })
+        },
       },
       {
         Header: 'Nom du produit',
         accessor: 'name' as const,
-        disableSortBy: true
+        disableSortBy: true,
       },
       {
         Header: 'Marque',
         accessor: 'brand' as const,
         disableSortBy: true,
-        Cell: ({ value }) => value.name
+        Cell: ({ value }) => value.name,
       },
       {
         Header: 'Modele',
         accessor: 'brandModel' as const,
         disableSortBy: true,
-        Cell: ({ value }) => value.name
+        Cell: ({ value }) => value.name,
       },
       {
         Header: 'Couleurs',
@@ -109,11 +109,11 @@ const ProductsTable: FC = () => {
           const colors = value.map(
             (v) =>
               productColors.filter(
-                (productColor) => productColor.value === v
-              )[0].name
-          );
-          return colors.toString();
-        }
+                (productColor) => productColor.value === v,
+              )[0].name,
+          )
+          return colors.toString()
+        },
       },
       {
         Header: 'Image',
@@ -125,7 +125,7 @@ const ProductsTable: FC = () => {
               Voir
             </Button>
           </>
-        )
+        ),
       },
       {
         Header: 'Actions',
@@ -138,9 +138,9 @@ const ProductsTable: FC = () => {
               <IconButton
                 sx={{
                   '&:hover': {
-                    background: theme.colors.primary.lighter
+                    background: theme.colors.primary.lighter,
                   },
-                  color: theme.palette.primary.main
+                  color: theme.palette.primary.main,
                 }}
                 color="inherit"
                 size="small"
@@ -153,7 +153,7 @@ const ProductsTable: FC = () => {
               <IconButton
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
-                  color: theme.palette.error.main
+                  color: theme.palette.error.main,
                 }}
                 color="inherit"
                 size="small"
@@ -163,11 +163,11 @@ const ProductsTable: FC = () => {
               </IconButton>
             </Tooltip>
           </>
-        )
-      }
+        ),
+      },
     ],
-    []
-  );
+    [],
+  )
 
   return (
     <Card>
@@ -219,15 +219,15 @@ const ProductsTable: FC = () => {
         </InfoDialog>
       )}
     </Card>
-  );
-};
+  )
+}
 
 ProductsTable.propTypes = {
-  products: PropTypes.array.isRequired
-};
+  products: PropTypes.array.isRequired,
+}
 
 ProductsTable.defaultProps = {
-  products: []
-};
+  products: [],
+}
 
-export default ProductsTable;
+export default ProductsTable

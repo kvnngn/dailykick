@@ -37,8 +37,9 @@ const WarehouseArticlesTable: FC<WarehouseArticlesTableProps> = ({ id }) => {
   const { mutateAsync: deleteWarehouse } = warehouse.useDeleteWarehouse()
   const navigate = useNavigate()
 
-  const handleOpen = () => {
+  const handleOpen = (id: string) => {
     if (!openModal) {
+      setWarehouseId(id)
       setOpenModal(true)
     }
   }
@@ -71,7 +72,7 @@ const WarehouseArticlesTable: FC<WarehouseArticlesTableProps> = ({ id }) => {
         disableSortBy: true,
       },
       {
-        Header: 'Date de création',
+        Header: 'Ajouté le',
         accessor: 'createdAt' as const,
         minWidth: 140,
         maxWidth: 140,
@@ -83,28 +84,22 @@ const WarehouseArticlesTable: FC<WarehouseArticlesTableProps> = ({ id }) => {
         },
       },
       {
-        Header: 'Nom du article',
-        accessor: 'name' as const,
+        Header: 'Produit',
+        accessor: 'product' as const,
         disableSortBy: true,
-        Cell: ({ value, row }) => {
-          return (
-            <Link
-              onClick={(e) => {
-                e.preventDefault()
-                navigate(`${ROUTES.MANAGEMENT.WAREHOUSES}/${row.values._id}`)
-              }}
-            >
-              {value}
-            </Link>
-          )
-        },
+        Cell: ({ value }) => value.name,
       },
-      // {
-      //   Header: "Nombre d'articles",
-      //   accessor: 'updatedAt' as const,
-      //   disableSortBy: false,
-      //   align: 'right'
-      // },
+      {
+        Header: 'SKU',
+        accessor: 'sku' as const,
+        disableSortBy: true,
+      },
+      {
+        Header: 'Prix dépot',
+        accessor: 'storehousePrice' as const,
+        disableSortBy: true,
+        Cell: ({ value }) => `${value}€`,
+      },
       {
         Header: 'Actions',
         align: 'center',
@@ -163,14 +158,18 @@ const WarehouseArticlesTable: FC<WarehouseArticlesTableProps> = ({ id }) => {
             sx={{ mt: { xs: 2, md: 0 } }}
             variant="contained"
             startIcon={<AddTwoToneIcon fontSize="small" />}
-            onClick={() => handleOpen()}
+            onClick={() => handleOpen(id)}
           >
             Ajouter un article
           </Button>
         }
       />
-      {openModal && (
-        <AddWarehouseArticleModal open={openModal} onClose={setOpenModal} />
+      {warehouseId && openModal && (
+        <AddWarehouseArticleModal
+          open={openModal}
+          onClose={setOpenModal}
+          warehouseId={warehouseId}
+        />
       )}
       {warehouseId && openEditModal && (
         <EditWarehouseModal

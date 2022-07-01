@@ -1,14 +1,25 @@
-import { useMutation, useQueryClient } from 'react-query';
-import { WarehouseService } from 'src/api/services';
-import { QUERY_KEY } from 'src/constants';
+import { useMutation, useQueryClient } from 'react-query'
+import { ArticleService } from 'src/api/services'
+import { QUERY_KEY } from 'src/constants'
 
 export default () => {
-  const client = useQueryClient();
+  const client = useQueryClient()
   return useMutation({
-    mutationKey: QUERY_KEY.MANAGEMENT.WAREHOUSE.ADD,
-    mutationFn: (variables: { name: string; createdBy: string }) =>
-      WarehouseService.createWarehouse(variables.name, variables.createdBy),
-    onSuccess: () =>
-      client.invalidateQueries(QUERY_KEY.MANAGEMENT.WAREHOUSE.GET)
-  });
-};
+    mutationKey: QUERY_KEY.MANAGEMENT.ARTICLE.ADD,
+    mutationFn: (variables: {
+      product: string
+      createdBy: string
+      warehouse: string
+      storehousePrice: number
+      sku: string
+    }) =>
+      ArticleService.createArticle(
+        variables.product,
+        variables.createdBy,
+        variables.warehouse,
+        variables.storehousePrice,
+        variables.sku,
+      ),
+    onSuccess: () => client.invalidateQueries(QUERY_KEY.MANAGEMENT.ARTICLE.GET),
+  })
+}

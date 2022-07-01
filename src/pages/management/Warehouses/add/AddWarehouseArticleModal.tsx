@@ -13,23 +13,22 @@ import {
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useSnackbar } from 'src/hooks/common'
-import {
-  useCreateProduct,
-  useGetProducts,
-} from 'src/hooks/api/management/product'
+import { useGetProducts } from 'src/hooks/api/management/product'
 import { useCurrentUser } from 'src/hooks/api/common'
 import { LoadingButton } from '@mui/lab'
 import { useSetRecoilState } from 'recoil'
 import { productNameState } from '../../../../atoms/global'
+import InputAdornment from '@mui/material/InputAdornment'
+import useCreateArticle from '../../../../hooks/api/management/article/mutation/useCreateArticle'
 
 function AddWarehouseArticleModal(props) {
-  const { onClose, open } = props
+  const { onClose, open, warehouseId } = props
 
   const handleClose = () => {
     onClose()
   }
 
-  const { mutateAsync: createProduct } = useCreateProduct()
+  const { mutateAsync: createArticle } = useCreateArticle()
   const setProductNameState = useSetRecoilState(productNameState)
   const { data: products } = useGetProducts()
   const { showErrorSnackbar } = useSnackbar()
@@ -50,15 +49,22 @@ function AddWarehouseArticleModal(props) {
     initialValues: {
       product: null,
       createdBy: currentUser.data._id,
+      warehouse: warehouseId,
+      storehousePrice: 0,
+      sku: null,
     },
     validationSchema: Yup.object({
       product: Yup.string().required('Le produit est obligatoire'),
-      createdBy: Yup.string().required('Votre ID est obligatoire'),
+      createdBy: Yup.string().required('Votre utilisateur ID est obligatoire'),
+      warehouse: Yup.string().required("L'ID du depot est obligatoire"),
+      storehousePrice: Yup.number(),
+      sku: Yup.string().required('Le SKU est obligatoire'),
     }),
 
     onSubmit: async (v) => {
       try {
         console.log({ v })
+        createArticle(v)
         handleClose()
       } catch (e: any) {
         if (e.response?.data?.message) {
@@ -84,7 +90,7 @@ function AddWarehouseArticleModal(props) {
             onChange={(e, value: Product) => {
               console.log({ value })
               if (value) {
-                setFieldValue('product', value.name)
+                setFieldValue('product', value._id)
               }
             }}
             disablePortal
@@ -113,6 +119,34 @@ function AddWarehouseArticleModal(props) {
               />
             )}
           />
+          <TextField
+            error={Boolean(touched.sku && errors.sku)}
+            fullWidth
+            helperText={touched.sku && errors.sku}
+            label="SKU"
+            margin="normal"
+            name="sku"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.sku}
+            variant="outlined"
+          />
+          <TextField
+            error={Boolean(touched.storehousePrice && errors.storehousePrice)}
+            fullWidth
+            helperText={touched.storehousePrice && errors.storehousePrice}
+            label="Prix dépot"
+            type="number"
+            margin="normal"
+            name="storehousePrice"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: <InputAdornment position="start">€</InputAdornment>,
+            }}
+            value={values.storehousePrice}
+            variant="outlined"
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Annuler</Button>
@@ -132,6 +166,7 @@ function AddWarehouseArticleModal(props) {
 AddWarehouseArticleModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  warehouseId: PropTypes.string.isRequired,
 }
 
 export default AddWarehouseArticleModal

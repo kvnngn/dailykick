@@ -69,7 +69,7 @@ const WarehousesTable: FC = () => {
         disableSortBy: true,
       },
       {
-        Header: 'Date de création',
+        Header: 'Ajouté le',
         accessor: 'createdAt' as const,
         minWidth: 140,
         maxWidth: 140,
@@ -97,12 +97,11 @@ const WarehousesTable: FC = () => {
           )
         },
       },
-      // {
-      //   Header: "Nombre d'articles",
-      //   accessor: 'updatedAt' as const,
-      //   disableSortBy: false,
-      //   align: 'right'
-      // },
+      {
+        Header: "Nombre d'articles",
+        accessor: 'articles' as const,
+        disableSortBy: true,
+      },
       {
         Header: 'Actions',
         align: 'center',

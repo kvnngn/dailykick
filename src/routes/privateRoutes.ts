@@ -6,7 +6,6 @@ const managementRoutes = {
   WAREHOUSES: '/management/warehouses',
   STORES: '/management/stores',
   PRODUCTS: '/management/products',
-  ARTICLES: '/management/articles',
 } as const
 
 const profileRoutes = {

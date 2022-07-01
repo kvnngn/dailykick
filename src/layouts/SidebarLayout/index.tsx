@@ -23,7 +23,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
       case pathname === ROUTES.MANAGEMENT.WAREHOUSES:
         return 'Dépots'
       case pathname.includes(ROUTES.MANAGEMENT.WAREHOUSES):
-        return 'Liste des artices du dépot'
+        return 'Articles du dépot'
       case pathname === ROUTES.MANAGEMENT.PRODUCTS:
         return 'Produits'
       case includesPath(ROUTES.PROFILE, pathname):
@@ -47,10 +47,8 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
 
   const canGoBack = useMemo<boolean>(() => {
     switch (true) {
-      // case includesPath(ROUTES.DETAILS, pathname):
-      // case pathname.startsWith(ROUTES.SETTINGS.ACCOUNTS_DETAIL):
-      // case pathname === ROUTES.SETTINGS.ACCOUNTS_ORGANIZATION:
-      //   return true;
+      case includesPath(ROUTES.MANAGEMENT, pathname):
+        return true;
       default:
         return false
     }

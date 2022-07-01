@@ -1,60 +1,65 @@
-import { FC, useMemo, useState } from 'react';
-import { format } from 'date-fns';
-import PropTypes from 'prop-types';
+import { FC, useMemo, useState } from 'react'
+import { format } from 'date-fns'
 import {
   Tooltip,
   Divider,
   Card,
   IconButton,
   useTheme,
-  Button
-} from '@mui/material';
+  Button,
+  Link,
+} from '@mui/material'
 
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { fr } from 'date-fns/locale';
-import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table';
-import {
-  useDeleteWarehouse,
-  useGetWarehouses
-} from 'src/hooks/api/management/warehouse';
-import AddWarehouseModal from './add/AddWarehouseModal';
-import EditWarehouseModal from './edit/EditWarehouseModal';
-import { ConfirmDialog } from 'src/components/modal';
+import AddTwoToneIcon from '@mui/icons-material/AddTwoTone'
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
+import { fr } from 'date-fns/locale'
+import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table'
+import * as warehouse from 'src/hooks/api/management/warehouse'
+import { useNavigate } from 'react-router'
+import { ConfirmDialog } from '../../../../components/modal'
+import { ROUTES } from '../../../../routes'
+import EditWarehouseModal from '../edit/EditWarehouseModal'
+import { useGetWarehouseArticles } from '../../../../hooks/api/management/article'
+import AddWarehouseArticleModal from '../add/AddWarehouseArticleModal'
 
-const WarehousesTable: FC = () => {
-  const theme = useTheme();
-  const { data, onPageChange } = useGetWarehouses();
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-  const [warehouseId, setWarehouseId] = useState<string>(null);
-  const { mutateAsync: deleteWarehouse } = useDeleteWarehouse();
+type WarehouseArticlesTableProps = {
+  id: string
+}
+
+const WarehouseArticlesTable: FC<WarehouseArticlesTableProps> = ({ id }) => {
+  const theme = useTheme()
+  const { data, onPageChange } = useGetWarehouseArticles(id)
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false)
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [warehouseId, setWarehouseId] = useState<string>(null)
+  const { mutateAsync: deleteWarehouse } = warehouse.useDeleteWarehouse()
+  const navigate = useNavigate()
 
   const handleOpen = () => {
     if (!openModal) {
-      setOpenModal(true);
+      setOpenModal(true)
     }
-  };
+  }
 
   const handleOpenEditModal = (id: string) => {
     if (!openEditModal) {
-      setWarehouseId(id);
-      setOpenEditModal(true);
+      setWarehouseId(id)
+      setOpenEditModal(true)
     }
-  };
+  }
 
   const handleOpenDeleteModal = (id: string) => {
     if (!openDeleteModal) {
-      setWarehouseId(id);
-      setOpenDeleteModal(true);
+      setWarehouseId(id)
+      setOpenDeleteModal(true)
     }
-  };
+  }
 
   const handleDeleteWarehouse = async () => {
-    await deleteWarehouse({ id: warehouseId });
-  };
+    await deleteWarehouse({ id: warehouseId })
+  }
 
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
@@ -63,7 +68,7 @@ const WarehousesTable: FC = () => {
         accessor: '_id' as const,
         minWidth: 130,
         maxWidth: 130,
-        disableSortBy: true
+        disableSortBy: true,
       },
       {
         Header: 'Date de création',
@@ -73,14 +78,26 @@ const WarehousesTable: FC = () => {
         disableSortBy: false,
         Cell: ({ value }) => {
           return format(new Date(value), 'dd MMMM yyyy', {
-            locale: fr
-          });
-        }
+            locale: fr,
+          })
+        },
       },
       {
-        Header: 'Nom du dépot',
+        Header: 'Nom du article',
         accessor: 'name' as const,
-        disableSortBy: true
+        disableSortBy: true,
+        Cell: ({ value, row }) => {
+          return (
+            <Link
+              onClick={(e) => {
+                e.preventDefault()
+                navigate(`${ROUTES.MANAGEMENT.WAREHOUSES}/${row.values._id}`)
+              }}
+            >
+              {value}
+            </Link>
+          )
+        },
       },
       // {
       //   Header: "Nombre d'articles",
@@ -95,13 +112,13 @@ const WarehousesTable: FC = () => {
         maxWidth: 84,
         Cell: ({ row }) => (
           <>
-            <Tooltip title="Modifier dépot" arrow>
+            <Tooltip title="Modifier article" arrow>
               <IconButton
                 sx={{
                   '&:hover': {
-                    background: theme.colors.primary.lighter
+                    background: theme.colors.primary.lighter,
                   },
-                  color: theme.palette.primary.main
+                  color: theme.palette.primary.main,
                 }}
                 color="inherit"
                 size="small"
@@ -110,11 +127,11 @@ const WarehousesTable: FC = () => {
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Supprimer dépot" arrow>
+            <Tooltip title="Supprimer l'article" arrow>
               <IconButton
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
-                  color: theme.palette.error.main
+                  color: theme.palette.error.main,
                 }}
                 color="inherit"
                 size="small"
@@ -124,11 +141,11 @@ const WarehousesTable: FC = () => {
               </IconButton>
             </Tooltip>
           </>
-        )
-      }
+        ),
+      },
     ],
-    []
-  );
+    [],
+  )
 
   return (
     <Card>
@@ -140,7 +157,7 @@ const WarehousesTable: FC = () => {
         totalCount={data.body.meta.itemCount}
         enableSort
         enableSelect
-        noDataText="Aucun dépot existant."
+        noDataText="Aucun article existant."
         ExtraElement={
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}
@@ -148,12 +165,12 @@ const WarehousesTable: FC = () => {
             startIcon={<AddTwoToneIcon fontSize="small" />}
             onClick={() => handleOpen()}
           >
-            Ajouter un dépot
+            Ajouter un article
           </Button>
         }
       />
       {openModal && (
-        <AddWarehouseModal open={openModal} onClose={setOpenModal} />
+        <AddWarehouseArticleModal open={openModal} onClose={setOpenModal} />
       )}
       {warehouseId && openEditModal && (
         <EditWarehouseModal
@@ -164,24 +181,16 @@ const WarehousesTable: FC = () => {
       )}
       {warehouseId && openDeleteModal && (
         <ConfirmDialog
-          title="Suppression de dépot"
+          title="Suppression d'article"
           open={openDeleteModal}
           setOpen={setOpenDeleteModal}
           onConfirm={handleDeleteWarehouse}
         >
-          Etes-vous sur de vouloir supprimer ce dépot?
+          Etes-vous sur de vouloir supprimer ce article?
         </ConfirmDialog>
       )}
     </Card>
-  );
-};
+  )
+}
 
-WarehousesTable.propTypes = {
-  warehouses: PropTypes.array.isRequired
-};
-
-WarehousesTable.defaultProps = {
-  warehouses: []
-};
-
-export default WarehousesTable;
+export default WarehouseArticlesTable

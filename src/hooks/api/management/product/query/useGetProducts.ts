@@ -1,13 +1,11 @@
-import { ProductService } from 'src/api/services';
-import { QUERY_KEY } from 'src/constants';
-import { usePaginatedQuery } from 'src/hooks/api/base';
+import { QUERY_KEY } from 'src/constants'
+import { usePaginatedQueryWithQuery } from 'src/hooks/api/base'
+import { ProductService } from '../../../../../api/services'
 
-export default () =>
-  usePaginatedQuery(
-    QUERY_KEY.MANAGEMENT.PRODUCT.GET,
+export default () => {
+  return usePaginatedQueryWithQuery(
+    QUERY_KEY.MANAGEMENT.WAREHOUSE.GET,
     ProductService.getProducts,
-    {
-      suspense: true,
-      useErrorBoundary: true
-    }
-  );
+    { suspense: true, useErrorBoundary: true },
+  )
+}

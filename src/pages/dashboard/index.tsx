@@ -1,11 +1,10 @@
-import { Helmet } from 'react-helmet-async';
-import { Container, Grid } from '@mui/material';
-import Footer from 'src/components/Footer';
+import { Helmet } from 'react-helmet-async'
+import { Container, Grid } from '@mui/material'
+import Footer from 'src/components/Footer'
 
-import AccountBalance from './AccountBalance';
-import Wallets from './Wallets';
-import AccountSecurity from './AccountSecurity';
-import WatchList from './WatchList';
+import AccountBalance from './AccountBalance'
+import SellingShopSummary from './SellingShopSummary'
+import SellingStorehouseSummary from './SellingStorehouseSummary'
 
 function DashboardOverview() {
   return (
@@ -24,20 +23,17 @@ function DashboardOverview() {
           <Grid item xs={12}>
             <AccountBalance />
           </Grid>
-          <Grid item lg={8} xs={12}>
-            <Wallets />
-          </Grid>
-          <Grid item lg={4} xs={12}>
-            <AccountSecurity />
+          <Grid item xs={12}>
+            <SellingStorehouseSummary />
           </Grid>
           <Grid item xs={12}>
-            <WatchList />
+            <SellingShopSummary />
           </Grid>
         </Grid>
       </Container>
       <Footer />
     </>
-  );
+  )
 }
 
-export default DashboardOverview;
+export default DashboardOverview

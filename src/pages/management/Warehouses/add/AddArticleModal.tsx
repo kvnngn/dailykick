@@ -21,8 +21,8 @@ import { productNameState } from '../../../../atoms/global'
 import InputAdornment from '@mui/material/InputAdornment'
 import useCreateArticle from '../../../../hooks/api/management/article/mutation/useCreateArticle'
 
-function AddWarehouseArticleModal(props) {
-  const { onClose, open, warehouseId } = props
+function AddArticleModal(props) {
+  const { onClose, open, articleId } = props
 
   const handleClose = () => {
     onClose()
@@ -49,8 +49,9 @@ function AddWarehouseArticleModal(props) {
     initialValues: {
       product: null,
       createdBy: currentUser.data._id,
-      warehouse: warehouseId,
+      warehouse: articleId,
       storehousePrice: 0,
+      size: 0,
       sku: null,
     },
     validationSchema: Yup.object({
@@ -58,13 +59,14 @@ function AddWarehouseArticleModal(props) {
       createdBy: Yup.string().required('Votre utilisateur ID est obligatoire'),
       warehouse: Yup.string().required("L'ID du depot est obligatoire"),
       storehousePrice: Yup.number(),
+      size: Yup.number(),
       sku: Yup.string().required('Le SKU est obligatoire'),
     }),
 
     onSubmit: async (v) => {
       try {
         console.log({ v })
-        createArticle(v)
+        await createArticle(v)
         handleClose()
       } catch (e: any) {
         if (e.response?.data?.message) {
@@ -147,6 +149,19 @@ function AddWarehouseArticleModal(props) {
             value={values.storehousePrice}
             variant="outlined"
           />
+          <TextField
+            error={Boolean(touched.size && errors.size)}
+            fullWidth
+            helperText={touched.size && errors.size}
+            label="Taille"
+            type="number"
+            margin="normal"
+            name="size"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={values.size}
+            variant="outlined"
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Annuler</Button>
@@ -163,10 +178,10 @@ function AddWarehouseArticleModal(props) {
   )
 }
 
-AddWarehouseArticleModal.propTypes = {
+AddArticleModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  warehouseId: PropTypes.string.isRequired,
+  articleId: PropTypes.string.isRequired,
 }
 
-export default AddWarehouseArticleModal
+export default AddArticleModal

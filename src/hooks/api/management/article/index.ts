@@ -1,1 +1,2 @@
-export { default as useGetWarehouseArticles } from './query/useGetWarehouseArticles'
+export { default as useGetArticles } from './query/useGetArticles'
+export { default as useGetArticle } from './query/useGetArticle'

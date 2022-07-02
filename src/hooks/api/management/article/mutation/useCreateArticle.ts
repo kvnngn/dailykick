@@ -11,6 +11,7 @@ export default () => {
       createdBy: string
       warehouse: string
       storehousePrice: number
+      size: number
       sku: string
     }) =>
       ArticleService.createArticle(
@@ -18,6 +19,7 @@ export default () => {
         variables.createdBy,
         variables.warehouse,
         variables.storehousePrice,
+        variables.size,
         variables.sku,
       ),
     onSuccess: () => client.invalidateQueries(QUERY_KEY.MANAGEMENT.ARTICLE.GET),

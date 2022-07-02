@@ -15,11 +15,13 @@ export default {
       ADD: 'ADD_WAREHOUSE',
       GET: 'GET_WAREHOUSES',
       DELETE: 'DELETE_WAREHOUSES',
+      PUT: 'PUT_WAREHOUSE',
     },
     ARTICLE: {
       ADD: 'ADD_ARTICLE',
       GET: 'GET_ARTICLES',
       DELETE: 'DELETE_ARTICLES',
+      PUT: 'PUT_ARTICLE',
     },
     PRODUCT: {
       ADD: 'ADD_PRODUCT',

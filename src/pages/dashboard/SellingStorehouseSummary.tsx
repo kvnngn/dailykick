@@ -9,9 +9,9 @@ import {
   alpha,
   Tooltip,
   CardActionArea,
-  styled
-} from '@mui/material';
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+  styled,
+} from '@mui/material'
+import AddTwoToneIcon from '@mui/icons-material/AddTwoTone'
 
 const AvatarWrapper = styled(Avatar)(
   ({ theme }) => `
@@ -38,8 +38,8 @@ const AvatarWrapper = styled(Avatar)(
       height: ${theme.spacing(4.5)};
       width: ${theme.spacing(4.5)};
     }
-`
-);
+`,
+)
 
 const AvatarAddWrapper = styled(Avatar)(
   ({ theme }) => `
@@ -47,8 +47,8 @@ const AvatarAddWrapper = styled(Avatar)(
         color: ${theme.colors.primary.main};
         width: ${theme.spacing(8)};
         height: ${theme.spacing(8)};
-`
-);
+`,
+)
 
 const CardAddAction = styled(Card)(
   ({ theme }) => `
@@ -71,10 +71,10 @@ const CardAddAction = styled(Card)(
         &:hover {
           border-color: ${theme.colors.alpha.black[70]};
         }
-`
-);
+`,
+)
 
-function Wallets() {
+function SellingStorehouseSummary() {
   return (
     <>
       <Box
@@ -82,48 +82,45 @@ function Wallets() {
         alignItems="center"
         justifyContent="space-between"
         sx={{
-          pb: 3
+          pb: 3,
         }}
       >
-        <Typography variant="h3">Wallets</Typography>
+        <Typography variant="h3">Ventes en dépot</Typography>
         <Button
           size="small"
           variant="outlined"
-          startIcon={<AddTwoToneIcon fontSize="small" />}
+          // startIcon={<AddTwoToneIcon fontSize="small" />}
         >
-          Add new wallet
+          Voir historique
         </Button>
       </Box>
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3} item>
           <Card
             sx={{
-              px: 1
+              px: 1,
             }}
           >
             <CardContent>
               <AvatarWrapper>
                 <img
                   alt="BTC"
-                  src="/static/images/placeholders/logo/bitcoin.png"
+                  src="/static/images/placeholders/logo/nike.png"
                 />
               </AvatarWrapper>
               <Typography variant="h5" noWrap>
-                Bitcoin
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                BTC
+                Nike
               </Typography>
               <Box
                 sx={{
-                  pt: 3
+                  pt: 3,
                 }}
               >
                 <Typography variant="h3" gutterBottom noWrap>
-                  $3,586.22
+                  $1000,00€
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
-                  1.25843 BTC
+                  97 articles
                 </Typography>
               </Box>
             </CardContent>
@@ -132,32 +129,29 @@ function Wallets() {
         <Grid xs={12} sm={6} md={3} item>
           <Card
             sx={{
-              px: 1
+              px: 1,
             }}
           >
             <CardContent>
               <AvatarWrapper>
                 <img
-                  alt="Ripple"
-                  src="/static/images/placeholders/logo/ripple.png"
+                  alt="Adidas"
+                  src="/static/images/placeholders/logo/adidas.png"
                 />
               </AvatarWrapper>
               <Typography variant="h5" noWrap>
-                Ripple
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                XRP
+                Adidas
               </Typography>
               <Box
                 sx={{
-                  pt: 3
+                  pt: 3,
                 }}
               >
                 <Typography variant="h3" gutterBottom noWrap>
-                  $586.83
+                  $100,00€
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
-                  5,783 XRP
+                  1 article
                 </Typography>
               </Box>
             </CardContent>
@@ -166,43 +160,40 @@ function Wallets() {
         <Grid xs={12} sm={6} md={3} item>
           <Card
             sx={{
-              px: 1
+              px: 1,
             }}
           >
             <CardContent>
               <AvatarWrapper>
                 <img
                   alt="Cardano"
-                  src="/static/images/placeholders/logo/cardano.png"
+                  src="/static/images/placeholders/logo/jordan.png"
                 />
               </AvatarWrapper>
               <Typography variant="h5" noWrap>
-                Cardano
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                ADA
+                Jordan
               </Typography>
               <Box
                 sx={{
-                  pt: 3
+                  pt: 3,
                 }}
               >
                 <Typography variant="h3" gutterBottom noWrap>
-                  $54,985.00
+                  $100,00€
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
-                  34,985 ADA
+                  1 article
                 </Typography>
               </Box>
             </CardContent>
           </Card>
         </Grid>
         <Grid xs={12} sm={6} md={3} item>
-          <Tooltip arrow title="Click to add a new wallet">
+          <Tooltip arrow title="Cliquez pour ajouter une vente">
             <CardAddAction>
               <CardActionArea
                 sx={{
-                  px: 1
+                  px: 1,
                 }}
               >
                 <CardContent>
@@ -216,7 +207,7 @@ function Wallets() {
         </Grid>
       </Grid>
     </>
-  );
+  )
 }
 
-export default Wallets;
+export default SellingStorehouseSummary

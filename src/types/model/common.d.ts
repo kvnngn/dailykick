@@ -62,6 +62,7 @@ declare type Article = {
   transfered: Boolean
   storehousePrice: number
   shopPrice: number
+  size: number
   sku: string
   createdAt: Date
   updatedAt: Date

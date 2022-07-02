@@ -4,7 +4,7 @@ import { ProductService } from '../../../../../api/services'
 
 export default () => {
   return usePaginatedQueryWithQuery(
-    QUERY_KEY.MANAGEMENT.WAREHOUSE.GET,
+    QUERY_KEY.MANAGEMENT.PRODUCT.GET,
     ProductService.getProducts,
     { suspense: true, useErrorBoundary: true },
   )

@@ -62,13 +62,6 @@ const WarehousesTable: FC = () => {
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
       {
-        Header: 'ID',
-        accessor: '_id' as const,
-        minWidth: 130,
-        maxWidth: 130,
-        disableSortBy: true,
-      },
-      {
         Header: 'Ajouté le',
         accessor: 'createdAt' as const,
         minWidth: 140,

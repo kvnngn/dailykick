@@ -44,6 +44,7 @@ const createArticle = async (
   createdBy: string,
   warehouse: string,
   storehousePrice: number,
+  size: number,
   sku: string,
 ) => {
   const { data } = await axios.post(`${API_URL.ARTICLE}/add`, {
@@ -51,6 +52,7 @@ const createArticle = async (
     createdBy,
     warehouse,
     storehousePrice,
+    size,
     sku,
   })
   return data

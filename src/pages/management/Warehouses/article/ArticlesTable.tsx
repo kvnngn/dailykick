@@ -7,7 +7,6 @@ import {
   IconButton,
   useTheme,
   Button,
-  Link,
 } from '@mui/material'
 
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone'
@@ -15,62 +14,54 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import { fr } from 'date-fns/locale'
 import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table'
-import * as warehouse from 'src/hooks/api/management/warehouse'
 import { useNavigate } from 'react-router'
 import { ConfirmDialog } from '../../../../components/modal'
-import { ROUTES } from '../../../../routes'
-import EditWarehouseModal from '../edit/EditWarehouseModal'
-import { useGetWarehouseArticles } from '../../../../hooks/api/management/article'
-import AddWarehouseArticleModal from '../add/AddWarehouseArticleModal'
+import EditArticleModal from '../edit/EditArticleModal'
+import AddArticleModal from '../add/AddArticleModal'
+import useDeleteArticle from '../../../../hooks/api/management/article/mutation/useDeleteArticle'
+import { useGetArticles } from '../../../../hooks/api/management/article'
 
-type WarehouseArticlesTableProps = {
+type ArticlesTableProps = {
   id: string
 }
 
-const WarehouseArticlesTable: FC<WarehouseArticlesTableProps> = ({ id }) => {
+const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
   const theme = useTheme()
-  const { data, onPageChange } = useGetWarehouseArticles(id)
+  const { data, onPageChange } = useGetArticles(id)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
-  const [warehouseId, setWarehouseId] = useState<string>(null)
-  const { mutateAsync: deleteWarehouse } = warehouse.useDeleteWarehouse()
+  const [articleId, setArticleId] = useState<string>(null)
+  const { mutateAsync: deleteArticle } = useDeleteArticle()
   const navigate = useNavigate()
 
   const handleOpen = (id: string) => {
     if (!openModal) {
-      setWarehouseId(id)
+      setArticleId(id)
       setOpenModal(true)
     }
   }
 
   const handleOpenEditModal = (id: string) => {
     if (!openEditModal) {
-      setWarehouseId(id)
+      setArticleId(id)
       setOpenEditModal(true)
     }
   }
 
   const handleOpenDeleteModal = (id: string) => {
     if (!openDeleteModal) {
-      setWarehouseId(id)
+      setArticleId(id)
       setOpenDeleteModal(true)
     }
   }
 
   const handleDeleteWarehouse = async () => {
-    await deleteWarehouse({ id: warehouseId })
+    await deleteArticle({ id: articleId })
   }
 
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
-      {
-        Header: 'ID',
-        accessor: '_id' as const,
-        minWidth: 130,
-        maxWidth: 130,
-        disableSortBy: true,
-      },
       {
         Header: 'Ajouté le',
         accessor: 'createdAt' as const,
@@ -99,6 +90,11 @@ const WarehouseArticlesTable: FC<WarehouseArticlesTableProps> = ({ id }) => {
         accessor: 'storehousePrice' as const,
         disableSortBy: true,
         Cell: ({ value }) => `${value}€`,
+      },
+      {
+        Header: 'Taille',
+        accessor: 'size' as const,
+        disableSortBy: true,
       },
       {
         Header: 'Actions',
@@ -164,32 +160,32 @@ const WarehouseArticlesTable: FC<WarehouseArticlesTableProps> = ({ id }) => {
           </Button>
         }
       />
-      {warehouseId && openModal && (
-        <AddWarehouseArticleModal
+      {articleId && openModal && (
+        <AddArticleModal
           open={openModal}
           onClose={setOpenModal}
-          warehouseId={warehouseId}
+          articleId={articleId}
         />
       )}
-      {warehouseId && openEditModal && (
-        <EditWarehouseModal
+      {articleId && openEditModal && (
+        <EditArticleModal
           open={openEditModal}
           onClose={setOpenEditModal}
-          warehouseId={warehouseId}
+          articleId={articleId}
         />
       )}
-      {warehouseId && openDeleteModal && (
+      {articleId && openDeleteModal && (
         <ConfirmDialog
           title="Suppression d'article"
           open={openDeleteModal}
           setOpen={setOpenDeleteModal}
           onConfirm={handleDeleteWarehouse}
         >
-          Etes-vous sur de vouloir supprimer ce article?
+          Etes-vous sur de vouloir supprimer cet article?
         </ConfirmDialog>
       )}
     </Card>
   )
 }
 
-export default WarehouseArticlesTable
+export default ArticlesTable

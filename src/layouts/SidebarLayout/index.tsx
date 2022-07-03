@@ -20,7 +20,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
     switch (true) {
       case includesPath(ROUTES.DASHBOARD, pathname):
         return "Vue d'ensemble"
-      case pathname.includes(ROUTES.MANAGEMENT.WAREHOUSES):
+      case pathname === ROUTES.MANAGEMENT.WAREHOUSES:
         return 'Dépots'
       case pathname === ROUTES.MANAGEMENT.PRODUCTS:
         return 'Produits'
@@ -38,8 +38,6 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
         return 'Gérer vos différents entrepots et leurs stocks'
       case pathname === ROUTES.MANAGEMENT.PRODUCTS:
         return 'Définissez les produits disponibles sur votre site'
-      case pathname.includes(ROUTES.MANAGEMENT.WAREHOUSES):
-        return 'Articles'
       default:
         return undefined
     }
@@ -47,8 +45,8 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
 
   const canGoBack = useMemo<boolean>(() => {
     switch (true) {
-      case includesPath(ROUTES.MANAGEMENT, pathname):
-        return true
+      // case includesPath(ROUTES.MANAGEMENT, pathname):
+      //   return true
       default:
         return false
     }

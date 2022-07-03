@@ -99,7 +99,7 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
     const sort =
       state.sortBy && state.sortBy.length
         ? JSON.stringify({
-            [state.sortBy[0].id]: state.sortBy[0].desc ? '-1' : '1',
+            [state.sortBy[0].id]: state.sortBy[0].desc ? -1 : 1,
           })
         : undefined
     onPageChange(
@@ -175,6 +175,8 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
                       sx={{
                         width: '2.5rem',
                         height: '2.5rem',
+                        border: '1px solid black',
+                        marginLeft: '10px',
                       }}
                     >
                       <FilterAltIcon />
@@ -185,6 +187,7 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
                       placement="bottom-end"
                       container={filterContainerRef.current}
                       disablePortal
+                      style={{ zIndex: 10000 }}
                     >
                       <SuspensePaper
                         variant="elevation"
@@ -192,7 +195,6 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
                         sx={{
                           width: 400,
                           maxWidth: 400,
-                          boxShadow: 6,
                           p: 3,
                         }}
                       >

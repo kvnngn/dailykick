@@ -3,8 +3,8 @@ import { Container, Grid } from '@mui/material'
 import Footer from 'src/components/Footer'
 
 import AccountBalance from './AccountBalance'
-import SellingShopSummary from './SellingShopSummary'
-import SellingStorehouseSummary from './SellingStorehouseSummary'
+import SellingStoreSummary from './SellingStoreSummary'
+import SellingWarehouseSummary from './SellingWarehouseSummary'
 
 function DashboardOverview() {
   return (
@@ -24,10 +24,10 @@ function DashboardOverview() {
             <AccountBalance />
           </Grid>
           <Grid item xs={12}>
-            <SellingStorehouseSummary />
+            <SellingWarehouseSummary />
           </Grid>
           <Grid item xs={12}>
-            <SellingShopSummary />
+            <SellingStoreSummary />
           </Grid>
         </Grid>
       </Container>

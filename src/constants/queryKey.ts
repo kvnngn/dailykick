@@ -17,6 +17,12 @@ export default {
       DELETE: 'DELETE_WAREHOUSES',
       PUT: 'PUT_WAREHOUSE',
     },
+    STORE: {
+      ADD: 'ADD_STORE',
+      GET: 'GET_STORES',
+      DELETE: 'DELETE_STORES',
+      PUT: 'PUT_STORE',
+    },
     ARTICLE: {
       ADD: 'ADD_ARTICLE',
       GET: 'GET_ARTICLES',

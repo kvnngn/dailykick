@@ -24,6 +24,15 @@ declare type Warehouse = {
   lastUpdatedBy: User
 }
 
+declare type Store = {
+  _id: string
+  name: string
+  createdBy: User
+  createdAt: Date
+  lastUpdated: Date
+  lastUpdatedBy: User
+}
+
 declare type Brand = {
   name: string
   createdAt: Date
@@ -56,12 +65,13 @@ declare type Article = {
   createdBy: Profile | string
   product: Product | string
   warehouse: Warehouse | string
+  store: Store | string
   sold: boolean
   soldAt: Date
   transferedAt: Date
   transfered: Boolean
-  storehousePrice: number
-  shopPrice: number
+  warehousePrice: number
+  storePrice: number
   size: number
   sku: string
   createdAt: Date

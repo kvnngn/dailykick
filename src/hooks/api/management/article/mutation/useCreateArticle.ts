@@ -10,7 +10,9 @@ export default () => {
       product: string
       createdBy: string
       warehouse: string
-      storehousePrice: number
+      store: string
+      warehousePrice: number
+      storePrice: number
       size: number
       sku: string
     }) =>
@@ -18,7 +20,9 @@ export default () => {
         variables.product,
         variables.createdBy,
         variables.warehouse,
-        variables.storehousePrice,
+        variables.store,
+        variables.warehousePrice,
+        variables.storePrice,
         variables.size,
         variables.sku,
       ),

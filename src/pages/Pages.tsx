@@ -12,6 +12,8 @@ import ManagementUserSettings from './management/Users/settings'
 import Products from './management/Products'
 import WarehouseDetailsPage from './management/Warehouses/article/WarehouseDetailsPage'
 import WarehousesPage from './management/Warehouses/list/WarehousesPage'
+import StoreDetailsPage from './management/Stores/article/StoreDetailsPage'
+import StoresPage from './management/Stores/list/StoresPage'
 
 const Pages: React.FC = () => {
   useQueryClientDefaultOptions()
@@ -32,6 +34,8 @@ const Pages: React.FC = () => {
           <Route path="warehouses" element={<WarehousesPage />} />
           <Route path="warehouses/:id" element={<WarehouseDetailsPage />} />
           <Route path="products" element={<Products />} />
+          <Route path="stores" element={<StoresPage />} />
+          <Route path="stores/:id" element={<StoreDetailsPage />} />
         </Route>
         <Route path="profile">
           <Route path="/profile" element={<Navigate to="details" replace />} />

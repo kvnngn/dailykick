@@ -74,7 +74,7 @@ const CardAddAction = styled(Card)(
 `,
 )
 
-function SellingShopSummary() {
+function SellingStoreSummary() {
   return (
     <>
       <Box
@@ -210,4 +210,4 @@ function SellingShopSummary() {
   )
 }
 
-export default SellingShopSummary
+export default SellingStoreSummary

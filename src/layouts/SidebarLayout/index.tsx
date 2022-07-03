@@ -22,6 +22,8 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
         return "Vue d'ensemble"
       case pathname === ROUTES.MANAGEMENT.WAREHOUSES:
         return 'Dépots'
+      case pathname === ROUTES.MANAGEMENT.STORES:
+        return 'Magasins'
       case pathname === ROUTES.MANAGEMENT.PRODUCTS:
         return 'Produits'
       case includesPath(ROUTES.PROFILE, pathname):
@@ -36,6 +38,8 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
     switch (true) {
       case pathname === ROUTES.MANAGEMENT.WAREHOUSES:
         return 'Gérer vos différents entrepots et leurs stocks'
+      case pathname === ROUTES.MANAGEMENT.STORES:
+        return 'Gérer les magasins et leurs stocks'
       case pathname === ROUTES.MANAGEMENT.PRODUCTS:
         return 'Définissez les produits disponibles sur votre site'
       default:

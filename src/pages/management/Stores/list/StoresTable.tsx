@@ -7,6 +7,7 @@ import {
   IconButton,
   useTheme,
   Button,
+  Link,
 } from '@mui/material'
 
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone'
@@ -14,51 +15,45 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import { fr } from 'date-fns/locale'
 import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table'
+import { useDeleteStore, useGetStores } from 'src/hooks/api/management/store'
 import { useNavigate } from 'react-router'
 import { ConfirmDialog } from '../../../../components/modal'
-import EditArticleModal from '../edit/EditArticleModal'
-import AddArticleModal from '../add/AddArticleModal'
-import useDeleteArticle from '../../../../hooks/api/management/article/mutation/useDeleteArticle'
-import { useGetArticles } from '../../../../hooks/api/management/article'
-import ArticlesFilter from './ArticlesFilter'
+import { ROUTES } from '../../../../routes'
+import AddStoreModal from '../add/AddStoreModal'
+import EditStoreModal from '../edit/EditStoreModal'
 
-type ArticlesTableProps = {
-  id: string
-}
-
-const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
+const StoresTable: FC = () => {
   const theme = useTheme()
-  const { data, onPageChange } = useGetArticles(id)
+  const { data, onPageChange } = useGetStores()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
-  const [articleId, setArticleId] = useState<string>(null)
-  const { mutateAsync: deleteArticle } = useDeleteArticle()
+  const [storeId, setStoreId] = useState<string>(null)
+  const { mutateAsync: deleteStore } = useDeleteStore()
   const navigate = useNavigate()
 
-  const handleOpen = (id: string) => {
+  const handleOpen = () => {
     if (!openModal) {
-      setArticleId(id)
       setOpenModal(true)
     }
   }
 
   const handleOpenEditModal = (id: string) => {
     if (!openEditModal) {
-      setArticleId(id)
+      setStoreId(id)
       setOpenEditModal(true)
     }
   }
 
   const handleOpenDeleteModal = (id: string) => {
     if (!openDeleteModal) {
-      setArticleId(id)
+      setStoreId(id)
       setOpenDeleteModal(true)
     }
   }
 
-  const handleDeleteWarehouse = async () => {
-    await deleteArticle({ id: articleId })
+  const handleDeleteStore = async () => {
+    await deleteStore({ id: storeId })
   }
 
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
@@ -83,26 +78,26 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         },
       },
       {
-        Header: 'Produit',
-        accessor: 'product' as const,
+        Header: 'Nom du magasin',
+        accessor: 'name' as const,
         disableSortBy: true,
-        Cell: ({ value }) => value.name,
+        Cell: ({ value, row }) => {
+          return (
+            <Link
+              onClick={(e) => {
+                e.preventDefault()
+                navigate(`${ROUTES.MANAGEMENT.STORES}/${row.values._id}`)
+              }}
+            >
+              {value}
+            </Link>
+          )
+        },
       },
       {
-        Header: 'SKU',
-        accessor: 'sku' as const,
+        Header: "Nombre d'articles",
+        accessor: 'articles' as const,
         disableSortBy: true,
-      },
-      {
-        Header: 'Prix dépot',
-        accessor: 'warehousePrice' as const,
-        disableSortBy: false,
-        Cell: ({ value }) => `${value}€`,
-      },
-      {
-        Header: 'Taille',
-        accessor: 'size' as const,
-        disableSortBy: false,
       },
       {
         Header: 'Actions',
@@ -111,7 +106,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         maxWidth: 84,
         Cell: ({ row }) => (
           <>
-            <Tooltip title="Modifier article" arrow>
+            <Tooltip title="Modifier magasin" arrow>
               <IconButton
                 sx={{
                   '&:hover': {
@@ -126,7 +121,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Supprimer l'article" arrow>
+            <Tooltip title="Supprimer magasin" arrow>
               <IconButton
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
@@ -150,51 +145,44 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
     <Card>
       <Divider />
       <DataPaginationTable
-        FilterElement={ArticlesFilter}
         data={data.body.data}
         columnInfo={columnInfo}
         onPageChange={onPageChange}
         totalCount={data.body.meta.itemCount}
         enableSort
         enableSelect
-        noDataText="Aucun article existant."
+        noDataText="Aucun magasin existant."
         ExtraElement={
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}
             variant="contained"
             startIcon={<AddTwoToneIcon fontSize="small" />}
-            onClick={() => handleOpen(id)}
+            onClick={() => handleOpen()}
           >
-            Ajouter un article
+            Ajouter un magasin
           </Button>
         }
       />
-      {openModal && (
-        <AddArticleModal
-          open={openModal}
-          onClose={setOpenModal}
-          warehouseId={id}
-        />
-      )}
-      {articleId && openEditModal && (
-        <EditArticleModal
+      {openModal && <AddStoreModal open={openModal} onClose={setOpenModal} />}
+      {storeId && openEditModal && (
+        <EditStoreModal
           open={openEditModal}
           onClose={setOpenEditModal}
-          articleId={articleId}
+          storeId={storeId}
         />
       )}
-      {articleId && openDeleteModal && (
+      {storeId && openDeleteModal && (
         <ConfirmDialog
-          title="Suppression d'article"
+          title="Suppression de magasin"
           open={openDeleteModal}
           setOpen={setOpenDeleteModal}
-          onConfirm={handleDeleteWarehouse}
+          onConfirm={handleDeleteStore}
         >
-          Etes-vous sur de vouloir supprimer cet article?
+          Etes-vous sur de vouloir supprimer ce magasin?
         </ConfirmDialog>
       )}
     </Card>
   )
 }
 
-export default ArticlesTable
+export default StoresTable

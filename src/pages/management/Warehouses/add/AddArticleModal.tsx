@@ -22,7 +22,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import useCreateArticle from '../../../../hooks/api/management/article/mutation/useCreateArticle'
 
 function AddArticleModal(props) {
-  const { onClose, open, articleId } = props
+  const { onClose, open, warehouseId } = props
 
   const handleClose = () => {
     onClose()
@@ -47,18 +47,22 @@ function AddArticleModal(props) {
     setFieldError,
   } = useFormik({
     initialValues: {
-      product: null,
+      product: undefined,
       createdBy: currentUser.data._id,
-      warehouse: articleId,
-      storehousePrice: 0,
+      warehouse: warehouseId,
+      store: undefined,
+      warehousePrice: 0,
+      storePrice: undefined,
       size: 0,
-      sku: null,
+      sku: undefined,
     },
     validationSchema: Yup.object({
       product: Yup.string().required('Le produit est obligatoire'),
       createdBy: Yup.string().required('Votre utilisateur ID est obligatoire'),
-      warehouse: Yup.string().required("L'ID du depot est obligatoire"),
-      storehousePrice: Yup.number(),
+      warehouse: Yup.string(),
+      store: Yup.string(),
+      warehousePrice: Yup.number(),
+      storePrice: Yup.number(),
       size: Yup.number(),
       sku: Yup.string().required('Le SKU est obligatoire'),
     }),
@@ -134,19 +138,19 @@ function AddArticleModal(props) {
             variant="outlined"
           />
           <TextField
-            error={Boolean(touched.storehousePrice && errors.storehousePrice)}
+            error={Boolean(touched.warehousePrice && errors.warehousePrice)}
             fullWidth
-            helperText={touched.storehousePrice && errors.storehousePrice}
+            helperText={touched.warehousePrice && errors.warehousePrice}
             label="Prix dépot"
             type="number"
             margin="normal"
-            name="storehousePrice"
+            name="warehousePrice"
             onBlur={handleBlur}
             onChange={handleChange}
             InputProps={{
               endAdornment: <InputAdornment position="start">€</InputAdornment>,
             }}
-            value={values.storehousePrice}
+            value={values.warehousePrice}
             variant="outlined"
           />
           <TextField
@@ -181,7 +185,7 @@ function AddArticleModal(props) {
 AddArticleModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  articleId: PropTypes.string.isRequired,
+  warehouseId: PropTypes.string.isRequired,
 }
 
 export default AddArticleModal

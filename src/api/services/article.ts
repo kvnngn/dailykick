@@ -43,7 +43,9 @@ const createArticle = async (
   product: string,
   createdBy: string,
   warehouse: string,
-  storehousePrice: number,
+  store: string,
+  warehousePrice: number,
+  storePrice: number,
   size: number,
   sku: string,
 ) => {
@@ -51,7 +53,9 @@ const createArticle = async (
     product,
     createdBy,
     warehouse,
-    storehousePrice,
+    store,
+    warehousePrice,
+    storePrice,
     size,
     sku,
   })

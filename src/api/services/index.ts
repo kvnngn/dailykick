@@ -1,5 +1,6 @@
 export { default as AuthService } from './auth'
 export { default as UserService } from './user'
 export { default as WarehouseService } from './warehouse'
+export { default as StoreService } from './store'
 export { default as ProductService } from './product'
 export { default as ArticleService } from './article'

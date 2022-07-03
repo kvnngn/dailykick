@@ -94,7 +94,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         disableSortBy: true,
       },
       {
-        Header: 'Prix dépot',
+        Header: 'Prix magasin',
         accessor: 'warehousePrice' as const,
         disableSortBy: false,
         Cell: ({ value }) => `${value}€`,
@@ -170,11 +170,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         }
       />
       {openModal && (
-        <AddArticleModal
-          open={openModal}
-          onClose={setOpenModal}
-          warehouseId={id}
-        />
+        <AddArticleModal open={openModal} onClose={setOpenModal} storeId={id} />
       )}
       {articleId && openEditModal && (
         <EditArticleModal

@@ -102,7 +102,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
       {
         Header: 'Taille',
         accessor: 'size' as const,
-        disableSortBy: false,
+        disableSortBy: true,
       },
       {
         Header: 'Actions',

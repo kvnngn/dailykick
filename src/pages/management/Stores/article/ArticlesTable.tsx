@@ -95,14 +95,20 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
       },
       {
         Header: 'Prix magasin',
-        accessor: 'warehousePrice' as const,
+        accessor: 'storePrice' as const,
         disableSortBy: false,
         Cell: ({ value }) => `${value}€`,
       },
       {
         Header: 'Taille',
         accessor: 'size' as const,
-        disableSortBy: false,
+        disableSortBy: true,
+      },
+      {
+        Header: 'Vendu ?',
+        accessor: 'sold' as const,
+        disableSortBy: true,
+        Cell: ({ value }) => (value ? 'Oui' : 'Non'),
       },
       {
         Header: 'Actions',

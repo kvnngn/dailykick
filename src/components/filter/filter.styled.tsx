@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef } from 'react'
 import {
   Checkbox,
   FormControl,
@@ -8,18 +8,18 @@ import {
   OutlinedInput,
   Select,
   SelectProps,
-  Typography
-} from '@mui/material';
+  Typography,
+} from '@mui/material'
 
 export const FilterGrid: React.FC = ({ children }) => (
   <Grid container direction="column" rowSpacing={2}>
     {children}
   </Grid>
-);
+)
 
 export const FilterGridItem: React.FC<{ label: string }> = ({
   label,
-  children
+  children,
 }) => (
   <Grid container item alignItems="center" columnSpacing={3}>
     <Grid item xs={3}>
@@ -31,16 +31,16 @@ export const FilterGridItem: React.FC<{ label: string }> = ({
       {children}
     </Grid>
   </Grid>
-);
+)
 
 type FilterSelectProps = Pick<
   SelectProps<Array<string>>,
   'name' | 'value' | 'onChange' | 'onBlur' | 'renderValue'
 > & {
-  selected: Array<string>;
-  candidate: Array<string> | ReadonlyArray<string>;
-  formatter?: (v: string) => any;
-};
+  selected: Array<string>
+  candidate: Array<string> | ReadonlyArray<string>
+  formatter?: (v: string) => any
+}
 
 export const FilterSelect: React.FC<FilterSelectProps> = ({
   name,
@@ -50,12 +50,14 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
   renderValue,
   candidate,
   selected,
-  formatter
+  formatter,
 }) => {
-  const formRef = useRef();
+  const formRef = useRef()
   if (!selected || !candidate) {
-    return null;
+    return null
   }
+  console.log({ candidate })
+  console.log(Boolean(!candidate?.length))
   return (
     <FormControl ref={formRef} fullWidth>
       <Select
@@ -71,12 +73,12 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
           PaperProps: {
             sx: {
               maxHeight: 350,
-              overflowY: 'auto'
-            }
+              overflowY: 'auto',
+            },
           },
           MenuListProps: {
-            disablePadding: true
-          }
+            disablePadding: true,
+          },
         }}
         multiple
       >
@@ -92,8 +94,8 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
           <ListItemText
             primary={`${
               selected.length === Number(candidate.length)
-                ? 'Tout selectionner'
-                : 'Tout déselectionner'
+                ? 'Tout déselectionner'
+                : 'Tout selectionner'
             } (${candidate.length})`}
           />
         </MenuItem>
@@ -105,8 +107,8 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
         ))}
       </Select>
     </FormControl>
-  );
-};
+  )
+}
 FilterSelect.defaultProps = {
-  formatter: undefined
-};
+  formatter: undefined,
+}

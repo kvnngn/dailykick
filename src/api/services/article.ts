@@ -81,6 +81,11 @@ const deleteArticles = (ids: string[]) =>
     },
   })
 
+const getArticleAutoComplete = async (): Promise<ArticleAutoComplete> => {
+  const { data } = await axios.get(`${API_URL.ARTICLE}/acdata`)
+  return data
+}
+
 export default {
   getArticle,
   getArticles,
@@ -88,4 +93,5 @@ export default {
   updateArticle,
   deleteArticle,
   deleteArticles,
+  getArticleAutoComplete,
 }

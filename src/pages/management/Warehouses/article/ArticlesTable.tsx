@@ -20,6 +20,7 @@ import EditArticleModal from '../edit/EditArticleModal'
 import AddArticleModal from '../add/AddArticleModal'
 import useDeleteArticle from '../../../../hooks/api/management/article/mutation/useDeleteArticle'
 import { useGetArticles } from '../../../../hooks/api/management/article'
+import ArticlesFilter from './ArticlesFilter'
 
 type ArticlesTableProps = {
   id: string
@@ -62,13 +63,13 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
 
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
-    {
-      Header: 'ID',
-      accessor: '_id' as const,
-      minWidth: 130,
-      maxWidth: 130,
-      disableSortBy: true,
-    },
+      {
+        Header: 'ID',
+        accessor: '_id' as const,
+        minWidth: 130,
+        maxWidth: 130,
+        disableSortBy: true,
+      },
       {
         Header: 'Ajouté le',
         accessor: 'createdAt' as const,
@@ -149,6 +150,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
     <Card>
       <Divider />
       <DataPaginationTable
+        FilterElement={ArticlesFilter}
         data={data.body.data}
         columnInfo={columnInfo}
         onPageChange={onPageChange}

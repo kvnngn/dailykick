@@ -20,6 +20,7 @@ export default {
     ARTICLE: {
       ADD: 'ADD_ARTICLE',
       GET: 'GET_ARTICLES',
+      GET_AC: 'GET_AC',
       DELETE: 'DELETE_ARTICLES',
       PUT: 'PUT_ARTICLE',
     },

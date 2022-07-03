@@ -74,3 +74,12 @@ declare type LoginResponse = {
   expiresPrettyPrint: string
   expires: number
 }
+
+declare interface AutoCompleteData {
+  [key: string]: ReadonlyArray<string | Record<string, string>>
+}
+
+declare interface ArticleAutoComplete extends AutoCompleteData {
+  brands: ReadonlyArray<string>
+  brandModels: ReadonlyArray<string>
+}

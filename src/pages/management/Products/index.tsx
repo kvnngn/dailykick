@@ -1,10 +1,14 @@
-import { Grid, Container } from '@mui/material';
-import Footer from 'src/components/Footer';
-import Products from './Products';
+import { Grid, Container } from '@mui/material'
+import { Helmet } from 'react-helmet-async'
+import Footer from 'src/components/Footer'
+import Products from './Products'
 
 function ApplicationsProducts() {
   return (
     <>
+      <Helmet>
+        <title>Produits</title>
+      </Helmet>
       <Container maxWidth="lg">
         <Grid
           container
@@ -18,9 +22,8 @@ function ApplicationsProducts() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
-  );
+  )
 }
 
-export default ApplicationsProducts;
+export default ApplicationsProducts

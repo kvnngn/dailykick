@@ -1,4 +1,5 @@
 import { Grid, Container } from '@mui/material'
+import { Helmet } from 'react-helmet-async'
 import Footer from 'src/components/Footer'
 import { SuspenseBox } from '../../../../components/styled/suspense'
 import StoresTable from './StoresTable'
@@ -6,6 +7,9 @@ import StoresTable from './StoresTable'
 function StoresPage() {
   return (
     <>
+      <Helmet>
+        <title>Magasins</title>
+      </Helmet>
       <Container maxWidth="lg">
         <Grid
           container
@@ -21,7 +25,6 @@ function StoresPage() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   )
 }

@@ -35,7 +35,7 @@ function StoreDetailsPage() {
   return (
     <>
       <Helmet>
-        <title>Magasin - Details</title>
+        <title> {data.name} - Détails</title>
       </Helmet>
       <PageTitleWrapper>
         <PageHeader title={data.name} subTitle={currentTab} canGoBack={true} />
@@ -68,7 +68,6 @@ function StoreDetailsPage() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   )
 }

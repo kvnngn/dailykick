@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext } from 'react'
 
 import {
   ListSubheader,
@@ -7,16 +7,17 @@ import {
   List,
   styled,
   Button,
-  ListItem
-} from '@mui/material';
-import { NavLink as RouterLink } from 'react-router-dom';
-import { SidebarContext } from 'src/contexts/SidebarContext';
+  ListItem,
+} from '@mui/material'
+import { NavLink as RouterLink } from 'react-router-dom'
+import { SidebarContext } from 'src/contexts/SidebarContext'
 
-import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
-import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
-import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
-import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
-import { ROUTES } from 'src/routes';
+import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone'
+import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone'
+import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone'
+import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone'
+import { ROUTES } from 'src/routes'
+import { useCurrentInfo } from '../../../../hooks/api/common'
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -36,8 +37,8 @@ const MenuWrapper = styled(Box)(
       padding: ${theme.spacing(0, 2.5)};
       line-height: 1.4;
     }
-`
-);
+`,
+)
 
 const SubMenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -134,7 +135,7 @@ const SubMenuWrapper = styled(Box)(
                 opacity: 0;
                 transition: ${theme.transitions.create([
                   'transform',
-                  'opacity'
+                  'opacity',
                 ])};
                 width: 6px;
                 height: 6px;
@@ -157,106 +158,139 @@ const SubMenuWrapper = styled(Box)(
         }
       }
     }
-`
-);
+`,
+)
 
 function SidebarMenu() {
-  const { closeSidebar } = useContext(SidebarContext);
+  const { closeSidebar } = useContext(SidebarContext)
+  const currentUser = useCurrentInfo()
 
   return (
     <>
       <MenuWrapper>
-        <List
-          component="div"
-          subheader={
-            <ListSubheader component="div" disableSticky>
-              Administrateur
-            </ListSubheader>
-          }
-        >
-          <SubMenuWrapper>
-            <List component="div">
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to={ROUTES.DASHBOARD.ROOT}
-                  startIcon={<BrightnessLowTwoToneIcon />}
-                >
-                  Vue d'ensemble
-                </Button>
-              </ListItem>
+        {currentUser.currentRole === 'ADMIN' && (
+          <>
+            <List
+              component="div"
+              subheader={
+                <ListSubheader component="div" disableSticky>
+                  Administrateur
+                </ListSubheader>
+              }
+            >
+              <SubMenuWrapper>
+                <List component="div">
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to={ROUTES.DASHBOARD.ROOT}
+                      startIcon={<BrightnessLowTwoToneIcon />}
+                    >
+                      Vue d'ensemble
+                    </Button>
+                  </ListItem>
+                </List>
+              </SubMenuWrapper>
             </List>
-          </SubMenuWrapper>
-        </List>
-        <List
-          component="div"
-          subheader={
-            <ListSubheader component="div" disableSticky>
-              Gestion
-            </ListSubheader>
-          }
-        >
-          <SubMenuWrapper>
-            <List component="div">
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to={ROUTES.MANAGEMENT.PRODUCTS}
-                  startIcon={<TableChartTwoToneIcon />}
-                >
-                  Produits
-                </Button>
-              </ListItem>
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to={ROUTES.MANAGEMENT.WAREHOUSES}
-                  startIcon={<TableChartTwoToneIcon />}
-                >
-                  Dépots
-                </Button>
-              </ListItem>
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to={ROUTES.MANAGEMENT.STORES}
-                  startIcon={<TableChartTwoToneIcon />}
-                >
-                  Magasins
-                </Button>
-              </ListItem>
+            <List
+              component="div"
+              subheader={
+                <ListSubheader component="div" disableSticky>
+                  Gestion
+                </ListSubheader>
+              }
+            >
+              <SubMenuWrapper>
+                <List component="div">
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to={ROUTES.MANAGEMENT.PRODUCTS}
+                      startIcon={<TableChartTwoToneIcon />}
+                    >
+                      Produits
+                    </Button>
+                  </ListItem>
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to={ROUTES.MANAGEMENT.WAREHOUSES}
+                      startIcon={<TableChartTwoToneIcon />}
+                    >
+                      Dépots
+                    </Button>
+                  </ListItem>
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to={ROUTES.MANAGEMENT.STORES}
+                      startIcon={<TableChartTwoToneIcon />}
+                    >
+                      Magasins
+                    </Button>
+                  </ListItem>
+                </List>
+              </SubMenuWrapper>
             </List>
-          </SubMenuWrapper>
-        </List>
+          </>
+        )}
+        {currentUser.currentRole === 'SELLER' && (
+          <>
+            <List
+              component="div"
+              subheader={
+                <ListSubheader component="div" disableSticky>
+                  Gestion
+                </ListSubheader>
+              }
+            >
+              <SubMenuWrapper>
+                <List component="div">
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to={ROUTES.MANAGEMENT.PRODUCTS}
+                      startIcon={<TableChartTwoToneIcon />}
+                    >
+                      Produits
+                    </Button>
+                  </ListItem>
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to={`${ROUTES.MANAGEMENT.STORES}/${currentUser.currentUser.store}`}
+                      startIcon={<TableChartTwoToneIcon />}
+                    >
+                      Mon magasin
+                    </Button>
+                  </ListItem>
+                </List>
+              </SubMenuWrapper>
+            </List>
+          </>
+        )}
         <List
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
-              Comptes
+              Mon profil
             </ListSubheader>
           }
         >
           <SubMenuWrapper>
             <List component="div">
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to={ROUTES.PROFILE.DETAILS}
-                  startIcon={<AccountCircleTwoToneIcon />}
-                >
-                  Mon profil
-                </Button>
-              </ListItem>
               <ListItem component="div">
                 <Button
                   disableRipple
@@ -273,7 +307,7 @@ function SidebarMenu() {
         </List>
       </MenuWrapper>
     </>
-  );
+  )
 }
 
-export default SidebarMenu;
+export default SidebarMenu

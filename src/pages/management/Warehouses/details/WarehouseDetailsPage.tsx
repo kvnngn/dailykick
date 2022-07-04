@@ -1,12 +1,12 @@
 import { Container, Grid } from '@mui/material'
 import { FC } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useParams } from 'react-router'
-import Footer from '../../../../components/Footer'
 import { SuspenseBox } from '../../../../components/styled/suspense'
 import { useGetWarehouse } from '../../../../hooks/api/management/warehouse'
 import PageHeader from '../../../../layouts/SidebarLayout/PageHeader'
 import PageTitleWrapper from '../../../../layouts/SidebarLayout/PageTitleWrapper'
-import ArticlesTable from './ArticlesTable'
+import ArticlesTable from '../article/ArticlesTable'
 
 const WarehouseDetailsPage: FC = () => {
   const { id } = useParams()
@@ -14,6 +14,9 @@ const WarehouseDetailsPage: FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{data.name} - Détails</title>
+      </Helmet>
       <PageTitleWrapper>
         <PageHeader
           title={data.name}
@@ -36,7 +39,6 @@ const WarehouseDetailsPage: FC = () => {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   )
 }

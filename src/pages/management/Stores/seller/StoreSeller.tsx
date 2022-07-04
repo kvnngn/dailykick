@@ -26,7 +26,6 @@ const StoreSeller: FC<StoreSellerProps> = ({ id }) => {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   )
 }

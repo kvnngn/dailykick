@@ -7,13 +7,12 @@ import DashboardOverview from './dashboard'
 import Login from './Login'
 import Register from './Register'
 import Status404 from './Status/Status404'
-import ManagementUserProfile from './management/Users/profile'
-import ManagementUserSettings from './management/Users/settings'
-import Products from './management/Products'
-import WarehouseDetailsPage from './management/Warehouses/article/WarehouseDetailsPage'
-import WarehousesPage from './management/Warehouses/list/WarehousesPage'
-import StoresPage from './management/Stores/list/StoresPage'
-import StoreDetailsPage from './management/Stores/details/StoreDetailsPage'
+import Products from './Management/Products'
+import WarehouseDetailsPage from './Management/Warehouses/details/WarehouseDetailsPage'
+import WarehousesPage from './Management/Warehouses/list/WarehousesPage'
+import StoresPage from './Management/Stores/list/StoresPage'
+import StoreDetailsPage from './Management/Stores/details/StoreDetailsPage'
+import SettingsPage from './Management/Users/settings/SettingsPage'
 
 const Pages: React.FC = () => {
   useQueryClientDefaultOptions()
@@ -38,9 +37,8 @@ const Pages: React.FC = () => {
           <Route path="stores/:id" element={<StoreDetailsPage />} />
         </Route>
         <Route path="profile">
-          <Route path="/profile" element={<Navigate to="details" replace />} />
-          <Route path="details" element={<ManagementUserProfile />} />
-          <Route path="settings" element={<ManagementUserSettings />} />
+          <Route path="/profile" element={<Navigate to="settings" replace />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Status404 />} />

@@ -7,6 +7,7 @@ import Header from './Header'
 import PageHeader from 'src/layouts/SidebarLayout/PageHeader'
 import PageTitleWrapper from 'src/layouts/SidebarLayout/PageTitleWrapper'
 import { includesPath, ROUTES } from 'src/routes'
+import Footer from '../../components/Footer'
 
 interface SidebarLayoutProps {
   children?: ReactNode
@@ -110,6 +111,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
               </PageTitleWrapper>
             )}
             <Outlet />
+            <Footer />
           </Box>
         </Box>
       </Box>

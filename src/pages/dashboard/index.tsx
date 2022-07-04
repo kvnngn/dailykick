@@ -31,7 +31,6 @@ function DashboardOverview() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
     </>
   )
 }

@@ -36,6 +36,37 @@ const getStoreArticles: PaginatedAxios<
   return { headers: parseContentRange(headers), body: data }
 }
 
+const getStoreUsers: PaginatedAxios<
+  WithContentRange<
+    CCQueryResponse<
+      User,
+      {
+        offset: number
+        page: number
+        limit: number
+        searchQuery: string
+        itemCount: number
+        pageCount: number
+        hasPreviousPage: boolean
+        hasNextPage: boolean
+      }
+    >
+  >
+> = async (skip, limit, filter, sort, storeId) => {
+  const { headers, data } = await axios.get(
+    `${API_URL.ARTICLE}/${storeId}/users`,
+    {
+      params: {
+        skip,
+        limit,
+        filter,
+        sort,
+      },
+    },
+  )
+  return { headers: parseContentRange(headers), body: data }
+}
+
 const getStores: PaginatedAxios<
   WithContentRange<
     CCQueryResponse<
@@ -103,4 +134,5 @@ export default {
   deleteStore,
   deleteStores,
   getStoreArticles,
+  getStoreUsers,
 }

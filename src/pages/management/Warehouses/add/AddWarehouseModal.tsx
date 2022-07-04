@@ -51,7 +51,6 @@ function AddWarehouseModal(props) {
 
     onSubmit: async (v) => {
       try {
-        console.log({ v });
         await createWarehouse({
           ...v
         });

@@ -12,8 +12,8 @@ import ManagementUserSettings from './management/Users/settings'
 import Products from './management/Products'
 import WarehouseDetailsPage from './management/Warehouses/article/WarehouseDetailsPage'
 import WarehousesPage from './management/Warehouses/list/WarehousesPage'
-import StoreDetailsPage from './management/Stores/article/StoreDetailsPage'
 import StoresPage from './management/Stores/list/StoresPage'
+import StoreDetailsPage from './management/Stores/details/StoreDetailsPage'
 
 const Pages: React.FC = () => {
   useQueryClientDefaultOptions()

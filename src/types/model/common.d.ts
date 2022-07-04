@@ -11,7 +11,8 @@ declare type User = {
   firstname: string
   lastname: string
   password: string
-  roles: string[]
+  roles: string
+  store: string
   _id: string
 }
 

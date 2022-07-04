@@ -1,18 +1,11 @@
-import { useMemo } from 'react';
-import useCurrentUser from './useCurrentUser';
+import { useMemo } from 'react'
+import useCurrentUser from './useCurrentUser'
 
 export default (suspense: boolean = true) => {
-  const { data: userData } = useCurrentUser(suspense);
-
-  const currentRole = useMemo(() => {
-    if (userData) {
-      return userData.roles[0];
-    }
-    return 'No role';
-  }, [userData]);
+  const { data: userData } = useCurrentUser(suspense)
 
   return {
     currentUser: userData,
-    currentRole
-  };
-};
+    currentRole: userData.roles,
+  }
+}

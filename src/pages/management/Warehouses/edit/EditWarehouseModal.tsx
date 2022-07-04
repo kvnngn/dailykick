@@ -53,7 +53,6 @@ const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
 
     onSubmit: async (v) => {
       try {
-        console.log({ v });
         await updateWarehouse({
           original: data,
           changes: v

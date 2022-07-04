@@ -36,7 +36,6 @@ const getProducts: PaginatedAxios<
     >
   >
 > = async (skip, limit, filter, sort, name) => {
-  console.log({ name })
   const { headers, data } = await axios.get(`${API_URL.PRODUCT}`, {
     params: {
       skip,

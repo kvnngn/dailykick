@@ -1,3 +1,4 @@
+import { TextField } from '@mui/material'
 import React, { useCallback } from 'react'
 import * as Yup from 'yup'
 import {
@@ -13,16 +14,19 @@ import useArticleAutoComplete from '../../../../hooks/api/management/article/que
 type ArticlesFilterForm = {
   brands: Array<string>
   brandModels: Array<string>
+  sku: string
 }
 
 const useArticlesFilterForm = (): UseValidation<ArticlesFilterForm> => ({
   initialValues: {
     brands: [],
     brandModels: [],
+    sku: undefined,
   },
   validationSchema: Yup.object({
     brands: Yup.array().of(Yup.string()),
     brandModels: Yup.array().of(Yup.string()),
+    sku: Yup.string(),
   }).defined(),
 })
 
@@ -33,7 +37,7 @@ const ArticlesFilter: React.FC<FilterProps> = ({
 }) => {
   const { data } = useArticleAutoComplete()
   const { initialValues, validationSchema } = useArticlesFilterForm()
-  const { values, handleArrayChange, handleBlur, handleSubmit } =
+  const { values, handleArrayChange, handleBlur, handleSubmit, handleChange } =
     useFilterFormik(
       {
         initialValues: previousValues || initialValues,
@@ -73,6 +77,15 @@ const ArticlesFilter: React.FC<FilterProps> = ({
             renderValue={() => values.brandModels.join(', ')}
             selected={values.brandModels}
             candidate={brandModels}
+          />
+        </FilterGridItem>
+        <FilterGridItem label="SKU">
+          <TextField
+            name="sku"
+            value={values.sku}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            fullWidth
           />
         </FilterGridItem>
       </FilterGrid>

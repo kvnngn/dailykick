@@ -30,6 +30,13 @@ export default {
       DELETE: 'DELETE_ARTICLES',
       PUT: 'PUT_ARTICLE',
     },
+    USER: {
+      ADD: 'ADD_USER',
+      GET: 'GET_USERS',
+      GET_AC: 'GET_AC',
+      DELETE: 'DELETE_USERS',
+      PUT: 'PUT_USER',
+    },
     PRODUCT: {
       ADD: 'ADD_PRODUCT',
       PUT: 'PUT_PRODUCT',

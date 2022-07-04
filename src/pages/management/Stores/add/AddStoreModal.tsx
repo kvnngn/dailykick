@@ -49,7 +49,6 @@ function AddStoreModal(props) {
 
     onSubmit: async (v) => {
       try {
-        console.log({ v });
         await createStore({
           ...v
         });

@@ -38,7 +38,7 @@ const Register = () => {
         .required("L'email est obligatoire"),
       firstname: Yup.string().max(255).required('Le prénom est obligatoire'),
       lastname: Yup.string().max(255).required('Le nom est obligatoire'),
-      password: Yup.string().max(255).required('Password est obligatoire')
+      password: Yup.string().max(255).required('Le mot de passe est obligatoire')
     }),
     onSubmit: async (v) => {
       try {
@@ -46,7 +46,6 @@ const Register = () => {
           ...v,
           password: hashPassword(v.password)
         });
-        console.log({ data });
         localStorage.setItem(GLOBAL.ACCESS_TOKEN, data.token);
         localStorage.setItem(GLOBAL.USER_ID, data.userId);
         navigate('/dashboard');

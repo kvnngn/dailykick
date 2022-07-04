@@ -41,7 +41,6 @@ const Login = () => {
         if (response) {
           const body = response;
           if (body.token && body.expires) {
-            console.log({ body });
             localStorage.setItem(GLOBAL.ACCESS_TOKEN, body.token);
             localStorage.setItem(GLOBAL.USER_ID, body.userId);
             localStorage.setItem(
@@ -56,8 +55,6 @@ const Login = () => {
           }
         }
       } catch (e: any) {
-        console.log({ e });
-        console.log(e.response?.data?.message);
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             case 'Could not authenticate. Please try again.':

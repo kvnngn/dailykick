@@ -84,7 +84,6 @@ function AddProductModal(props) {
 
     onSubmit: async (v) => {
       try {
-        console.log({ v });
         await createProduct({
           ...v
         });

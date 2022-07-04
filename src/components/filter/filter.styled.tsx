@@ -56,8 +56,6 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
   if (!selected || !candidate) {
     return null
   }
-  console.log({ candidate })
-  console.log(Boolean(!candidate?.length))
   return (
     <FormControl ref={formRef} fullWidth>
       <Select

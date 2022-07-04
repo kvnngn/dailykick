@@ -69,7 +69,6 @@ function AddArticleModal(props) {
 
     onSubmit: async (v) => {
       try {
-        console.log({ v })
         await createArticle(v)
         handleClose()
       } catch (e: any) {
@@ -94,7 +93,6 @@ function AddArticleModal(props) {
           </DialogContentText>
           <Autocomplete
             onChange={(e, value: Product) => {
-              console.log({ value })
               if (value) {
                 setFieldValue('product', value._id)
               }

@@ -53,7 +53,6 @@ const EditStoreModal: FC<EditStoreModalProps> = ({
 
     onSubmit: async (v) => {
       try {
-        console.log({ v });
         await updateStore({
           original: data,
           changes: v

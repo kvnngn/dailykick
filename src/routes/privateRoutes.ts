@@ -9,7 +9,6 @@ const managementRoutes = {
 } as const
 
 const profileRoutes = {
-  DETAILS: '/profile/details',
   SETTINGS: '/profile/settings',
 } as const
 

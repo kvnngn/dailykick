@@ -97,7 +97,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         Header: 'Prix magasin',
         accessor: 'storePrice' as const,
         disableSortBy: false,
-        Cell: ({ value }) => `${value}€`,
+        Cell: ({ value }) => value ? `${value}€` : 'Non défini',
       },
       {
         Header: 'Taille',
@@ -112,9 +112,6 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
       },
       {
         Header: 'Actions',
-        align: 'center',
-        minWidth: 84,
-        maxWidth: 84,
         Cell: ({ row }) => (
           <>
             <Tooltip title="Modifier article" arrow>

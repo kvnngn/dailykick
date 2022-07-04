@@ -142,10 +142,6 @@ function HeaderUserbox() {
           </MenuUserBox>
           <Divider sx={{ mb: 0 }} />
           <List sx={{ p: 1 }} component="nav">
-            <ListItem button to={ROUTES.PROFILE.DETAILS} component={NavLink}>
-              <AccountBoxTwoToneIcon fontSize="small" />
-              <ListItemText primary="Mon profil" />
-            </ListItem>
             <ListItem button to={ROUTES.PROFILE.SETTINGS} component={NavLink}>
               <AccountTreeTwoToneIcon fontSize="small" />
               <ListItemText primary="Paramètres" />

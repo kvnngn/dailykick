@@ -16,11 +16,13 @@ import { fr } from 'date-fns/locale'
 import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table'
 import { useNavigate } from 'react-router'
 import { ConfirmDialog } from '../../../../components/modal'
-import EditArticleModal from '../edit/EditArticleModal'
-import AddArticleModal from '../add/AddArticleModal'
 import useDeleteArticle from '../../../../hooks/api/management/article/mutation/useDeleteArticle'
 import { useGetArticles } from '../../../../hooks/api/management/article'
+import EditArticleModal from '../edit/EditArticleModal'
+import AddArticleModal from '../add/AddArticleModal'
 import ArticlesFilter from './ArticlesFilter'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import TransferArticleModal from '../transfer/TransferArticleModal'
 
 type ArticlesTableProps = {
   id: string
@@ -32,6 +34,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [openTransferModal, setOpenTransferModal] = useState<boolean>(false)
   const [articleId, setArticleId] = useState<string>(null)
   const { mutateAsync: deleteArticle } = useDeleteArticle()
   const navigate = useNavigate()
@@ -57,7 +60,14 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
     }
   }
 
-  const handleDeleteWarehouse = async () => {
+  const handleOpenTransferModal = (id: string) => {
+    if (!openTransferModal) {
+      setArticleId(id)
+      setOpenTransferModal(true)
+    }
+  }
+
+  const handleDeleteArticle = async () => {
     await deleteArticle({ id: articleId })
   }
 
@@ -105,10 +115,19 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         disableSortBy: true,
       },
       {
+        Header: 'Sortie le',
+        accessor: 'transferedAt' as const,
+        disableSortBy: true,
+        Cell: ({ value, row }) =>
+          value
+            ? `${format(new Date(value), 'dd/MM/yyyy', {
+                locale: fr,
+              })} -> ${row.original.store.name} (${row.original.transferPrice}€)`
+            : 'non',
+      },
+      {
         Header: 'Actions',
         align: 'center',
-        minWidth: 84,
-        maxWidth: 84,
         Cell: ({ row }) => (
           <>
             <Tooltip title="Modifier article" arrow>
@@ -137,6 +156,19 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                 onClick={() => handleOpenDeleteModal(row.values._id)}
               >
                 <DeleteTwoToneIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Sortir l'article" arrow>
+              <IconButton
+                sx={{
+                  '&:hover': { background: theme.colors.error.lighter },
+                  color: theme.palette.error.main,
+                }}
+                color="inherit"
+                size="small"
+                onClick={() => handleOpenTransferModal(row.values._id)}
+              >
+                <ArrowForwardIcon fontSize="small" />
               </IconButton>
             </Tooltip>
           </>
@@ -183,12 +215,19 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
           articleId={articleId}
         />
       )}
+      {articleId && openTransferModal && (
+        <TransferArticleModal
+          open={openTransferModal}
+          onClose={setOpenTransferModal}
+          articleId={articleId}
+        />
+      )}
       {articleId && openDeleteModal && (
         <ConfirmDialog
           title="Suppression d'article"
           open={openDeleteModal}
           setOpen={setOpenDeleteModal}
-          onConfirm={handleDeleteWarehouse}
+          onConfirm={handleDeleteArticle}
         >
           Etes-vous sur de vouloir supprimer cet article?
         </ConfirmDialog>

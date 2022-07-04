@@ -73,6 +73,20 @@ const updateArticle = async (
   return data
 }
 
+const transferArticle = async (
+  articleId: string,
+  transferPrice: number,
+  store: string,
+  updatedBy: string,
+): Promise<Article> => {
+  const { data } = await axios.put(`${API_URL.ARTICLE}/transfer/${articleId}`, {
+    transferPrice,
+    store,
+    updatedBy,
+  })
+  return data
+}
+
 const deleteArticle = async (id: string): Promise<any> => {
   const { data } = await axios.delete(`${API_URL.ARTICLE}/id/${id}`)
   return data
@@ -98,4 +112,5 @@ export default {
   deleteArticle,
   deleteArticles,
   getArticleAutoComplete,
+  transferArticle,
 }

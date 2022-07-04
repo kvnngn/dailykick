@@ -39,6 +39,68 @@ const getArticles: PaginatedAxios<
   return { headers: parseContentRange(headers), body: data }
 }
 
+const getStoreInventory: PaginatedAxios<
+  WithContentRange<
+    CCQueryResponse<
+      Article,
+      {
+        offset: number
+        page: number
+        limit: number
+        searchQuery: string
+        itemCount: number
+        pageCount: number
+        hasPreviousPage: boolean
+        hasNextPage: boolean
+      }
+    >
+  >
+> = async (skip, limit, filter, sort, warehouseId) => {
+  const { headers, data } = await axios.get(
+    `${API_URL.ARTICLE}/${warehouseId}/store/byproducts`,
+    {
+      params: {
+        skip,
+        limit,
+        filter,
+        sort,
+      },
+    },
+  )
+  return { headers: parseContentRange(headers), body: data }
+}
+
+const getWarehouseInventory: PaginatedAxios<
+  WithContentRange<
+    CCQueryResponse<
+      Article,
+      {
+        offset: number
+        page: number
+        limit: number
+        searchQuery: string
+        itemCount: number
+        pageCount: number
+        hasPreviousPage: boolean
+        hasNextPage: boolean
+      }
+    >
+  >
+> = async (skip, limit, filter, sort, warehouseId) => {
+  const { headers, data } = await axios.get(
+    `${API_URL.ARTICLE}/${warehouseId}/warehouse/byproducts`,
+    {
+      params: {
+        skip,
+        limit,
+        filter,
+        sort,
+      },
+    },
+  )
+  return { headers: parseContentRange(headers), body: data }
+}
+
 const createArticle = async (
   product: string,
   createdBy: string,
@@ -113,4 +175,6 @@ export default {
   deleteArticles,
   getArticleAutoComplete,
   transferArticle,
+  getStoreInventory,
+  getWarehouseInventory,
 }

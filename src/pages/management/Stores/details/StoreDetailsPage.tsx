@@ -9,6 +9,7 @@ import { useParams } from 'react-router'
 import { useGetStore } from '../../../../hooks/api/management/store'
 import PageHeader from '../../../../layouts/SidebarLayout/PageHeader'
 import StoreSeller from '../seller/StoreSeller'
+import ProductsTable from '../product/ProductsTable'
 
 const TabsWrapper = styled(Tabs)(
   () => `
@@ -19,11 +20,12 @@ const TabsWrapper = styled(Tabs)(
 )
 
 function StoreDetailsPage() {
-  const [currentTab, setCurrentTab] = useState<string>('Articles')
+  const [currentTab, setCurrentTab] = useState<string>('Inventaire')
   const { id } = useParams()
   const { data } = useGetStore(id)
 
   const tabs = [
+    { value: 'Inventaire', label: 'Inventaire' },
     { value: 'Articles', label: 'Articles' },
     { value: 'Vendeurs', label: 'Vendeurs' },
   ]
@@ -63,6 +65,7 @@ function StoreDetailsPage() {
             </TabsWrapper>
           </Grid>
           <Grid item xs={12}>
+            {currentTab === 'Inventaire' && <ProductsTable id={id} />}
             {currentTab === 'Articles' && <StoreArticle id={id} />}
             {currentTab === 'Vendeurs' && <StoreSeller id={id} />}
           </Grid>

@@ -31,6 +31,7 @@ type ArticlesTableProps = {
 const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
   const theme = useTheme()
   const { data, onPageChange } = useGetArticles(id)
+  console.log({ data })
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)

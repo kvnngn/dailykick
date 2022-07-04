@@ -1,6 +1,5 @@
 import { Grid, Container } from '@mui/material'
 import { Helmet } from 'react-helmet-async'
-import Footer from 'src/components/Footer'
 import { SuspenseBox } from '../../../../components/styled/suspense'
 import WarehousesTable from './WarehousesTable'
 

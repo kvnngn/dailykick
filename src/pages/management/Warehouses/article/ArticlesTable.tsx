@@ -105,7 +105,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         disableSortBy: true,
       },
       {
-        Header: 'Prix dépot',
+        Header: 'Prix fournisseur',
         accessor: 'warehousePrice' as const,
         disableSortBy: false,
         Cell: ({ value }) => `${value}€`,

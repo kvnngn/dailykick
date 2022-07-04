@@ -117,7 +117,7 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
             error={Boolean(touched.warehousePrice && errors.warehousePrice)}
             fullWidth
             helperText={touched.warehousePrice && errors.warehousePrice}
-            label="Prix dépot"
+            label="Prix fournisseur"
             type="number"
             margin="normal"
             name="warehousePrice"

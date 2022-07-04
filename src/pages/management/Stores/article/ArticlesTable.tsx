@@ -21,6 +21,8 @@ import AddArticleModal from '../add/AddArticleModal'
 import useDeleteArticle from '../../../../hooks/api/management/article/mutation/useDeleteArticle'
 import { useGetArticles } from '../../../../hooks/api/management/article'
 import ArticlesFilter from './ArticlesFilter'
+import SellIcon from '@mui/icons-material/Sell'
+import SellArticleModal from '../sell/SellArticleModal'
 
 type ArticlesTableProps = {
   id: string
@@ -32,6 +34,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [openSellModal, setOpenSellModal] = useState<boolean>(false)
   const [articleId, setArticleId] = useState<string>(null)
   const { mutateAsync: deleteArticle } = useDeleteArticle()
   const navigate = useNavigate()
@@ -54,6 +57,13 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
     if (!openDeleteModal) {
       setArticleId(id)
       setOpenDeleteModal(true)
+    }
+  }
+
+  const handleOpenSellModal = (id: string) => {
+    if (!openSellModal) {
+      setArticleId(id)
+      setOpenSellModal(true)
     }
   }
 
@@ -97,7 +107,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         Header: 'Prix magasin',
         accessor: 'storePrice' as const,
         disableSortBy: false,
-        Cell: ({ value }) => value ? `${value}€` : 'Non défini',
+        Cell: ({ value }) => (value ? `${value}€` : 'Non défini'),
       },
       {
         Header: 'Taille',
@@ -106,9 +116,14 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
       },
       {
         Header: 'Vendu ?',
-        accessor: 'sold' as const,
+        accessor: 'soldAt' as const,
         disableSortBy: true,
-        Cell: ({ value }) => (value ? 'Oui' : 'Non'),
+        Cell: ({ value, row }) =>
+          value
+            ? `${format(new Date(value), 'dd/MM/yyyy', {
+                locale: fr,
+              })} (${row.original.sellingPrice}€)`
+            : 'Non',
       },
       {
         Header: 'Actions',
@@ -131,6 +146,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
             </Tooltip>
             <Tooltip title="Supprimer l'article" arrow>
               <IconButton
+                disabled={row.original.soldAt}
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
                   color: theme.palette.error.main,
@@ -140,6 +156,20 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                 onClick={() => handleOpenDeleteModal(row.values._id)}
               >
                 <DeleteTwoToneIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Vente de l'article" arrow>
+              <IconButton
+                disabled={row.original.soldAt}
+                sx={{
+                  '&:hover': { background: theme.colors.error.lighter },
+                  color: theme.palette.error.main,
+                }}
+                color="inherit"
+                size="small"
+                onClick={() => handleOpenSellModal(row.values._id)}
+              >
+                <SellIcon fontSize="small" />
               </IconButton>
             </Tooltip>
           </>
@@ -179,6 +209,13 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         <EditArticleModal
           open={openEditModal}
           onClose={setOpenEditModal}
+          articleId={articleId}
+        />
+      )}
+      {articleId && openSellModal && (
+        <SellArticleModal
+          open={openSellModal}
+          onClose={setOpenSellModal}
           articleId={articleId}
         />
       )}

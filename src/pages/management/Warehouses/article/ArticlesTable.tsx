@@ -122,7 +122,9 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
           value
             ? `${format(new Date(value), 'dd/MM/yyyy', {
                 locale: fr,
-              })} -> ${row.original.store.name} (${row.original.transferPrice}€)`
+              })} -> ${row.original.store.name} (${
+                row.original.transferPrice
+              }€)`
             : 'non',
       },
       {
@@ -147,6 +149,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
             </Tooltip>
             <Tooltip title="Supprimer l'article" arrow>
               <IconButton
+                disabled={row.original.transferedAt}
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
                   color: theme.palette.error.main,
@@ -160,6 +163,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
             </Tooltip>
             <Tooltip title="Sortir l'article" arrow>
               <IconButton
+                disabled={row.original.transferedAt}
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
                   color: theme.palette.error.main,

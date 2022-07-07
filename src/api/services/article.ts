@@ -109,7 +109,6 @@ const createArticle = async (
   warehousePrice: number,
   storePrice: number,
   size: number,
-  sku: string,
 ) => {
   const { data } = await axios.post(`${API_URL.ARTICLE}/add`, {
     product,
@@ -119,7 +118,6 @@ const createArticle = async (
     warehousePrice,
     storePrice,
     size,
-    sku,
   })
   return data
 }
@@ -148,6 +146,20 @@ const transferArticle = async (
   })
   return data
 }
+
+const transferArticleToWarehouse = async (
+  articleId: string,
+  updatedBy: string,
+): Promise<Article> => {
+  const { data } = await axios.put(
+    `${API_URL.ARTICLE}/transfer/${articleId}/warehouse`,
+    {
+      updatedBy,
+    },
+  )
+  return data
+}
+
 const sellArticle = async (
   articleId: string,
   sellingPrice: number,
@@ -189,4 +201,5 @@ export default {
   getStoreInventory,
   getWarehouseInventory,
   sellArticle,
+  transferArticleToWarehouse,
 }

@@ -29,7 +29,7 @@ function SettingsPage() {
   return (
     <>
       <Helmet>
-        <title>Paramètres</title>
+        <title>Settings</title>
       </Helmet>
       <Container maxWidth="lg">
         <Grid
@@ -51,15 +51,14 @@ function SettingsPage() {
                   >
                     <Box>
                       <Typography variant="h4" gutterBottom>
-                        Détails personnels
+                        Personal details
                       </Typography>
                       <Typography variant="subtitle2">
-                        Gérer les informations relatives à vos données
-                        personnelles
+                        Manage information about your account data
                       </Typography>
                     </Box>
                     <Button variant="text" startIcon={<EditTwoToneIcon />}>
-                      Mettre à jour
+                      Update
                     </Button>
                   </Box>
                   <Divider />
@@ -74,7 +73,7 @@ function SettingsPage() {
                           textAlign={{ sm: 'right' }}
                         >
                           <Box pr={3} pb={2}>
-                            Nom:
+                            Name:
                           </Box>
                         </Grid>
                         <Grid item xs={12} sm={8} md={9}>
@@ -90,7 +89,7 @@ function SettingsPage() {
                           textAlign={{ sm: 'right' }}
                         >
                           <Box pr={3} pb={2}>
-                            Prénom:
+                            Firstname:
                           </Box>
                         </Grid>
                         <Grid item xs={12} sm={8} md={9}>
@@ -106,7 +105,7 @@ function SettingsPage() {
                           textAlign={{ sm: 'right' }}
                         >
                           <Box pr={3} pb={2}>
-                            Adresse mail:
+                            Email address:
                           </Box>
                         </Grid>
                         <Grid item xs={12} sm={8} md={9}>
@@ -124,7 +123,7 @@ function SettingsPage() {
                               textAlign={{ sm: 'right' }}
                             >
                               <Box pr={3} pb={2}>
-                                ID Magasin:
+                                ID Store:
                               </Box>
                             </Grid>
                             <Grid item xs={12} sm={8} md={9}>
@@ -142,7 +141,7 @@ function SettingsPage() {
                           textAlign={{ sm: 'right' }}
                         >
                           <Box pr={3} pb={2}>
-                            Rôle:
+                            Account role:
                           </Box>
                         </Grid>
                         <Grid item xs={12} sm={8} md={9}>

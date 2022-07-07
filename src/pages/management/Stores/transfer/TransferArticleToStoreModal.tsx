@@ -19,23 +19,23 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useSnackbar } from 'src/hooks/common'
 import { useCurrentUser } from 'src/hooks/api/common'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { LoadingButton } from '@mui/lab'
 import {
   useGetArticle,
-  useSellArticle,
   useTransferArticle,
 } from '../../../../hooks/api/management/article'
 import _ from 'lodash'
 import Text from 'src/components/Text'
+import { useGetStores } from '../../../../hooks/api/management/store'
 
-declare type SellArticleModalProps = {
+declare type TransferArticleToStoreModalProps = {
   onClose: Dispatch<SetStateAction<boolean>>
   open: boolean
   articleId: string
 }
 
-const SellArticleModal: FC<SellArticleModalProps> = ({
+const TransferArticleToStoreModal: FC<TransferArticleToStoreModalProps> = ({
   onClose,
   open,
   articleId,
@@ -44,11 +44,17 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
     onClose(false)
   }
 
-  const { mutateAsync: transferArticle } = useSellArticle()
+  const { mutateAsync: transferArticle } = useTransferArticle()
+  const { data: stores } = useGetStores()
 
   const { data } = useGetArticle(articleId)
   const { showErrorSnackbar } = useSnackbar()
   const currentUser = useCurrentUser()
+
+  useEffect(() => {
+    console.log(stores.body.data)
+  }, [stores?.body?.data])
+
   const {
     values,
     handleChange,
@@ -63,14 +69,15 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
     initialValues: {
       articleId: articleId,
       updatedBy: currentUser.data._id,
-      sellingPrice: data.storePrice | 0,
+      store: undefined,
+      transferPrice: 0,
     },
     validationSchema: Yup.object({
-      articleId: Yup.string().required('ArticleId field is mandatory'),
+      articleId: Yup.string().required('Article Id field is mandatory'),
       updatedBy: Yup.string().required('User ID field is mandatory'),
-      sellingPrice: Yup.number().required('Store ID field is mandatory'),
+      transferPrice: Yup.number().required('Transfer price field is mandatory'),
+      store: Yup.string().required('Store ID field is mandatory'),
     }),
-
     onSubmit: async (v) => {
       try {
         await transferArticle(v)
@@ -89,7 +96,7 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Vente d'article</DialogTitle>
+        <DialogTitle>Transfer of article to another store</DialogTitle>
         <Typography variant="subtitle2">
           <Grid container spacing={0}>
             <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
@@ -128,37 +135,46 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
             </Grid>
             <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
               <Box pr={3} pb={2}>
-                Price en store:
+                Supplier price:
               </Box>
             </Grid>
             <Grid item xs={12} sm={8} md={9}>
               <Text color="black">
-                <b>{data.storePrice ? `${data.storePrice}AED` : 'Undefined'}</b>
+                <b>AED {data.warehousePrice}</b>
               </Text>
             </Grid>
           </Grid>
         </Typography>
         <DialogContent>
           <DialogContentText>
-            Veuillez indiquer le Price de vente
+            Please indicate the store recipient.
           </DialogContentText>
-          <TextField
-            error={Boolean(touched.sellingPrice && errors.sellingPrice)}
-            fullWidth
-            helperText={touched.sellingPrice && errors.sellingPrice}
-            label="Price de vente"
-            type="number"
-            margin="normal"
-            name="sellingPrice"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">AED</InputAdornment>
-              ),
+          <Autocomplete
+            onChange={(e, value: Store) => {
+              if (value) {
+                setFieldValue('store', value._id)
+              } else {
+                setFieldValue('store', null)
+              }
             }}
-            value={values.sellingPrice}
-            variant="outlined"
+            disablePortal
+            options={stores.body.data}
+            getOptionLabel={(option: Store) => option.name}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                error={Boolean(touched.store && errors.store)}
+                fullWidth
+                helperText={touched.store && errors.store}
+                label="Store"
+                margin="normal"
+                name="store"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.store}
+                variant="outlined"
+              />
+            )}
           />
         </DialogContent>
         <DialogActions>
@@ -176,10 +192,10 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
   )
 }
 
-SellArticleModal.propTypes = {
+TransferArticleToStoreModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   articleId: PropTypes.string.isRequired,
 }
 
-export default SellArticleModal
+export default TransferArticleToStoreModal

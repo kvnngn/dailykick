@@ -174,7 +174,7 @@ function SidebarMenu() {
               component="div"
               subheader={
                 <ListSubheader component="div" disableSticky>
-                  Administrateur
+                  Administrator
                 </ListSubheader>
               }
             >
@@ -188,7 +188,7 @@ function SidebarMenu() {
                       to={ROUTES.DASHBOARD.ROOT}
                       startIcon={<BrightnessLowTwoToneIcon />}
                     >
-                      Vue d'ensemble
+                      Overview
                     </Button>
                   </ListItem>
                 </List>
@@ -198,7 +198,7 @@ function SidebarMenu() {
               component="div"
               subheader={
                 <ListSubheader component="div" disableSticky>
-                  Gestion
+                  Manage
                 </ListSubheader>
               }
             >
@@ -212,7 +212,7 @@ function SidebarMenu() {
                       to={ROUTES.MANAGEMENT.PRODUCTS}
                       startIcon={<TableChartTwoToneIcon />}
                     >
-                      Produits
+                      Products
                     </Button>
                   </ListItem>
                   <ListItem component="div">
@@ -223,7 +223,7 @@ function SidebarMenu() {
                       to={ROUTES.MANAGEMENT.WAREHOUSES}
                       startIcon={<TableChartTwoToneIcon />}
                     >
-                      Dépots
+                      Warehouses
                     </Button>
                   </ListItem>
                   <ListItem component="div">
@@ -234,7 +234,7 @@ function SidebarMenu() {
                       to={ROUTES.MANAGEMENT.STORES}
                       startIcon={<TableChartTwoToneIcon />}
                     >
-                      Magasins
+                      Stores
                     </Button>
                   </ListItem>
                 </List>
@@ -248,7 +248,7 @@ function SidebarMenu() {
               component="div"
               subheader={
                 <ListSubheader component="div" disableSticky>
-                  Gestion
+                  Manage
                 </ListSubheader>
               }
             >
@@ -259,10 +259,10 @@ function SidebarMenu() {
                       disableRipple
                       component={RouterLink}
                       onClick={closeSidebar}
-                      to={ROUTES.MANAGEMENT.PRODUCTS}
+                      to={`${ROUTES.MANAGEMENT.STORES}/${currentUser.currentUser.store}`}
                       startIcon={<TableChartTwoToneIcon />}
                     >
-                      Produits
+                      My store
                     </Button>
                   </ListItem>
                   <ListItem component="div">
@@ -270,10 +270,10 @@ function SidebarMenu() {
                       disableRipple
                       component={RouterLink}
                       onClick={closeSidebar}
-                      to={`${ROUTES.MANAGEMENT.STORES}/${currentUser.currentUser.store}`}
+                      to={`${ROUTES.MANAGEMENT.STORES}`}
                       startIcon={<TableChartTwoToneIcon />}
                     >
-                      Mon magasin
+                      All stores
                     </Button>
                   </ListItem>
                 </List>
@@ -285,7 +285,7 @@ function SidebarMenu() {
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
-              Mon profil
+              My profil
             </ListSubheader>
           }
         >
@@ -299,7 +299,7 @@ function SidebarMenu() {
                   to={ROUTES.PROFILE.SETTINGS}
                   startIcon={<DisplaySettingsTwoToneIcon />}
                 >
-                  Paramètres
+                  Settings
                 </Button>
               </ListItem>
             </List>

@@ -21,6 +21,7 @@ import { ConfirmDialog } from '../../../../components/modal'
 import { ROUTES } from '../../../../routes'
 import AddStoreModal from '../add/AddStoreModal'
 import EditStoreModal from '../edit/EditStoreModal'
+import { useCurrentInfo } from '../../../../hooks/api/common'
 
 const StoresTable: FC = () => {
   const theme = useTheme()
@@ -56,6 +57,8 @@ const StoresTable: FC = () => {
     await deleteStore({ id: storeId })
   }
 
+  const { currentUser } = useCurrentInfo()
+
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
       {
@@ -66,19 +69,17 @@ const StoresTable: FC = () => {
         disableSortBy: true,
       },
       {
-        Header: 'Ajouté le',
+        Header: 'Added on',
         accessor: 'createdAt' as const,
         minWidth: 140,
         maxWidth: 140,
         disableSortBy: false,
         Cell: ({ value }) => {
-          return format(new Date(value), 'dd MMMM yyyy', {
-            locale: fr,
-          })
+          return format(new Date(value), 'dd/MM/yyyy HH:mm')
         },
       },
       {
-        Header: 'Nom du magasin',
+        Header: 'Store name',
         accessor: 'name' as const,
         disableSortBy: true,
         Cell: ({ value, row }) => {
@@ -95,7 +96,7 @@ const StoresTable: FC = () => {
         },
       },
       {
-        Header: "Nombre d'articles",
+        Header: 'Number of articles',
         accessor: 'articles' as const,
         disableSortBy: true,
       },
@@ -104,38 +105,39 @@ const StoresTable: FC = () => {
         align: 'center',
         minWidth: 84,
         maxWidth: 84,
-        Cell: ({ row }) => (
-          <>
-            <Tooltip title="Modifier magasin" arrow>
-              <IconButton
-                sx={{
-                  '&:hover': {
-                    background: theme.colors.primary.lighter,
-                  },
-                  color: theme.palette.primary.main,
-                }}
-                color="inherit"
-                size="small"
-                onClick={() => handleOpenEditModal(row.values._id)}
-              >
-                <EditTwoToneIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Supprimer magasin" arrow>
-              <IconButton
-                sx={{
-                  '&:hover': { background: theme.colors.error.lighter },
-                  color: theme.palette.error.main,
-                }}
-                color="inherit"
-                size="small"
-                onClick={() => handleOpenDeleteModal(row.values._id)}
-              >
-                <DeleteTwoToneIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          </>
-        ),
+        Cell: ({ row }) =>
+          currentUser.roles === 'ADMIN' && (
+            <>
+              <Tooltip title="Modify store" arrow>
+                <IconButton
+                  sx={{
+                    '&:hover': {
+                      background: theme.colors.primary.lighter,
+                    },
+                    color: theme.palette.primary.main,
+                  }}
+                  color="inherit"
+                  size="small"
+                  onClick={() => handleOpenEditModal(row.values._id)}
+                >
+                  <EditTwoToneIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete store" arrow>
+                <IconButton
+                  sx={{
+                    '&:hover': { background: theme.colors.error.lighter },
+                    color: theme.palette.error.main,
+                  }}
+                  color="inherit"
+                  size="small"
+                  onClick={() => handleOpenDeleteModal(row.values._id)}
+                >
+                  <DeleteTwoToneIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </>
+          ),
       },
     ],
     [],
@@ -151,16 +153,18 @@ const StoresTable: FC = () => {
         totalCount={data.body.meta.itemCount}
         enableSort
         enableSelect
-        noDataText="Aucun magasin existant."
+        noDataText="No existing store."
         ExtraElement={
-          <Button
-            sx={{ mt: { xs: 2, md: 0 } }}
-            variant="contained"
-            startIcon={<AddTwoToneIcon fontSize="small" />}
-            onClick={() => handleOpen()}
-          >
-            Ajouter un magasin
-          </Button>
+          currentUser.roles === 'ADMIN' && (
+            <Button
+              sx={{ mt: { xs: 2, md: 0 } }}
+              variant="contained"
+              startIcon={<AddTwoToneIcon fontSize="small" />}
+              onClick={() => handleOpen()}
+            >
+              Add store
+            </Button>
+          )
         }
       />
       {openModal && <AddStoreModal open={openModal} onClose={setOpenModal} />}
@@ -173,12 +177,12 @@ const StoresTable: FC = () => {
       )}
       {storeId && openDeleteModal && (
         <ConfirmDialog
-          title="Suppression de magasin"
+          title="Store deletion"
           open={openDeleteModal}
           setOpen={setOpenDeleteModal}
           onConfirm={handleDeleteStore}
         >
-          Etes-vous sur de vouloir supprimer ce magasin?
+          Are you sure you want to delete this store?
         </ConfirmDialog>
       )}
     </Card>

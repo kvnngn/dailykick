@@ -20,15 +20,15 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
   const title = useMemo<string | undefined>(() => {
     switch (true) {
       case includesPath(ROUTES.DASHBOARD, pathname):
-        return "Vue d'ensemble"
+        return "Overview"
       case pathname === ROUTES.MANAGEMENT.WAREHOUSES:
-        return 'Dépots'
+        return 'Warehouses'
       case pathname === ROUTES.MANAGEMENT.STORES:
-        return 'Magasins'
+        return 'Store'
       case pathname === ROUTES.MANAGEMENT.PRODUCTS:
-        return 'Produits'
+        return 'Products'
       case includesPath(ROUTES.PROFILE, pathname):
-        return 'Mon profil'
+        return 'My profil'
       default:
         return undefined
     }
@@ -38,11 +38,11 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
     console.log({ pathname })
     switch (true) {
       case pathname === ROUTES.MANAGEMENT.WAREHOUSES:
-        return 'Gérer vos différents entrepots et leurs stocks'
+        return 'Manage your different warehouses and their stocks'
       case pathname === ROUTES.MANAGEMENT.STORES:
-        return 'Gérer les magasins et leurs stocks'
+        return 'Manage stores and their inventory'
       case pathname === ROUTES.MANAGEMENT.PRODUCTS:
-        return 'Définissez les produits disponibles sur votre site'
+        return 'Define the available products on your site'
       default:
         return undefined
     }

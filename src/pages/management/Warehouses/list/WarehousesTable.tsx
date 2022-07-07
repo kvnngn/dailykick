@@ -69,19 +69,17 @@ const WarehousesTable: FC = () => {
         disableSortBy: true,
       },
       {
-        Header: 'Ajouté le',
+        Header: 'Added on',
         accessor: 'createdAt' as const,
         minWidth: 140,
         maxWidth: 140,
         disableSortBy: false,
         Cell: ({ value }) => {
-          return format(new Date(value), 'dd MMMM yyyy', {
-            locale: fr,
-          })
+          return format(new Date(value), 'dd/MM/yyyy HH:mm')
         },
       },
       {
-        Header: 'Nom du dépot',
+        Header: 'Warehouse name',
         accessor: 'name' as const,
         disableSortBy: true,
         Cell: ({ value, row }) => {
@@ -98,7 +96,7 @@ const WarehousesTable: FC = () => {
         },
       },
       {
-        Header: "Nombre d'articles",
+        Header: 'Number of articles',
         accessor: 'articles' as const,
         disableSortBy: true,
       },
@@ -109,7 +107,7 @@ const WarehousesTable: FC = () => {
         maxWidth: 84,
         Cell: ({ row }) => (
           <>
-            <Tooltip title="Modifier dépot" arrow>
+            <Tooltip title="Modify warehouse" arrow>
               <IconButton
                 sx={{
                   '&:hover': {
@@ -124,7 +122,7 @@ const WarehousesTable: FC = () => {
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Supprimer dépot" arrow>
+            <Tooltip title="Delete warehouse" arrow>
               <IconButton
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
@@ -154,7 +152,7 @@ const WarehousesTable: FC = () => {
         totalCount={data.body.meta.itemCount}
         enableSort
         enableSelect
-        noDataText="Aucun dépot existant."
+        noDataText="No existing warehouse."
         ExtraElement={
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}
@@ -162,7 +160,7 @@ const WarehousesTable: FC = () => {
             startIcon={<AddTwoToneIcon fontSize="small" />}
             onClick={() => handleOpen()}
           >
-            Ajouter un dépot
+            Add warehouse
           </Button>
         }
       />
@@ -178,12 +176,12 @@ const WarehousesTable: FC = () => {
       )}
       {warehouseId && openDeleteModal && (
         <ConfirmDialog
-          title="Suppression de dépot"
+          title="Warehouse deletion"
           open={openDeleteModal}
           setOpen={setOpenDeleteModal}
           onConfirm={handleDeleteWarehouse}
         >
-          Etes-vous sur de vouloir supprimer ce dépot?
+          Are you sure you want to delete this warehouse?
         </ConfirmDialog>
       )}
     </Card>

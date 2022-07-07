@@ -55,7 +55,7 @@ const ListItemAvatarWrapper = styled(ListItemAvatar)(
 `,
 )
 
-function  AccountBalance() {
+function AccountBalance() {
   const theme = useTheme()
 
   const chartOptions: ApexOptions = {
@@ -138,11 +138,11 @@ function  AccountBalance() {
               }}
               variant="h4"
             >
-              Valeur marchandise
+              Commodity value
             </Typography>
             <Box>
               <Typography variant="h1" gutterBottom>
-                1200,00€
+              AED 1200,00
               </Typography>
               <Typography
                 variant="h4"
@@ -167,9 +167,9 @@ function  AccountBalance() {
                   <TrendingUp fontSize="large" />
                 </AvatarSuccess>
                 <Box>
-                  <Typography variant="h4">+200,00€</Typography>
+                  <Typography variant="h4">+AED 200,00</Typography>
                   <Typography variant="subtitle2" noWrap>
-                    Ce mois-ci
+                    Current month
                   </Typography>
                 </Box>
               </Box>
@@ -177,12 +177,12 @@ function  AccountBalance() {
             <Grid container spacing={3}>
               <Grid sm item>
                 <Button fullWidth variant="outlined">
-                  Voir dépots
+                  See warehouses
                 </Button>
               </Grid>
               <Grid sm item>
                 <Button fullWidth variant="contained">
-                  Voir magasins
+                  See stores
                 </Button>
               </Grid>
             </Grid>
@@ -201,7 +201,7 @@ function  AccountBalance() {
           <Box
             component="span"
             sx={{
-              display: { xs: 'none', md: 'inline-block' },
+              display: { xs: 'Noe', md: 'inline-block' },
             }}
           >
             <Divider absolute orientation="vertical" />

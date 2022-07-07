@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle'
+import Dialog from '@mui/material/Dialog'
 import {
   DialogContent,
   TextField,
@@ -11,45 +11,45 @@ import {
   Box,
   DialogContentText,
   MenuItem,
-  createFilterOptions
-} from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useSnackbar } from 'src/hooks/common';
-import { useGetProduct } from 'src/hooks/api/management/product';
-import { useCurrentUser } from 'src/hooks/api/common';
-import { Dispatch, FC, SetStateAction } from 'react';
-import useUpdateProduct from 'src/hooks/api/management/product/mutation/useUpdateProduct';
-import { LoadingButton } from '@mui/lab';
-import FileInput from '../../../../components/FileInput';
-import { productColors } from '../add/AddProductModal';
-import useGetBrands from '../../../../hooks/api/management/brand/query/useGetBrands';
-import useGetBrandModels from '../../../../hooks/api/management/brandModel/query/useGetBrandModels';
-import _ from 'lodash';
+  createFilterOptions,
+} from '@mui/material'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { useSnackbar } from 'src/hooks/common'
+import { useGetProduct } from 'src/hooks/api/management/product'
+import { useCurrentUser } from 'src/hooks/api/common'
+import { Dispatch, FC, SetStateAction } from 'react'
+import useUpdateProduct from 'src/hooks/api/management/product/mutation/useUpdateProduct'
+import { LoadingButton } from '@mui/lab'
+import FileInput from '../../../../components/FileInput'
+import { productColors } from '../add/AddProductModal'
+import useGetBrands from '../../../../hooks/api/management/brand/query/useGetBrands'
+import useGetBrandModels from '../../../../hooks/api/management/brandModel/query/useGetBrandModels'
+import _ from 'lodash'
 
 declare type EditProductModalProps = {
-  onClose: Dispatch<SetStateAction<boolean>>;
-  open: boolean;
-  productId: string;
-};
+  onClose: Dispatch<SetStateAction<boolean>>
+  open: boolean
+  productId: string
+}
 
-const filter = createFilterOptions<Brand | BrandModel | string>();
+const filter = createFilterOptions<Brand | BrandModel | string>()
 
 const EditProductModal: FC<EditProductModalProps> = ({
   onClose,
   open,
-  productId
+  productId,
 }) => {
   const handleClose = () => {
-    onClose(false);
-  };
+    onClose(false)
+  }
 
-  const { mutateAsync: updateProduct } = useUpdateProduct();
-  const { data: brandModels } = useGetBrandModels();
-  const { data: brands } = useGetBrands();
-  const { data } = useGetProduct(productId);
-  const { showErrorSnackbar } = useSnackbar();
-  const currentUser = useCurrentUser();
+  const { mutateAsync: updateProduct } = useUpdateProduct()
+  const { data: brandModels } = useGetBrandModels()
+  const { data: brands } = useGetBrands()
+  const { data } = useGetProduct(productId)
+  const { showErrorSnackbar } = useSnackbar()
+  const currentUser = useCurrentUser()
   const {
     values,
     handleChange,
@@ -60,76 +60,75 @@ const EditProductModal: FC<EditProductModalProps> = ({
     isValid,
     isSubmitting,
     setFieldError,
-    setFieldValue
+    setFieldValue,
   } = useFormik({
     initialValues: {
       brand: _.isObject(data.brand) ? data.brand.name : null,
       brandModel: _.isObject(data.brandModel) ? data.brandModel.name : null,
       image_url: data.image_url,
-      colors: data.colors
+      sku: data.sku,
     },
     validationSchema: Yup.object({
-      brand: Yup.string().required('La marque est obligatoire'),
-      brandModel: Yup.string().required('Le modele est obligatoire'),
-      // image_url: Yup.string().required('Une photo est obligatoire'),
-      colors: Yup.array().required('Une couleur est obligatoire')
+      brand: Yup.string().required('Brand field is mandatory'),
+      brandModel: Yup.string().required('Model field is mandatory'),
+      sku: Yup.string().required('SKU field is mandatory'),
     }),
 
     onSubmit: async (v) => {
       try {
         await updateProduct({
           original: data,
-          changes: v
-        });
-        handleClose();
+          changes: v,
+        })
+        handleClose()
       } catch (e: any) {
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             default:
-              showErrorSnackbar('Une erreur est survenue');
-              break;
+              showErrorSnackbar('An error occured')
+              break
           }
         }
       }
-    }
-  });
+    },
+  })
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Modification d'un nouveau produit</DialogTitle>
+        <DialogTitle>Update a product</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Veuillez indiquer les informations de produit.
+            Please provide product information.
           </DialogContentText>
           <Autocomplete
             value={values.brand}
             onChange={(e, value: Brand) => {
               if (value) {
-                setFieldValue('brand', value.name);
+                setFieldValue('brand', value.name)
               } else {
-                setFieldValue('brand', null);
+                setFieldValue('brand', null)
               }
             }}
             disablePortal
             options={brands}
             filterOptions={(options, params) => {
-              const filtered = filter(options, params);
+              const filtered = filter(options, params)
 
-              const { inputValue } = params;
+              const { inputValue } = params
               const isExisting = options.some((option) =>
                 _.isObject(option)
                   ? inputValue === option.name
-                  : inputValue === option
-              );
+                  : inputValue === option,
+              )
               if (inputValue !== '' && !isExisting) {
                 filtered.push({
                   name: inputValue,
                   createdAt: new Date(),
-                  updatedAt: new Date()
-                });
+                  updatedAt: new Date(),
+                })
               }
 
-              return filtered;
+              return filtered
             }}
             getOptionLabel={(option: BrandModel | Brand | string) =>
               _.isObject(option) ? option.name : option
@@ -140,7 +139,7 @@ const EditProductModal: FC<EditProductModalProps> = ({
                 error={Boolean(touched.brand && errors.brand)}
                 fullWidth
                 helperText={touched.brand && errors.brand}
-                label="Marque"
+                label="Brand"
                 margin="normal"
                 name="brand"
                 onBlur={handleBlur}
@@ -155,31 +154,31 @@ const EditProductModal: FC<EditProductModalProps> = ({
             onBlur={handleBlur}
             onChange={(e, value: BrandModel) => {
               if (value) {
-                setFieldValue('brandModel', value.name);
+                setFieldValue('brandModel', value.name)
               } else {
-                setFieldValue('brandModel', null);
+                setFieldValue('brandModel', null)
               }
             }}
             disablePortal
             options={brandModels}
             filterOptions={(options, params) => {
-              const filtered = filter(options, params);
+              const filtered = filter(options, params)
 
-              const { inputValue } = params;
+              const { inputValue } = params
               const isExisting = options.some((option) =>
                 _.isObject(option)
                   ? inputValue === option.name
-                  : inputValue === option
-              );
+                  : inputValue === option,
+              )
               if (inputValue !== '' && !isExisting) {
                 filtered.push({
                   name: inputValue,
                   createdAt: new Date(),
-                  updatedAt: new Date()
-                });
+                  updatedAt: new Date(),
+                })
               }
 
-              return filtered;
+              return filtered
             }}
             getOptionLabel={(option: BrandModel | Brand | string) =>
               _.isObject(option) ? option.name : option
@@ -190,7 +189,7 @@ const EditProductModal: FC<EditProductModalProps> = ({
                 error={Boolean(touched.brandModel && errors.brandModel)}
                 fullWidth
                 helperText={touched.brandModel && errors.brandModel}
-                label="Modele"
+                label="Model"
                 margin="normal"
                 name="brandModel"
                 onBlur={handleBlur}
@@ -201,26 +200,17 @@ const EditProductModal: FC<EditProductModalProps> = ({
             )}
           />
           <TextField
-            sx={{ width: 300 }}
-            select
-            label="Couleur(s)"
-            placeholder="Couleur(s)"
-            name="colors"
-            error={Boolean(touched.colors && errors.colors)}
-            helperText={touched.colors && errors.colors}
+            error={Boolean(touched.sku && errors.sku)}
+            fullWidth
+            helperText={touched.sku && errors.sku}
+            label="SKU"
+            margin="normal"
+            name="sku"
             onBlur={handleBlur}
-            SelectProps={{
-              multiple: true,
-              value: values.colors,
-              onChange: handleChange
-            }}
-          >
-            {productColors.map((color) => (
-              <MenuItem key={color.name} value={color.value}>
-                {color.name}
-              </MenuItem>
-            ))}
-          </TextField>
+            onChange={handleChange}
+            value={values.sku}
+            variant="outlined"
+          />
           <Box mt={2}>
             <FileInput
               selectedImage={values.image_url}
@@ -235,24 +225,24 @@ const EditProductModal: FC<EditProductModalProps> = ({
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Annuler</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <LoadingButton
             loading={isSubmitting}
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Mettre à jour
+            Update
           </LoadingButton>
         </DialogActions>
       </form>
     </Dialog>
-  );
-};
+  )
+}
 
 EditProductModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  productId: PropTypes.string.isRequired
-};
+  productId: PropTypes.string.isRequired,
+}
 
-export default EditProductModal;
+export default EditProductModal

@@ -6,6 +6,6 @@ export default (suspense: boolean = true) => {
 
   return {
     currentUser: userData,
-    currentRole: userData.roles,
+    currentRole: userData?.roles,
   }
 }

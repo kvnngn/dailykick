@@ -13,20 +13,20 @@ import useArticleAutoComplete from '../../../../hooks/api/management/article/que
 
 type ArticlesFilterForm = {
   brands: Array<string>
-  brandModels: Array<string>,
-  sku: string
+  brandModels: Array<string>
+  size: string
 }
 
 const useArticlesFilterForm = (): UseValidation<ArticlesFilterForm> => ({
   initialValues: {
     brands: [],
     brandModels: [],
-    sku: undefined,
+    size: undefined,
   },
   validationSchema: Yup.object({
     brands: Yup.array().of(Yup.string()),
     brandModels: Yup.array().of(Yup.string()),
-    sku: Yup.string(),
+    size: Yup.string(),
   }).defined(),
 })
 
@@ -57,7 +57,7 @@ const ArticlesFilter: React.FC<FilterProps> = ({
   return (
     <FilterWrapper onClose={onClose} onSubmit={handleSubmit}>
       <FilterGrid>
-        <FilterGridItem label="Marque">
+        <FilterGridItem label="Brand">
           <FilterSelect
             name="brands"
             value={values.brands}
@@ -68,7 +68,7 @@ const ArticlesFilter: React.FC<FilterProps> = ({
             candidate={brands}
           />
         </FilterGridItem>
-        <FilterGridItem label="Modele">
+        <FilterGridItem label="Model">
           <FilterSelect
             name="brandModels"
             value={values.brandModels}
@@ -79,15 +79,16 @@ const ArticlesFilter: React.FC<FilterProps> = ({
             candidate={brandModels}
           />
         </FilterGridItem>
-        <FilterGridItem label="SKU">
+        <FilterGridItem label="Size (EU)">
           <TextField
-            name="sku"
-            value={values.sku}
+            name="size"
+            value={values.size}
             onChange={handleChange}
             onBlur={handleBlur}
             fullWidth
           />
         </FilterGridItem>
+        ƒ
       </FilterGrid>
     </FilterWrapper>
   )

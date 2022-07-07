@@ -96,7 +96,7 @@ function HeaderNotifications() {
             <Box flex="1">
               <Box display="flex" justifyContent="space-between">
                 <Typography sx={{ fontWeight: 'bold' }}>
-                  Rupture de stock pour le produit..
+                  Rupture de stock pour le product..
                 </Typography>
                 <Typography variant="caption" sx={{ textTransform: 'none' }}>
                   {formatDistance(subDays(new Date(), 3), new Date(), {

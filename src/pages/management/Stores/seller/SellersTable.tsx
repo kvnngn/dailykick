@@ -70,29 +70,27 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
         disableSortBy: true,
       },
       {
-        Header: 'Ajouté le',
+        Header: 'Added on',
         accessor: 'createdAt' as const,
         minWidth: 140,
         maxWidth: 140,
         disableSortBy: false,
         Cell: ({ value }) => {
-          return format(new Date(value), 'dd MMMM yyyy', {
-            locale: fr,
-          })
+          return format(new Date(value), 'dd/MM/yyyy HH:mm')
         },
       },
       {
-        Header: 'Email',
+        Header: 'Email address',
         accessor: 'email' as const,
         disableSortBy: true,
       },
       {
-        Header: 'Nom',
+        Header: 'Lastname',
         accessor: 'lastname' as const,
         disableSortBy: true,
       },
       {
-        Header: 'Prénom',
+        Header: 'Firstname',
         accessor: 'firstname' as const,
         disableSortBy: true,
       },
@@ -103,7 +101,7 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
         maxWidth: 84,
         Cell: ({ row }) => (
           <>
-            <Tooltip title="Modifier vendeur" arrow>
+            <Tooltip title="Modify seller" arrow>
               <IconButton
                 sx={{
                   '&:hover': {
@@ -118,7 +116,7 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Supprimer le vendeur" arrow>
+            <Tooltip title="Delete seller" arrow>
               <IconButton
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
@@ -148,7 +146,7 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
         totalCount={data.body.meta.itemCount}
         enableSort
         enableSelect
-        noDataText="Aucun vendeur existant."
+        noDataText="No existing seller."
         ExtraElement={
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}
@@ -156,7 +154,7 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
             startIcon={<AddTwoToneIcon fontSize="small" />}
             onClick={() => handleOpen(id)}
           >
-            Ajouter un vendeur
+            Add seller
           </Button>
         }
       />
@@ -172,12 +170,12 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
       )}
       {sellerId && openDeleteModal && (
         <ConfirmDialog
-          title="Suppression du vendeur"
+          title="Seller Deletion"
           open={openDeleteModal}
           setOpen={setOpenDeleteModal}
           onConfirm={handleDeleteWarehouse}
         >
-          Etes-vous sur de vouloir supprimer ce vendeur?
+          Are you sure you want to delete this seller?
         </ConfirmDialog>
       )}
     </Card>

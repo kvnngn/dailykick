@@ -51,7 +51,7 @@ declare type Product = {
   _id: string
   name: string
   image_url: string
-  colors: string[]
+  sku: string
   price: number
   brand: string | Brand
   brandModel: string | BrandModel
@@ -74,7 +74,6 @@ declare type Article = {
   warehousePrice: number
   storePrice: number
   size: number
-  sku: string
   createdAt: Date
   updatedAt: Date
 }
@@ -82,6 +81,7 @@ declare type Article = {
 declare type LoginResponse = {
   userId: string
   token: string
+  store: string
   expiresPrettyPrint: string
   expires: number
 }

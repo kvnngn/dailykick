@@ -7,7 +7,7 @@ function ApplicationsProducts() {
   return (
     <>
       <Helmet>
-        <title>Produits</title>
+        <title>Products</title>
       </Helmet>
       <Container maxWidth="lg">
         <Grid

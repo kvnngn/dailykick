@@ -20,10 +20,10 @@ const TabsWrapper = styled(Tabs)(
 const WarehouseDetailsPage: FC = () => {
   const { id } = useParams()
   const { data } = useGetWarehouse(id)
-  const [currentTab, setCurrentTab] = useState<string>('Inventaire')
+  const [currentTab, setCurrentTab] = useState<string>('Inventory')
 
   const tabs = [
-    { value: 'Inventaire', label: 'Inventaire' },
+    { value: 'Inventory', label: 'Inventory' },
     { value: 'Articles', label: 'Articles' },
   ]
 
@@ -38,7 +38,7 @@ const WarehouseDetailsPage: FC = () => {
       <PageTitleWrapper>
         <PageHeader
           title={data.name}
-          subTitle="Inventaire par type de produit et quantité"
+          subTitle="Inventory"
           canGoBack={true}
         />
       </PageTitleWrapper>
@@ -65,7 +65,7 @@ const WarehouseDetailsPage: FC = () => {
             </TabsWrapper>
           </Grid>
           <Grid item xs={12}>
-            {currentTab === 'Inventaire' && <ProductsTable id={id} />}
+            {currentTab === 'Inventory' && <ProductsTable id={id} />}
             {currentTab === 'Articles' && <ArticlesTable id={id} />}
           </Grid>
         </Grid>

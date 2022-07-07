@@ -10,7 +10,7 @@ function DashboardOverview() {
   return (
     <>
       <Helmet>
-        <title>Vue d'ensemble</title>
+        <title>Overview</title>
       </Helmet>
       <Container maxWidth="lg">
         <Grid

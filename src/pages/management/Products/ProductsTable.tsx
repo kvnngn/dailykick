@@ -73,47 +73,36 @@ const ProductsTable: FC = () => {
         disableSortBy: true,
       },
       {
-        Header: 'Ajouté le',
+        Header: 'Added on',
         accessor: 'createdAt' as const,
         minWidth: 140,
         maxWidth: 140,
         disableSortBy: false,
         Cell: ({ value }) => {
-          return format(new Date(value), 'dd MMMM yyyy', {
-            locale: fr,
-          })
+          return format(new Date(value), 'dd/MM/yyyy HH:mm')
         },
       },
       {
-        Header: 'Nom du produit',
+        Header: 'Product name',
         accessor: 'name' as const,
         disableSortBy: true,
       },
       {
-        Header: 'Marque',
+        Header: 'Brand',
         accessor: 'brand' as const,
         disableSortBy: true,
         Cell: ({ value }) => value.name,
       },
       {
-        Header: 'Modele',
+        Header: 'Model',
         accessor: 'brandModel' as const,
         disableSortBy: true,
         Cell: ({ value }) => value.name,
       },
       {
-        Header: 'Couleurs',
-        accessor: 'colors' as const,
+        Header: 'SKU',
+        accessor: 'sku' as const,
         disableSortBy: true,
-        Cell: ({ value }) => {
-          const colors = value.map(
-            (v) =>
-              productColors.filter(
-                (productColor) => productColor.value === v,
-              )[0].name,
-          )
-          return colors.toString()
-        },
       },
       {
         Header: 'Image',
@@ -122,7 +111,7 @@ const ProductsTable: FC = () => {
         Cell: ({ row }) => (
           <>
             <Button onClick={() => handleOpenViewImageModal(row.values)}>
-              Voir
+              See
             </Button>
           </>
         ),
@@ -134,7 +123,7 @@ const ProductsTable: FC = () => {
         maxWidth: 84,
         Cell: ({ row }) => (
           <>
-            <Tooltip title="Modifier produit" arrow>
+            <Tooltip title="Modify product" arrow>
               <IconButton
                 sx={{
                   '&:hover': {
@@ -149,7 +138,7 @@ const ProductsTable: FC = () => {
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Supprimer produit" arrow>
+            <Tooltip title="Delete product" arrow>
               <IconButton
                 sx={{
                   '&:hover': { background: theme.colors.error.lighter },
@@ -179,7 +168,7 @@ const ProductsTable: FC = () => {
         totalCount={data.body.meta.itemCount}
         enableSort
         enableSelect
-        noDataText="Aucun produit existant."
+        noDataText="No existing article."
         ExtraElement={
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}
@@ -187,7 +176,7 @@ const ProductsTable: FC = () => {
             startIcon={<AddTwoToneIcon fontSize="small" />}
             onClick={() => handleOpen()}
           >
-            Ajouter un produit
+            Add product
           </Button>
         }
       />
@@ -201,12 +190,12 @@ const ProductsTable: FC = () => {
       )}
       {productId && openDeleteModal && (
         <ConfirmDialog
-          title="Suppression de produit"
+          title="Product deletion"
           open={openDeleteModal}
           setOpen={setOpenDeleteModal}
           onConfirm={handleDeleteProduct}
         >
-          Etes-vous sur de vouloir supprimer ce produit?
+          Are you sure you want to delete this product?
         </ConfirmDialog>
       )}
       {row && openViewImageModal && (

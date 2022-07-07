@@ -47,8 +47,8 @@ const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
       createdBy: currentUser.data._id
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Le nom est obligatoire'),
-      createdBy: Yup.string().required('Votre ID est obligatoire')
+      name: Yup.string().required('Lastname is mandatory'),
+      createdBy: Yup.string().required('User ID field is mandatory')
     }),
 
     onSubmit: async (v) => {
@@ -62,7 +62,7 @@ const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             default:
-              showErrorSnackbar('Une erreur est survenue');
+              showErrorSnackbar('An error occured');
               break;
           }
         }
@@ -72,13 +72,13 @@ const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Modification du dépot</DialogTitle>
+        <DialogTitle>Update warehouse</DialogTitle>
         <DialogContent>
           <TextField
             error={Boolean(touched.name && errors.name)}
             fullWidth
             helperText={touched.name && errors.name}
-            label="Nom"
+            label="Name"
             margin="normal"
             name="name"
             onBlur={handleBlur}
@@ -88,13 +88,13 @@ const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Annuler</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <LoadingButton
             loading={isSubmitting}
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Mettre à jour
+            Update
           </LoadingButton>
         </DialogActions>
       </form>

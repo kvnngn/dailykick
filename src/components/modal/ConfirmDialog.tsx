@@ -22,7 +22,7 @@ const ConfirmDialog = (props) => {
           onClick={() => setOpen(false)}
           color="secondary"
         >
-          Non
+          Cancel
         </Button>
         <Button
           variant="contained"
@@ -31,7 +31,7 @@ const ConfirmDialog = (props) => {
             onConfirm();
           }}
         >
-          Confirmer
+          Confirm
         </Button>
       </DialogActions>
     </Dialog>

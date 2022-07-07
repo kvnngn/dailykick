@@ -43,8 +43,8 @@ function AddStoreModal(props) {
       createdBy: currentUser.data._id
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Le nom est obligatoire'),
-      createdBy: Yup.string().required('Votre ID est obligatoire')
+      name: Yup.string().required('Lastname is mandatory'),
+      createdBy: Yup.string().required('User ID field is mandatory')
     }),
 
     onSubmit: async (v) => {
@@ -57,7 +57,7 @@ function AddStoreModal(props) {
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             default:
-              showErrorSnackbar('Une erreur est survenue');
+              showErrorSnackbar('An error occured');
               break;
           }
         }
@@ -67,16 +67,16 @@ function AddStoreModal(props) {
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Création d'un nouveau magasin</DialogTitle>
+        <DialogTitle>Add a new store</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Veuillez indiquer le nom de votre magasin.
+            Veuillez indiquer le nom de votre store.
           </DialogContentText>
           <TextField
             error={Boolean(touched.name && errors.name)}
             fullWidth
             helperText={touched.name && errors.name}
-            label="Nom"
+            label="Name"
             margin="normal"
             name="name"
             onBlur={handleBlur}
@@ -86,13 +86,13 @@ function AddStoreModal(props) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Annuler</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <LoadingButton
             loading={isSubmitting}
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Créer
+            Create
           </LoadingButton>
         </DialogActions>
       </form>

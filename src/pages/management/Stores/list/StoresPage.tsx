@@ -8,7 +8,7 @@ function StoresPage() {
   return (
     <>
       <Helmet>
-        <title>Magasins</title>
+        <title>Stores</title>
       </Helmet>
       <Container maxWidth="lg">
         <Grid

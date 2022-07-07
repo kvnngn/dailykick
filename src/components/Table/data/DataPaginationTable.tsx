@@ -92,7 +92,6 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
     parseFilterValues({}),
   )
 
-  const { currentUser } = useCurrentInfo()
   const filterContainerRef = useRef()
 
   useEffect(() => {

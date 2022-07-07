@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import PageTitleWrapper from 'src/layouts/SidebarLayout/PageTitleWrapper'
 import { Container, Tabs, Tab, Grid } from '@mui/material'
@@ -10,6 +10,7 @@ import { useGetStore } from '../../../../hooks/api/management/store'
 import PageHeader from '../../../../layouts/SidebarLayout/PageHeader'
 import StoreSeller from '../seller/StoreSeller'
 import ProductsTable from '../product/ProductsTable'
+import { useCurrentInfo } from '../../../../hooks/api/common'
 
 const TabsWrapper = styled(Tabs)(
   () => `
@@ -20,15 +21,21 @@ const TabsWrapper = styled(Tabs)(
 )
 
 function StoreDetailsPage() {
-  const [currentTab, setCurrentTab] = useState<string>('Inventaire')
+  const [currentTab, setCurrentTab] = useState<string>('Inventory')
   const { id } = useParams()
   const { data } = useGetStore(id)
+  const { currentUser } = useCurrentInfo()
 
   const tabs = [
-    { value: 'Inventaire', label: 'Inventaire' },
+    { value: 'Inventory', label: 'Inventory' },
     { value: 'Articles', label: 'Articles' },
-    { value: 'Vendeurs', label: 'Vendeurs' },
   ]
+
+  useEffect(() => {
+    if (currentUser.roles === 'ADMIN') {
+      tabs.push({ value: 'Sellers', label: 'Sellers' })
+    }
+  }, [currentUser])
 
   const handleTabsChange = (event: ChangeEvent<{}>, value: string): void => {
     setCurrentTab(value)
@@ -65,9 +72,9 @@ function StoreDetailsPage() {
             </TabsWrapper>
           </Grid>
           <Grid item xs={12}>
-            {currentTab === 'Inventaire' && <ProductsTable id={id} />}
+            {currentTab === 'Inventory' && <ProductsTable id={id} />}
             {currentTab === 'Articles' && <StoreArticle id={id} />}
-            {currentTab === 'Vendeurs' && <StoreSeller id={id} />}
+            {currentTab === 'Sellers' && <StoreSeller id={id} />}
           </Grid>
         </Grid>
       </Container>

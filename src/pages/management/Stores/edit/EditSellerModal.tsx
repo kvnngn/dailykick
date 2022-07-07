@@ -60,14 +60,14 @@ const EditSellerModal: FC<EditSellerModalProps> = ({
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email("L'email doit etre valide")
+        .email("Email has to be valid")
         .max(255)
-        .required("L'email est obligatoire"),
-      firstname: Yup.string().max(255).required('Le prénom est obligatoire'),
-      lastname: Yup.string().max(255).required('Le nom est obligatoire'),
+        .required("Email is mandatory"),
+      firstname: Yup.string().max(255).required('Firstname is mandatory'),
+      lastname: Yup.string().max(255).required('Lastname is mandatory'),
       password: Yup.string()
         .max(255)
-        .required('Le mot de passe est obligatoire'),
+        .required('Password is mandatory'),
     }),
 
     onSubmit: async (v) => {
@@ -81,7 +81,7 @@ const EditSellerModal: FC<EditSellerModalProps> = ({
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             default:
-              showErrorSnackbar('Une erreur est survenue')
+              showErrorSnackbar('An error occured')
               break
           }
         }
@@ -91,16 +91,16 @@ const EditSellerModal: FC<EditSellerModalProps> = ({
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Modification du vendeur</DialogTitle>
+        <DialogTitle>Update seller</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Veuillez indiquer les informations du vendeur.
+            Veuillez indiquer les informations du seller.
           </DialogContentText>
           <TextField
             error={Boolean(touched.firstname && errors.firstname)}
             fullWidth
             helperText={touched.firstname && errors.firstname}
-            label="Nom"
+            label="Name"
             margin="normal"
             name="firstname"
             onBlur={handleBlur}
@@ -124,7 +124,7 @@ const EditSellerModal: FC<EditSellerModalProps> = ({
             error={Boolean(touched.email && errors.email)}
             fullWidth
             helperText={touched.email && errors.email}
-            label="Adresse Email"
+            label="Email address"
             margin="normal"
             name="email"
             onBlur={handleBlur}
@@ -137,7 +137,7 @@ const EditSellerModal: FC<EditSellerModalProps> = ({
             error={Boolean(touched.password && errors.password)}
             fullWidth
             helperText={touched.password && errors.password}
-            label="Mot de passe"
+            label="Password"
             margin="normal"
             name="password"
             onBlur={handleBlur}
@@ -148,13 +148,13 @@ const EditSellerModal: FC<EditSellerModalProps> = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Annuler</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <LoadingButton
             loading={isSubmitting}
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Mettre à jour
+            Update
           </LoadingButton>
         </DialogActions>
       </form>

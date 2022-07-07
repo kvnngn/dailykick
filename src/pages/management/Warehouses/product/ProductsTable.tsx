@@ -14,18 +14,18 @@ const ProductsTable: FC<ProductsTableProps> = ({ id }) => {
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
       {
-        Header: 'Produit',
+        Header: 'Product',
         accessor: 'product' as const,
         disableSortBy: true,
         Cell: ({ value }) => value.name,
       },
       {
-        Header: 'Quantité',
+        Header: 'Quantity',
         accessor: 'total' as const,
         disableSortBy: true,
       },
       {
-        Header: 'Taille(s) disponible(s)',
+        Header: 'Available sizes',
         accessor: 'sizes' as const,
         disableSortBy: true,
         Cell: ({ value }) => value.join(', '),

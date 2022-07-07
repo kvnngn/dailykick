@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle'
+import Dialog from '@mui/material/Dialog'
 import {
   DialogContent,
   DialogContentText,
@@ -11,17 +11,17 @@ import {
   MenuItem,
   Box,
   Autocomplete,
-  createFilterOptions
-} from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useSnackbar } from 'src/hooks/common';
-import { useCreateProduct } from 'src/hooks/api/management/product';
-import { useCurrentUser } from 'src/hooks/api/common';
-import { LoadingButton } from '@mui/lab';
-import FileInput from '../../../../components/FileInput';
-import useGetBrandModels from '../../../../hooks/api/management/brandModel/query/useGetBrandModels';
-import useGetBrands from '../../../../hooks/api/management/brand/query/useGetBrands';
+  createFilterOptions,
+} from '@mui/material'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { useSnackbar } from 'src/hooks/common'
+import { useCreateProduct } from 'src/hooks/api/management/product'
+import { useCurrentUser } from 'src/hooks/api/common'
+import { LoadingButton } from '@mui/lab'
+import FileInput from '../../../../components/FileInput'
+import useGetBrandModels from '../../../../hooks/api/management/brandModel/query/useGetBrandModels'
+import useGetBrands from '../../../../hooks/api/management/brand/query/useGetBrands'
 
 export const productColors = [
   { value: 'red', name: 'rouge' },
@@ -37,23 +37,23 @@ export const productColors = [
   { value: 'Grey', name: 'gris' },
   { value: 'azure', name: 'azur' },
   { value: 'skyblue', name: 'bleu ciel' },
-  { value: 'navyblue', name: 'bleu marine' }
-];
+  { value: 'navyblue', name: 'bleu marine' },
+]
 
-const filter = createFilterOptions<Brand | BrandModel>();
+const filter = createFilterOptions<Brand | BrandModel>()
 
 function AddProductModal(props) {
-  const { onClose, open } = props;
+  const { onClose, open } = props
 
   const handleClose = () => {
-    onClose();
-  };
+    onClose()
+  }
 
-  const { mutateAsync: createProduct } = useCreateProduct();
-  const { data: brandModels } = useGetBrandModels();
-  const { data: brands } = useGetBrands();
-  const { showErrorSnackbar } = useSnackbar();
-  const currentUser = useCurrentUser();
+  const { mutateAsync: createProduct } = useCreateProduct()
+  const { data: brandModels } = useGetBrandModels()
+  const { data: brands } = useGetBrands()
+  const { showErrorSnackbar } = useSnackbar()
+  const currentUser = useCurrentUser()
 
   const {
     values,
@@ -65,74 +65,74 @@ function AddProductModal(props) {
     isValid,
     isSubmitting,
     setFieldValue,
-    setFieldError
+    setFieldError,
   } = useFormik({
     initialValues: {
       brand: null,
       brandModel: null,
       image_url: null,
-      colors: ['white'],
-      createdBy: currentUser.data._id
+      sku: null,
+      createdBy: currentUser.data._id,
     },
     validationSchema: Yup.object({
-      brand: Yup.string().required('La marque est obligatoire'),
-      brandModel: Yup.string().required('Le modele est obligatoire'),
-      image_url: Yup.string().required('Une photo est obligatoire'),
-      colors: Yup.array().required('Une couleur est obligatoire'),
-      createdBy: Yup.string().required('Votre ID est obligatoire')
+      brand: Yup.string().required('Brand field is mandatory'),
+      brandModel: Yup.string().required('Model field is mandatory'),
+      image_url: Yup.string().required('Image field is mandatory'),
+      sku: Yup.string().required('SKU field is mandatory'),
+      createdBy: Yup.string().required('User ID field is mandatory'),
     }),
 
     onSubmit: async (v) => {
       try {
         await createProduct({
-          ...v
-        });
-        handleClose();
+          ...v,
+        })
+        handleClose()
       } catch (e: any) {
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             default:
-              showErrorSnackbar('Une erreur est survenue');
-              break;
+              showErrorSnackbar('An error occured')
+              break
           }
         }
       }
-    }
-  });
+    },
+  })
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Création d'un nouveau produit</DialogTitle>
+        <DialogTitle>Add new product</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Veuillez indiquer les informations de produit.
+            Please provide product information.
           </DialogContentText>
           <Autocomplete
             onChange={(e, value: Brand) => {
               if (value) {
-                setFieldValue('brand', value.name);
+                setFieldValue('brand', value.name)
               } else {
-                setFieldValue('brand', null);
+                setFieldValue('brand', null)
               }
             }}
             disablePortal
             options={brands}
             filterOptions={(options, params) => {
-              const filtered = filter(options, params);
+              const filtered = filter(options, params)
 
-              const { inputValue } = params;
+              const { inputValue } = params
               const isExisting = options.some(
-                (option) => inputValue === option.name
-              );
+                (option) => inputValue === option.name,
+              )
               if (inputValue !== '' && !isExisting) {
                 filtered.push({
                   name: inputValue,
                   createdAt: new Date(),
-                  updatedAt: new Date()
-                });
+                  updatedAt: new Date(),
+                })
               }
 
-              return filtered;
+              return filtered
             }}
             getOptionLabel={(option: Brand) => option.name}
             renderInput={(params) => (
@@ -141,7 +141,7 @@ function AddProductModal(props) {
                 error={Boolean(touched.brand && errors.brand)}
                 fullWidth
                 helperText={touched.brand && errors.brand}
-                label="Marque"
+                label="Brand"
                 margin="normal"
                 name="brand"
                 onBlur={handleBlur}
@@ -154,29 +154,29 @@ function AddProductModal(props) {
           <Autocomplete
             onChange={(e, value: BrandModel) => {
               if (value) {
-                setFieldValue('brandModel', value.name);
+                setFieldValue('brandModel', value.name)
               } else {
-                setFieldValue('brandModel', null);
+                setFieldValue('brandModel', null)
               }
             }}
             disablePortal
             options={brandModels}
             filterOptions={(options, params) => {
-              const filtered = filter(options, params);
+              const filtered = filter(options, params)
 
-              const { inputValue } = params;
+              const { inputValue } = params
               const isExisting = options.some(
-                (option) => inputValue === option.name
-              );
+                (option) => inputValue === option.name,
+              )
               if (inputValue !== '' && !isExisting) {
                 filtered.push({
                   name: inputValue,
                   createdAt: new Date(),
-                  updatedAt: new Date()
-                });
+                  updatedAt: new Date(),
+                })
               }
 
-              return filtered;
+              return filtered
             }}
             getOptionLabel={(option: Brand) => option.name}
             renderInput={(params) => (
@@ -185,7 +185,7 @@ function AddProductModal(props) {
                 error={Boolean(touched.brandModel && errors.brandModel)}
                 fullWidth
                 helperText={touched.brandModel && errors.brandModel}
-                label="Modele"
+                label="Model"
                 margin="normal"
                 name="brandModel"
                 onBlur={handleBlur}
@@ -196,26 +196,17 @@ function AddProductModal(props) {
             )}
           />
           <TextField
-            sx={{ width: 300 }}
-            select
-            label="Couleur(s)"
-            placeholder="Couleur(s)"
-            name="colors"
-            error={Boolean(touched.colors && errors.colors)}
-            helperText={touched.colors && errors.colors}
+            error={Boolean(touched.sku && errors.sku)}
+            fullWidth
+            helperText={touched.sku && errors.sku}
+            label="SKU"
+            margin="normal"
+            name="sku"
             onBlur={handleBlur}
-            SelectProps={{
-              multiple: true,
-              value: values.colors,
-              onChange: handleChange
-            }}
-          >
-            {productColors.map((color) => (
-              <MenuItem key={color.name} value={color.value}>
-                {color.name}
-              </MenuItem>
-            ))}
-          </TextField>
+            onChange={handleChange}
+            value={values.sku}
+            variant="outlined"
+          />
           <Box mt={2}>
             <FileInput
               selectedImage={values.image_url}
@@ -224,23 +215,23 @@ function AddProductModal(props) {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Annuler</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <LoadingButton
             loading={isSubmitting}
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Créer
+            Create
           </LoadingButton>
         </DialogActions>
       </form>
     </Dialog>
-  );
+  )
 }
 
 AddProductModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired
-};
+  open: PropTypes.bool.isRequired,
+}
 
-export default AddProductModal;
+export default AddProductModal

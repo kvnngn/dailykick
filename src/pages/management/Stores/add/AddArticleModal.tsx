@@ -54,17 +54,15 @@ function AddArticleModal(props) {
       warehousePrice: undefined,
       storePrice: 0,
       size: 0,
-      sku: undefined,
     },
     validationSchema: Yup.object({
-      product: Yup.string().required('Le produit est obligatoire'),
-      createdBy: Yup.string().required('Votre utilisateur ID est obligatoire'),
+      product: Yup.string().required('Product field is mandatory'),
+      createdBy: Yup.string().required('User ID field is mandatory'),
       warehouse: Yup.string(),
       store: Yup.string(),
       warehousePrice: Yup.number(),
       storePrice: Yup.number(),
       size: Yup.number(),
-      sku: Yup.string().required('Le SKU est obligatoire'),
     }),
 
     onSubmit: async (v) => {
@@ -75,7 +73,7 @@ function AddArticleModal(props) {
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             default:
-              showErrorSnackbar('Une erreur est survenue')
+              showErrorSnackbar('An error occured')
               break
           }
         }
@@ -86,10 +84,10 @@ function AddArticleModal(props) {
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Création d'un nouvel article</DialogTitle>
+        <DialogTitle>Creating a new article</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Veuillez indiquer les informations de l'article.
+            Please fill in the item information.
           </DialogContentText>
           <Autocomplete
             onChange={(e, value: Product) => {
@@ -106,7 +104,7 @@ function AddArticleModal(props) {
                 error={Boolean(touched.product && errors.product)}
                 fullWidth
                 helperText={touched.product && errors.product}
-                label="Produit"
+                label="Product"
                 margin="normal"
                 name="product"
                 onBlur={handleBlur}
@@ -124,29 +122,19 @@ function AddArticleModal(props) {
             )}
           />
           <TextField
-            error={Boolean(touched.sku && errors.sku)}
-            fullWidth
-            helperText={touched.sku && errors.sku}
-            label="SKU"
-            margin="normal"
-            name="sku"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.sku}
-            variant="outlined"
-          />
-          <TextField
             error={Boolean(touched.storePrice && errors.storePrice)}
             fullWidth
             helperText={touched.storePrice && errors.storePrice}
-            label="Prix magasin"
+            label="Price"
             type="number"
             margin="normal"
             name="storePrice"
             onBlur={handleBlur}
             onChange={handleChange}
             InputProps={{
-              endAdornment: <InputAdornment position="start">€</InputAdornment>,
+              endAdornment: (
+                <InputAdornment position="start">AED</InputAdornment>
+              ),
             }}
             value={values.storePrice}
             variant="outlined"
@@ -155,7 +143,7 @@ function AddArticleModal(props) {
             error={Boolean(touched.size && errors.size)}
             fullWidth
             helperText={touched.size && errors.size}
-            label="Taille"
+            label="Size"
             type="number"
             margin="normal"
             name="size"
@@ -166,13 +154,13 @@ function AddArticleModal(props) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Annuler</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <LoadingButton
             loading={isSubmitting}
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Créer
+            Create
           </LoadingButton>
         </DialogActions>
       </form>

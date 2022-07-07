@@ -77,7 +77,7 @@ function Status500() {
                   src="/static/images/status/500.svg"
                 />
                 <Typography variant="h2" sx={{ my: 2 }}>
-                Une erreur s'est produite, veuillez réessayer plus tard
+                Une erreur s'est producte, veuillez réessayer plus tard
                 </Typography>
                 <Typography
                   variant="h4"
@@ -121,7 +121,7 @@ function Status500() {
                     fontWeight="normal"
                     sx={{ mb: 4 }}
                   >
-                    L'application pour gérer vos stocks de produit en quelques de clics.
+                    L'application pour gérer vos stocks de product en quelques de clics.
                   </TypographySecondary>
                   <Button href="/dashboards" size="large" variant="contained">
                     Overview

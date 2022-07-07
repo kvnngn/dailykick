@@ -82,58 +82,51 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         disableSortBy: true,
       },
       {
-        Header: 'Ajouté le',
+        Header: 'Added on',
         accessor: 'createdAt' as const,
         minWidth: 140,
         maxWidth: 140,
         disableSortBy: false,
         Cell: ({ value }) => {
-          return format(new Date(value), 'dd MMMM yyyy', {
-            locale: fr,
-          })
+          return format(new Date(value), 'dd/MM/yyyy HH:mm')
         },
       },
       {
-        Header: 'Produit',
+        Header: 'Product',
         accessor: 'product' as const,
         disableSortBy: true,
         Cell: ({ value }) => value.name,
       },
       {
-        Header: 'SKU',
-        accessor: 'sku' as const,
-        disableSortBy: true,
-      },
-      {
-        Header: 'Prix fournisseur',
+        Header: 'Supplier price',
         accessor: 'warehousePrice' as const,
         disableSortBy: false,
-        Cell: ({ value }) => `${value}€`,
+        Cell: ({ value }) => `AED ${value}`,
       },
       {
-        Header: 'Taille',
+        Header: 'Size',
         accessor: 'size' as const,
         disableSortBy: true,
       },
       {
-        Header: 'Sortie le',
+        Header: 'Transferred on',
         accessor: 'transferedAt' as const,
         disableSortBy: true,
         Cell: ({ value, row }) =>
           value
             ? `${format(new Date(value), 'dd/MM/yyyy', {
                 locale: fr,
-              })} -> ${row.original.store.name} (${
+              })} -> ${row.original.store.name} (AED ${
                 row.original.transferPrice
-              }€)`
-            : 'non',
+              })`
+            : 'No',
       },
       {
         Header: 'Actions',
         align: 'center',
         Cell: ({ row }) => (
           <>
-            <Tooltip title="Modifier article" arrow>
+            <Tooltip title="Modify article" arrow>
               <IconButton
                 sx={{
                   '&:hover': {
@@ -148,7 +141,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Supprimer l'article" arrow>
+            <Tooltip title="Delete l'article" arrow>
               <IconButton
                 disabled={row.original.transferedAt}
                 sx={{
@@ -194,7 +187,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         totalCount={data.body.meta.itemCount}
         enableSort
         enableSelect
-        noDataText="Aucun article existant."
+        noDataText="No existing article."
         ExtraElement={
           <Button
             sx={{ mt: { xs: 2, md: 0 } }}
@@ -202,7 +195,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
             startIcon={<AddTwoToneIcon fontSize="small" />}
             onClick={() => handleOpen(id)}
           >
-            Ajouter un article
+            Add article
           </Button>
         }
       />
@@ -234,7 +227,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
           setOpen={setOpenDeleteModal}
           onConfirm={handleDeleteArticle}
         >
-          Etes-vous sur de vouloir supprimer cet article?
+          Are you sure you want to delete this article?
         </ConfirmDialog>
       )}
     </Card>

@@ -14,7 +14,6 @@ export default () => {
       warehousePrice: number
       storePrice: number
       size: number
-      sku: string
     }) =>
       ArticleService.createArticle(
         variables.product,
@@ -24,7 +23,6 @@ export default () => {
         variables.warehousePrice,
         variables.storePrice,
         variables.size,
-        variables.sku,
       ),
     onSuccess: () => client.invalidateQueries(QUERY_KEY.MANAGEMENT.ARTICLE.GET),
   })

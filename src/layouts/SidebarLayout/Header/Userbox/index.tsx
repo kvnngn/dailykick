@@ -144,14 +144,14 @@ function HeaderUserbox() {
           <List sx={{ p: 1 }} component="nav">
             <ListItem button to={ROUTES.PROFILE.SETTINGS} component={NavLink}>
               <AccountTreeTwoToneIcon fontSize="small" />
-              <ListItemText primary="Paramètres" />
+              <ListItemText primary="Settings" />
             </ListItem>
           </List>
           <Divider />
           <Box sx={{ m: 1 }}>
             <Button color="primary" fullWidth onClick={signOut}>
               <LockOpenTwoToneIcon sx={{ mr: 1 }} />
-              Me déconnecter
+              Log out
             </Button>
           </Box>
         </Popover>

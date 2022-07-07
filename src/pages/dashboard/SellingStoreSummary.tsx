@@ -85,13 +85,13 @@ function SellingStoreSummary() {
           pb: 3,
         }}
       >
-        <Typography variant="h3">Ventes en magasin</Typography>
+        <Typography variant="h3">Stores sales</Typography>
         <Button
           size="small"
           variant="outlined"
           // startIcon={<AddTwoToneIcon fontSize="small" />}
         >
-          Voir historique
+          See history
         </Button>
       </Box>
       <Grid container spacing={3}>
@@ -117,7 +117,7 @@ function SellingStoreSummary() {
                 }}
               >
                 <Typography variant="h3" gutterBottom noWrap>
-                  $1000,00€
+                  AED 100,00
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
                   97 articles
@@ -148,7 +148,7 @@ function SellingStoreSummary() {
                 }}
               >
                 <Typography variant="h3" gutterBottom noWrap>
-                  $100,00€
+                  AED 100,00
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
                   1 article
@@ -179,7 +179,7 @@ function SellingStoreSummary() {
                 }}
               >
                 <Typography variant="h3" gutterBottom noWrap>
-                  $100,00€
+                  AED 100,00
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
                   1 article
@@ -189,7 +189,7 @@ function SellingStoreSummary() {
           </Card>
         </Grid>
         <Grid xs={12} sm={6} md={3} item>
-          <Tooltip arrow title="Cliquez pour ajouter une vente">
+          <Tooltip arrow title="Cliquez pour Adde vente">
             <CardAddAction>
               <CardActionArea
                 sx={{

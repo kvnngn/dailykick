@@ -1,36 +1,36 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
-import { DialogContent, TextField, DialogActions, Button } from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useSnackbar } from 'src/hooks/common';
-import { useGetStore } from 'src/hooks/api/management/store';
-import { useCurrentUser } from 'src/hooks/api/common';
-import { Dispatch, FC, SetStateAction } from 'react';
-import useUpdateStore from 'src/hooks/api/management/store/mutation/useUpdateStore';
-import { LoadingButton } from '@mui/lab';
+import DialogTitle from '@mui/material/DialogTitle'
+import Dialog from '@mui/material/Dialog'
+import { DialogContent, TextField, DialogActions, Button } from '@mui/material'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { useSnackbar } from 'src/hooks/common'
+import { useGetStore } from 'src/hooks/api/management/store'
+import { useCurrentUser } from 'src/hooks/api/common'
+import { Dispatch, FC, SetStateAction } from 'react'
+import useUpdateStore from 'src/hooks/api/management/store/mutation/useUpdateStore'
+import { LoadingButton } from '@mui/lab'
 
 declare type EditStoreModalProps = {
-  onClose: Dispatch<SetStateAction<boolean>>;
-  open: boolean;
-  storeId: string;
-};
+  onClose: Dispatch<SetStateAction<boolean>>
+  open: boolean
+  storeId: string
+}
 
 const EditStoreModal: FC<EditStoreModalProps> = ({
   onClose,
   open,
-  storeId
+  storeId,
 }) => {
   const handleClose = () => {
-    onClose(false);
-  };
+    onClose(false)
+  }
 
-  const { mutateAsync: updateStore } = useUpdateStore();
-  const { data } = useGetStore(storeId);
-  const { showErrorSnackbar } = useSnackbar();
-  const currentUser = useCurrentUser();
+  const { mutateAsync: updateStore } = useUpdateStore()
+  const { data } = useGetStore(storeId)
+  const { showErrorSnackbar } = useSnackbar()
+  const currentUser = useCurrentUser()
   const {
     values,
     handleChange,
@@ -40,45 +40,45 @@ const EditStoreModal: FC<EditStoreModalProps> = ({
     touched,
     isValid,
     isSubmitting,
-    setFieldError
+    setFieldError,
   } = useFormik({
     initialValues: {
       name: data.name,
-      createdBy: currentUser.data._id
+      createdBy: currentUser.data._id,
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Le nom est obligatoire'),
-      createdBy: Yup.string().required('Votre ID est obligatoire')
+      name: Yup.string().required('Lastname is mandatory'),
+      createdBy: Yup.string().required('User ID field is mandatory'),
     }),
 
     onSubmit: async (v) => {
       try {
         await updateStore({
           original: data,
-          changes: v
-        });
-        handleClose();
+          changes: v,
+        })
+        handleClose()
       } catch (e: any) {
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             default:
-              showErrorSnackbar('Une erreur est survenue');
-              break;
+              showErrorSnackbar('An error occured')
+              break
           }
         }
       }
-    }
-  });
+    },
+  })
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Modification du magasin</DialogTitle>
+        <DialogTitle>Update store</DialogTitle>
         <DialogContent>
           <TextField
             error={Boolean(touched.name && errors.name)}
             fullWidth
             helperText={touched.name && errors.name}
-            label="Nom"
+            label="Name"
             margin="normal"
             name="name"
             onBlur={handleBlur}
@@ -88,24 +88,24 @@ const EditStoreModal: FC<EditStoreModalProps> = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Annuler</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <LoadingButton
             loading={isSubmitting}
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Mettre à jour
+            Update
           </LoadingButton>
         </DialogActions>
       </form>
     </Dialog>
-  );
-};
+  )
+}
 
 EditStoreModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  storeId: PropTypes.string.isRequired
-};
+  storeId: PropTypes.string.isRequired,
+}
 
-export default EditStoreModal;
+export default EditStoreModal

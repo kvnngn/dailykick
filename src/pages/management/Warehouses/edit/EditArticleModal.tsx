@@ -54,14 +54,12 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
       updatedBy: currentUser.data._id,
       warehousePrice: data.warehousePrice,
       size: data.size,
-      sku: data.sku,
     },
     validationSchema: Yup.object({
-      product: Yup.string().required('Le produit est obligatoire'),
-      updatedBy: Yup.string().required('Votre utilisateur ID est obligatoire'),
+      product: Yup.string().required('Product ID field is mandatory'),
+      updatedBy: Yup.string().required('User ID field is mandatory'),
       warehousePrice: Yup.number(),
       size: Yup.number(),
-      sku: Yup.string().required('Le SKU est obligatoire'),
     }),
 
     onSubmit: async (v) => {
@@ -75,7 +73,7 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             default:
-              showErrorSnackbar('Une erreur est survenue')
+              showErrorSnackbar('An error occured')
               break
           }
         }
@@ -92,7 +90,7 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
           </DialogContentText>
           <TextField
             fullWidth
-            label="Produit"
+            label="Product"
             margin="normal"
             name="product"
             disabled={true}
@@ -102,29 +100,17 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
             variant="outlined"
           />
           <TextField
-            error={Boolean(touched.sku && errors.sku)}
-            fullWidth
-            helperText={touched.sku && errors.sku}
-            label="SKU"
-            margin="normal"
-            name="sku"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.sku}
-            variant="outlined"
-          />
-          <TextField
             error={Boolean(touched.warehousePrice && errors.warehousePrice)}
             fullWidth
             helperText={touched.warehousePrice && errors.warehousePrice}
-            label="Prix fournisseur"
+            label="Supplier price"
             type="number"
             margin="normal"
             name="warehousePrice"
             onBlur={handleBlur}
             onChange={handleChange}
             InputProps={{
-              endAdornment: <InputAdornment position="start">€</InputAdornment>,
+              startAdornment: <InputAdornment position="start">AED</InputAdornment>,
             }}
             value={values.warehousePrice}
             variant="outlined"
@@ -133,7 +119,7 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
             error={Boolean(touched.size && errors.size)}
             fullWidth
             helperText={touched.size && errors.size}
-            label="Taille"
+            label="Size"
             type="number"
             margin="normal"
             name="size"
@@ -144,13 +130,13 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Annuler</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <LoadingButton
             loading={isSubmitting}
             type="submit"
             disabled={!isValid || isSubmitting}
           >
-            Mettre à jour
+            Update
           </LoadingButton>
         </DialogActions>
       </form>

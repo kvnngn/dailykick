@@ -52,14 +52,14 @@ const createProduct = async (
   brand: string,
   brandModel: string,
   image_url: string,
-  colors: string[],
+  sku: string,
   createdBy: string,
 ) => {
   let formData = new FormData()
   formData.append('brand', brand)
   formData.append('brandModel', brandModel)
   formData.append('image_url', image_url)
-  formData.append('colors', JSON.stringify(colors))
+  formData.append('sku', sku)
   formData.append('createdBy', createdBy)
   const { data } = await axios.post(`${API_URL.PRODUCT}/add`, formData, {
     headers: {
@@ -88,7 +88,7 @@ const updateProduct = async (
     _.isString(product.brandModel) ? product.brandModel : null,
   )
   formData.append('image_url', product.image_url)
-  formData.append('colors', JSON.stringify(product.colors))
+  formData.append('sku', product.sku)
   const { data } = await axios.put(
     `${API_URL.PRODUCT}/id/${original._id}`,
     formData,

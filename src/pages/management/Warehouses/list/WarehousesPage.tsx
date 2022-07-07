@@ -7,7 +7,7 @@ function WarehousesPage() {
   return (
     <>
       <Helmet>
-        <title>Dépots</title>
+        <title>Warehouses</title>
       </Helmet>
       <Container maxWidth="lg">
         <Grid

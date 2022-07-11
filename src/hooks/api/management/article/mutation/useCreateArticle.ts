@@ -13,7 +13,7 @@ export default () => {
       store: string
       warehousePrice: number
       storePrice: number
-      size: number
+      sizes: Array<{ size: number; quantity: number }>
     }) =>
       ArticleService.createArticle(
         variables.product,
@@ -22,7 +22,7 @@ export default () => {
         variables.store,
         variables.warehousePrice,
         variables.storePrice,
-        variables.size,
+        variables.sizes,
       ),
     onSuccess: () => client.invalidateQueries(QUERY_KEY.MANAGEMENT.ARTICLE.GET),
   })

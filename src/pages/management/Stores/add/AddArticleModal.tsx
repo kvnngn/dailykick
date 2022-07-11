@@ -53,7 +53,12 @@ function AddArticleModal(props) {
       store: storeId,
       warehousePrice: undefined,
       storePrice: 0,
-      size: 0,
+      sizes: [
+        {
+          size: 40,
+          quantity: 1,
+        },
+      ],
     },
     validationSchema: Yup.object({
       product: Yup.string().required('Product field is mandatory'),
@@ -62,7 +67,12 @@ function AddArticleModal(props) {
       store: Yup.string(),
       warehousePrice: Yup.number(),
       storePrice: Yup.number(),
-      size: Yup.number(),
+      sizes: Yup.array().of(
+        Yup.object().shape({
+          size: Yup.number().required('Size is required'),
+          quantity: Yup.number().required('Quantity is required'),
+        }),
+      ),
     }),
 
     onSubmit: async (v) => {
@@ -140,16 +150,16 @@ function AddArticleModal(props) {
             variant="outlined"
           />
           <TextField
-            error={Boolean(touched.size && errors.size)}
+            error={Boolean(touched.sizes && errors.sizes)}
             fullWidth
-            helperText={touched.size && errors.size}
+            helperText={touched.sizes && errors.sizes}
             label="Size"
             type="number"
             margin="normal"
             name="size"
             onBlur={handleBlur}
             onChange={handleChange}
-            value={values.size}
+            value={values.sizes}
             variant="outlined"
           />
         </DialogContent>

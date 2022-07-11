@@ -5,6 +5,7 @@ const dashboardRoutes = {
 const managementRoutes = {
   WAREHOUSES: '/management/warehouses',
   STORES: '/management/stores',
+  MY_STORE: '/management/store',
   PRODUCTS: '/management/products',
 } as const
 

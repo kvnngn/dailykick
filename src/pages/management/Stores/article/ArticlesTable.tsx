@@ -250,20 +250,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         enableSort
         enableSelect
         noDataText="No existing article."
-        ExtraElement={
-          currentUser.roles === 'ADMIN' ? (
-            <Button
-              sx={{ mt: { xs: 2, md: 0 } }}
-              variant="contained"
-              startIcon={<AddTwoToneIcon fontSize="small" />}
-              onClick={() => handleOpen(id)}
-            >
-              Add an article
-            </Button>
-          ) : (
-            <></>
-          )
-        }
+        ExtraElement={<></>}
       />
       {openModal && (
         <AddArticleModal open={openModal} onClose={setOpenModal} storeId={id} />

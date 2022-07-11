@@ -102,9 +102,6 @@ const StoresTable: FC = () => {
       },
       {
         Header: 'Actions',
-        align: 'center',
-        minWidth: 84,
-        maxWidth: 84,
         Cell: ({ row }) =>
           currentUser.roles === 'ADMIN' && (
             <>

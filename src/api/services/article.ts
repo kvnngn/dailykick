@@ -108,7 +108,7 @@ const createArticle = async (
   store: string,
   warehousePrice: number,
   storePrice: number,
-  size: number,
+  sizes: Array<{ size: number; quantity: number }>,
 ) => {
   const { data } = await axios.post(`${API_URL.ARTICLE}/add`, {
     product,
@@ -117,7 +117,7 @@ const createArticle = async (
     store,
     warehousePrice,
     storePrice,
-    size,
+    sizes,
   })
   return data
 }

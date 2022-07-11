@@ -89,7 +89,7 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Vente d'article</DialogTitle>
+        <DialogTitle>Selling article</DialogTitle>
         <Typography variant="subtitle2">
           <Grid container spacing={0}>
             <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
@@ -128,7 +128,7 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
             </Grid>
             <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
               <Box pr={3} pb={2}>
-                Price en store:
+                Store price:
               </Box>
             </Grid>
             <Grid item xs={12} sm={8} md={9}>
@@ -140,13 +140,13 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
         </Typography>
         <DialogContent>
           <DialogContentText>
-            Veuillez indiquer le Price de vente
+            Please indicate the selling price
           </DialogContentText>
           <TextField
             error={Boolean(touched.sellingPrice && errors.sellingPrice)}
             fullWidth
             helperText={touched.sellingPrice && errors.sellingPrice}
-            label="Price de vente"
+            label="Selling price"
             type="number"
             margin="normal"
             name="sellingPrice"

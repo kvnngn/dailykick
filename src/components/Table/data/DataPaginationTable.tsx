@@ -10,6 +10,7 @@ import {
   Backdrop,
   Box,
   Checkbox,
+  Grid,
   IconButton,
   Pagination,
   Popper,
@@ -19,6 +20,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material'
 import { FormikValues } from 'formik'
 import * as PropTypes from 'prop-types'
@@ -26,10 +28,8 @@ import { DataTableProps } from '../table.types'
 import { TableSortIcon } from '../table.styled'
 import { PAGE_LIMIT } from '../table.constants'
 import { NoAvailableData } from 'src/components/styled/noData'
-import { useCurrentInfo } from 'src/hooks/api/common'
 import { useSnackbar } from 'src/hooks/common'
 import { parseFilterValues } from 'src/utils/parser'
-import BulkActions from '../BulkActions'
 import { SuspensePaper } from '../../styled/suspense'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 
@@ -134,6 +134,21 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
     },
     [setFilterValue, setRawFilterValue],
   )
+
+  const [width, setWidth] = useState<number>(window.innerWidth)
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth)
+  }
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const isMobile = width <= 1024
+
   return (
     <>
       {/* <Box flex={1} p={2}>
@@ -183,7 +198,7 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
                     <Popper
                       open={Boolean(anchorEl)}
                       anchorEl={anchorEl}
-                      placement="bottom-end"
+                      placement="bottom-start"
                       container={filterContainerRef.current}
                       disablePortal
                       style={{ zIndex: 10000 }}
@@ -212,99 +227,150 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
         </>
       )}
       <TableContainer>
-        <Table {...getTableProps()}>
-          <TableHead>
-            {headerGroups.map((headerGroup, idx) => (
-              <TableRow
-                key={`TableRow${idx}`}
-                {...headerGroup.getHeaderGroupProps()}
-              >
-                {enableSelect && idx === headerGroups.length - 1 && (
-                  <TableCell padding="checkbox">
-                    <Checkbox {...getToggleAllPageRowsSelectedProps()} />
-                  </TableCell>
-                )}
-                {headerGroup.headers.map((column, idx) => (
-                  <TableCell
-                    key={`TableCell${idx}`}
-                    {...column.getHeaderProps(
-                      enableSort && column.canSort && Boolean(data?.length)
-                        ? column.getSortByToggleProps()
-                        : undefined,
-                    )}
-                    width={column.width}
-                    align={column.align}
-                    sx={{
-                      minWidth: column.minWidth,
-                      maxWidth: column.maxWidth,
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
+        {!isMobile && (
+          <>
+            <Table {...getTableProps()}>
+              <TableHead>
+                {headerGroups.map((headerGroup, idx) => (
+                  <TableRow
+                    key={`TableRow${idx}`}
+                    {...headerGroup.getHeaderGroupProps()}
                   >
-                    {column.render('Header')}
-                    {enableSort && column.canSort && Boolean(data?.length) && (
-                      <TableSortIcon
-                        isSorted={column.isSorted}
-                        isDesc={column.isSortedDesc}
-                      />
+                    {enableSelect && idx === headerGroups.length - 1 && (
+                      <TableCell padding="checkbox">
+                        <Checkbox {...getToggleAllPageRowsSelectedProps()} />
+                      </TableCell>
                     )}
-                  </TableCell>
+                    {headerGroup.headers.map((column, idx) => (
+                      <TableCell
+                        key={`TableCell${idx}`}
+                        {...column.getHeaderProps(
+                          enableSort && column.canSort && Boolean(data?.length)
+                            ? column.getSortByToggleProps()
+                            : undefined,
+                        )}
+                        width={column.width}
+                        align={column.align}
+                        sx={{
+                          minWidth: column.minWidth,
+                          maxWidth: column.maxWidth,
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {column.render('Header')}
+                        {enableSort &&
+                          column.canSort &&
+                          Boolean(data?.length) && (
+                            <TableSortIcon
+                              isSorted={column.isSorted}
+                              isDesc={column.isSortedDesc}
+                            />
+                          )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
                 ))}
-              </TableRow>
-            ))}
-          </TableHead>
-          <TableBody {...getTableBodyProps()}>
-            {page.map((row, idx) => {
-              prepareRow(row)
-              return (
-                <TableRow
-                  key={`TableRow${idx}`}
-                  {...row.getRowProps()}
-                  selected={row.isSelected}
-                  hover
-                >
-                  {enableSelect && (
-                    <TableCell padding="checkbox">
-                      <Checkbox {...row.getToggleRowSelectedProps()} />
-                    </TableCell>
-                  )}
-                  {row.cells.map((cell, idx) => (
-                    <TableCell
-                      key={`TableCell${idx}`}
-                      {...cell.getCellProps()}
-                      width={cell.column.width}
-                      align={cell.column.align}
-                      title={
-                        typeof cell.value === 'string' ||
-                        typeof cell.value === 'number'
-                          ? cell.value.toString()
-                          : undefined
-                      }
-                      sx={{
-                        color: cell.column.color,
-                        backgroundColor: cell.column.backgroundColor,
-                        minWidth: cell.column.minWidth,
-                        maxWidth: cell.column.maxWidth,
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                      }}
+              </TableHead>
+              <TableBody {...getTableBodyProps()}>
+                {page.map((row, idx) => {
+                  prepareRow(row)
+                  return (
+                    <TableRow
+                      key={`TableRow${idx}`}
+                      {...row.getRowProps()}
+                      selected={row.isSelected}
+                      hover
                     >
-                      {cell.render('Cell')}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-        {Boolean(!data?.length) && (
-          <Box p={3}>
-            <NoAvailableData text={noDataText} />
-          </Box>
+                      {enableSelect && (
+                        <TableCell padding="checkbox">
+                          <Checkbox {...row.getToggleRowSelectedProps()} />
+                        </TableCell>
+                      )}
+                      {row.cells.map((cell, idx) => (
+                        <TableCell
+                          key={`TableCell${idx}`}
+                          {...cell.getCellProps()}
+                          width={cell.column.width}
+                          align={cell.column.align}
+                          title={
+                            typeof cell.value === 'string' ||
+                            typeof cell.value === 'number'
+                              ? cell.value.toString()
+                              : undefined
+                          }
+                          sx={{
+                            color: cell.column.color,
+                            backgroundColor: cell.column.backgroundColor,
+                            minWidth: cell.column.minWidth,
+                            maxWidth: cell.column.maxWidth,
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {cell.render('Cell')}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+            {Boolean(!data?.length) && (
+              <Box p={3}>
+                <NoAvailableData text={noDataText} />
+              </Box>
+            )}
+          </>
+        )}
+        {isMobile && (
+          <>
+            <Table {...getTableProps()}>
+              <TableBody {...getTableBodyProps()}>
+                {page.map((row, idx) => {
+                  prepareRow(row)
+                  return (
+                    <TableRow
+                      key={`TableRow${idx}`}
+                      {...row.getRowProps()}
+                      selected={row.isSelected}
+                      hover
+                      sx={{ borderBottom: '1px dotted lightgray' }}
+                    >
+                      {row.cells.map((cell, idx) => (
+                        <Grid key={`TableCell${idx}`} container px={2} py={1}>
+                          <Grid item xs={6}>
+                            <b> {cell.column.Header}</b>
+                          </Grid>
+                          <Grid
+                            item
+                            xs={6}
+                            sx={{
+                              whiteSpace: 'pre-wrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            }}
+                          >
+                            {cell.render('Cell')}
+                          </Grid>
+                        </Grid>
+                      ))}
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+            {Boolean(!data?.length) && (
+              <Box p={3}>
+                <NoAvailableData text={noDataText} />
+              </Box>
+            )}
+          </>
         )}
       </TableContainer>
+
       {pageCount > 0 && (
         <Box p={2}>
           <Pagination

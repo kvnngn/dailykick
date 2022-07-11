@@ -6,19 +6,19 @@ import {
   Box,
   Button,
   Divider,
-  Stack
-} from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import * as PropTypes from 'prop-types';
-import React from 'react';
+  Stack,
+} from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import * as PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
 
 const SubTitleSvg = styled('svg')(
   sx({
     width: '0.6875rem',
     height: '1.125rem',
-    ml: 3
-  })
-);
+    ml: 3,
+  }),
+)
 
 const SubTitleArrow = React.memo(() => (
   <SubTitleSvg viewBox="0 0 11 18">
@@ -29,7 +29,7 @@ const SubTitleArrow = React.memo(() => (
       points="2.09312 0 0 2.115 6.79892 9 0 15.885 2.09312 18 11 9"
     />
   </SubTitleSvg>
-));
+))
 
 const SubTitleItem = React.memo(({ label }: { label: string }) => (
   <>
@@ -38,15 +38,28 @@ const SubTitleItem = React.memo(({ label }: { label: string }) => (
       {label}
     </Typography>
   </>
-));
+))
 
 const PageHeader: React.FC<{
-  title: string;
-  subTitle?: string | Array<string>;
-  canGoBack?: boolean;
+  title: string
+  subTitle?: string | Array<string>
+  canGoBack?: boolean
 }> = ({ title, subTitle, canGoBack }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
+  const [width, setWidth] = useState<number>(window.innerWidth)
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth)
+  }
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const isMobile = width <= 1024
   return (
     <Box>
       <Box
@@ -71,7 +84,7 @@ const PageHeader: React.FC<{
               </>
             ))}
         </Box>
-        {canGoBack && (
+        {!isMobile && canGoBack && (
           <Box display="flex" justifyContent="flex-end" alignItems="center">
             <Stack direction="row" alignItems="center" spacing={3}>
               {canGoBack && (
@@ -81,7 +94,7 @@ const PageHeader: React.FC<{
                   size="large"
                   onClick={() => navigate(-1)}
                 >
-                  Retour
+                  Back
                 </Button>
               )}
             </Stack>
@@ -89,19 +102,19 @@ const PageHeader: React.FC<{
         )}
       </Box>
     </Box>
-  );
-};
+  )
+}
 
 PageHeader.propTypes = {
   subTitle: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string.isRequired)
+    PropTypes.arrayOf(PropTypes.string.isRequired),
   ]),
-  canGoBack: PropTypes.bool
-};
+  canGoBack: PropTypes.bool,
+}
 PageHeader.defaultProps = {
   subTitle: undefined,
-  canGoBack: false
-};
+  canGoBack: false,
+}
 
-export default PageHeader;
+export default PageHeader

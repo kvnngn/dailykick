@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from 'react'
+import { useState, ChangeEvent, useEffect, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import PageTitleWrapper from 'src/layouts/SidebarLayout/PageTitleWrapper'
 import { Container, Tabs, Tab, Grid } from '@mui/material'
@@ -26,16 +26,16 @@ function StoreDetailsPage() {
   const { data } = useGetStore(id)
   const { currentUser } = useCurrentInfo()
 
-  const tabs = [
-    { value: 'Inventory', label: 'Inventory' },
-    { value: 'Articles', label: 'Articles' },
-  ]
-
-  useEffect(() => {
+  const tabs = useMemo(() => {
+    const tabs = [
+      { value: 'Inventory', label: 'Inventory' },
+      { value: 'Articles', label: 'Articles' },
+    ]
     if (currentUser.roles === 'ADMIN') {
       tabs.push({ value: 'Sellers', label: 'Sellers' })
     }
-  }, [currentUser])
+    return tabs
+  }, [currentUser?.roles])
 
   const handleTabsChange = (event: ChangeEvent<{}>, value: string): void => {
     setCurrentTab(value)
@@ -47,7 +47,7 @@ function StoreDetailsPage() {
         <title> {data.name} - Détails</title>
       </Helmet>
       <PageTitleWrapper>
-        <PageHeader title={data.name} subTitle={currentTab} canGoBack={true} />
+        <PageHeader title={data.name} subTitle={currentTab} />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid

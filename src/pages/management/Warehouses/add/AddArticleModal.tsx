@@ -9,8 +9,9 @@ import {
   DialogActions,
   Button,
   Autocomplete,
+  Grid,
 } from '@mui/material'
-import { useFormik } from 'formik'
+import { FieldArray, Form, Formik, getIn, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useSnackbar } from 'src/hooks/common'
 import { useGetProducts } from 'src/hooks/api/management/product'
@@ -33,149 +34,228 @@ function AddArticleModal(props) {
   const { data: products } = useGetProducts()
   const { showErrorSnackbar } = useSnackbar()
   const currentUser = useCurrentUser()
-
-  const {
-    values,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    errors,
-    touched,
-    isValid,
-    isSubmitting,
-    setFieldValue,
-    setFieldError,
-  } = useFormik({
-    initialValues: {
-      product: undefined,
-      createdBy: currentUser.data._id,
-      warehouse: warehouseId,
-      store: undefined,
-      warehousePrice: 0,
-      storePrice: undefined,
-      size: 0,
-      sku: undefined,
-    },
-    validationSchema: Yup.object({
-      product: Yup.string().required('Le produit est obligatoire'),
-      createdBy: Yup.string().required('Votre utilisateur ID est obligatoire'),
-      warehouse: Yup.string(),
-      store: Yup.string(),
-      warehousePrice: Yup.number(),
-      storePrice: Yup.number(),
-      size: Yup.number(),
-      sku: Yup.string().required('Le SKU est obligatoire'),
-    }),
-
-    onSubmit: async (v) => {
-      try {
-        await createArticle(v)
-        handleClose()
-      } catch (e: any) {
-        if (e.response?.data?.message) {
-          switch (e.response.data.message) {
-            default:
-              showErrorSnackbar('Une erreur est survenue')
-              break
-          }
-        }
-      }
-    },
+  const validationSchema = Yup.object({
+    product: Yup.string().required('Product is mandatory'),
+    createdBy: Yup.string().required('User ID is mandatory'),
+    warehouse: Yup.string(),
+    store: Yup.string(),
+    warehousePrice: Yup.number(),
+    storePrice: Yup.number(),
+    sizes: Yup.array().of(
+      Yup.object().shape({
+        size: Yup.number().required('Size is required'),
+        quantity: Yup.number().required('Quantity is required'),
+      }),
+    ),
   })
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <form onSubmit={handleSubmit}>
-        <DialogTitle>Création d'un nouvel article</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Veuillez indiquer les informations de l'article.
-          </DialogContentText>
-          <Autocomplete
-            onChange={(e, value: Product) => {
-              if (value) {
-                setFieldValue('product', value._id)
+      <Formik
+        initialValues={{
+          product: undefined,
+          createdBy: currentUser.data._id,
+          warehouse: warehouseId,
+          store: undefined,
+          warehousePrice: 0,
+          storePrice: 0,
+          sizes: [
+            {
+              id: Math.random(),
+              size: 40,
+              quantity: 1,
+            },
+          ],
+        }}
+        validationSchema={validationSchema}
+        onSubmit={async (v) => {
+          try {
+            await createArticle(v)
+            handleClose()
+          } catch (e: any) {
+            if (e.response?.data?.message) {
+              switch (e.response.data.message) {
+                default:
+                  showErrorSnackbar('An error occured')
+                  break
               }
-            }}
-            disablePortal
-            options={products.body.data}
-            getOptionLabel={(option: Product) => option.name}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                error={Boolean(touched.product && errors.product)}
-                fullWidth
-                helperText={touched.product && errors.product}
-                label="Produit"
-                margin="normal"
-                name="product"
-                onBlur={handleBlur}
-                onChange={(e) => {
-                  if (!e.target.value) {
-                    setProductNameState(undefined)
-                  } else {
-                    setProductNameState(e.target.value)
+            }
+          }
+        }}
+      >
+        {({
+          values,
+          touched,
+          errors,
+          handleChange,
+          handleBlur,
+          setFieldValue,
+          isSubmitting,
+          isValid,
+        }) => (
+          <Form noValidate autoComplete="off">
+            <DialogTitle>Add a new article</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Please fill in the article information.
+              </DialogContentText>
+              <Autocomplete
+                onChange={(e, value: Product) => {
+                  if (value) {
+                    setFieldValue('product', value._id)
                   }
-                  return handleChange
                 }}
-                value={values.product}
+                disablePortal
+                options={products.body.data}
+                getOptionLabel={(option: Product) => option.name}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    error={Boolean(touched.product && errors.product)}
+                    fullWidth
+                    helperText={touched.product && errors.product}
+                    label="Product"
+                    margin="normal"
+                    name="product"
+                    onBlur={handleBlur}
+                    onChange={(e) => {
+                      if (!e.target.value) {
+                        setProductNameState(undefined)
+                      } else {
+                        setProductNameState(e.target.value)
+                      }
+                      return handleChange
+                    }}
+                    value={values.product}
+                    variant="outlined"
+                  />
+                )}
+              />
+              <TextField
+                error={Boolean(touched.warehousePrice && errors.warehousePrice)}
+                fullWidth
+                helperText={touched.warehousePrice && errors.warehousePrice}
+                label="Supplier price"
+                type="number"
+                margin="normal"
+                name="warehousePrice"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">AED</InputAdornment>
+                  ),
+                }}
+                value={values.warehousePrice}
                 variant="outlined"
               />
-            )}
-          />
-          <TextField
-            error={Boolean(touched.sku && errors.sku)}
-            fullWidth
-            helperText={touched.sku && errors.sku}
-            label="SKU"
-            margin="normal"
-            name="sku"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.sku}
-            variant="outlined"
-          />
-          <TextField
-            error={Boolean(touched.warehousePrice && errors.warehousePrice)}
-            fullWidth
-            helperText={touched.warehousePrice && errors.warehousePrice}
-            label="Prix fournisseur"
-            type="number"
-            margin="normal"
-            name="warehousePrice"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            InputProps={{
-              endAdornment: <InputAdornment position="start">€</InputAdornment>,
-            }}
-            value={values.warehousePrice}
-            variant="outlined"
-          />
-          <TextField
-            error={Boolean(touched.size && errors.size)}
-            fullWidth
-            helperText={touched.size && errors.size}
-            label="Taille"
-            type="number"
-            margin="normal"
-            name="size"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.size}
-            variant="outlined"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Annuler</Button>
-          <LoadingButton
-            loading={isSubmitting}
-            type="submit"
-            disabled={!isValid || isSubmitting}
-          >
-            Créer
-          </LoadingButton>
-        </DialogActions>
-      </form>
+              <TextField
+                error={Boolean(touched.storePrice && errors.storePrice)}
+                fullWidth
+                helperText={touched.storePrice && errors.storePrice}
+                label="Store price"
+                type="number"
+                margin="normal"
+                name="storePrice"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">AED</InputAdornment>
+                  ),
+                }}
+                value={values.storePrice}
+                variant="outlined"
+              />
+              <FieldArray name="sizes">
+                {({ push, remove }) => (
+                  <div>
+                    {values.sizes.map((p, index) => {
+                      const size = `sizes[${index}].size`
+                      const touchedSize = getIn(touched, size)
+                      const errorSize = getIn(errors, size)
+
+                      const quantity = `sizes[${index}].quantity`
+                      const touchedQuantity = getIn(touched, quantity)
+                      const errorQuantity = getIn(errors, quantity)
+
+                      return (
+                        <Grid container spacing={2} key={p.id}>
+                          <Grid item xs>
+                            <TextField
+                              type="number"
+                              margin="normal"
+                              variant="outlined"
+                              label="Size (EU)"
+                              name={size}
+                              value={p.size}
+                              required
+                              helperText={
+                                touchedSize && errorSize ? errorSize : ''
+                              }
+                              error={Boolean(touchedSize && errorSize)}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            />
+                          </Grid>
+                          <Grid item xs>
+                            <TextField
+                              type="number"
+                              margin="normal"
+                              variant="outlined"
+                              label="Quantity"
+                              name={quantity}
+                              value={p.quantity}
+                              required
+                              helperText={
+                                touchedQuantity && errorQuantity
+                                  ? errorQuantity
+                                  : ''
+                              }
+                              error={Boolean(touchedQuantity && errorQuantity)}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            />
+                          </Grid>
+                          <Grid item xs>
+                            <Button
+                              sx={{ marginTop: '20px' }}
+                              type="button"
+                              variant="outlined"
+                              onClick={() => remove(index)}
+                            >
+                              x
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      )
+                    })}
+                    <Button
+                      type="button"
+                      variant="outlined"
+                      onClick={() =>
+                        push({ id: Math.random(), size: 40, quantity: 1 })
+                      }
+                    >
+                      Add different size
+                    </Button>
+                  </div>
+                )}
+              </FieldArray>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <LoadingButton
+                loading={isSubmitting}
+                type="submit"
+                disabled={!isValid || isSubmitting}
+              >
+                Create
+              </LoadingButton>
+            </DialogActions>
+          </Form>
+        )}
+      </Formik>
     </Dialog>
   )
 }

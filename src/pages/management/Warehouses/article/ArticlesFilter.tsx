@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material'
+import { MenuItem, Select, TextField } from '@mui/material'
 import React, { useCallback } from 'react'
 import * as Yup from 'yup'
 import {
@@ -15,6 +15,7 @@ type ArticlesFilterForm = {
   brands: Array<string>
   brandModels: Array<string>
   size: string
+  transferedAt: string
 }
 
 const useArticlesFilterForm = (): UseValidation<ArticlesFilterForm> => ({
@@ -22,11 +23,13 @@ const useArticlesFilterForm = (): UseValidation<ArticlesFilterForm> => ({
     brands: [],
     brandModels: [],
     size: undefined,
+    transferedAt: 'no',
   },
   validationSchema: Yup.object({
     brands: Yup.array().of(Yup.string()),
     brandModels: Yup.array().of(Yup.string()),
     size: Yup.string(),
+    transferedAt: Yup.string(),
   }).defined(),
 })
 
@@ -88,7 +91,18 @@ const ArticlesFilter: React.FC<FilterProps> = ({
             fullWidth
           />
         </FilterGridItem>
-        ƒ
+        <FilterGridItem label="Available only">
+          <Select
+            name="transferedAt"
+            value={values.transferedAt}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            fullWidth
+          >
+            <MenuItem value="no">no</MenuItem>
+            <MenuItem value="yes">yes</MenuItem>
+          </Select>
+        </FilterGridItem>
       </FilterGrid>
     </FilterWrapper>
   )

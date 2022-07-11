@@ -31,7 +31,6 @@ type ArticlesTableProps = {
 const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
   const theme = useTheme()
   const { data, onPageChange } = useGetArticles(id)
-  console.log({ data })
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
@@ -123,7 +122,6 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
       },
       {
         Header: 'Actions',
-        align: 'center',
         Cell: ({ row }) => (
           <>
             <Tooltip title="Modify article" arrow>
@@ -190,7 +188,6 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         noDataText="No existing article."
         ExtraElement={
           <Button
-            sx={{ mt: { xs: 2, md: 0 } }}
             variant="contained"
             startIcon={<AddTwoToneIcon fontSize="small" />}
             onClick={() => handleOpen(id)}

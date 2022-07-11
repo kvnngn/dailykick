@@ -22,7 +22,7 @@ const InfoDialog = (props) => {
           onClick={() => setOpen(false)}
           color="secondary"
         >
-          Fermer
+          Close
         </Button>
       </DialogActions>
     </Dialog>

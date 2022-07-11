@@ -110,17 +110,14 @@ const ProductsTable: FC = () => {
         disableSortBy: true,
         Cell: ({ row }) => (
           <>
-            <Button onClick={() => handleOpenViewImageModal(row.values)}>
-              See
+            <Button type='button' variant='outlined' onClick={() => handleOpenViewImageModal(row.values)}>
+               Open
             </Button>
           </>
         ),
       },
       {
         Header: 'Actions',
-        align: 'center',
-        minWidth: 84,
-        maxWidth: 84,
         Cell: ({ row }) => (
           <>
             <Tooltip title="Modify product" arrow>

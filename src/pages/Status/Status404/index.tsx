@@ -55,7 +55,7 @@ function Status404() {
           <Container maxWidth="sm">
             <Card sx={{ textAlign: 'center', mt: 3, p: 4 }}>
               <Button href="/dashboard" variant="outlined">
-                Retour à la page d'accueil
+                Back à la page d'accueil
               </Button>
             </Card>
           </Container>

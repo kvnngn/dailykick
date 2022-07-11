@@ -43,7 +43,7 @@ const ProductsTable: FC<ProductsTableProps> = ({ id }) => {
         onPageChange={onPageChange}
         totalCount={data.body.meta.itemCount}
         enableSort
-        noDataText="Aucun article existant."
+        noDataText="No existing article."
       />
     </Card>
   )

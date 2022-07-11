@@ -259,8 +259,8 @@ function SidebarMenu() {
                       disableRipple
                       component={RouterLink}
                       onClick={closeSidebar}
-                      to={`${ROUTES.MANAGEMENT.STORES}/${currentUser.currentUser.store}`}
-                      startIcon={<TableChartTwoToneIcon />}
+                      to={`${ROUTES.MANAGEMENT.MY_STORE}/${currentUser.currentUser.store}`}
+                      startIcon={<AccountCircleTwoToneIcon />}
                     >
                       My store
                     </Button>
@@ -273,7 +273,7 @@ function SidebarMenu() {
                       to={`${ROUTES.MANAGEMENT.STORES}`}
                       startIcon={<TableChartTwoToneIcon />}
                     >
-                      All stores
+                      Other stores
                     </Button>
                   </ListItem>
                 </List>

@@ -15,7 +15,7 @@ const FilterWrapper: React.FC<FilterWrapperProps> = ({
         {children}
         <Box display="flex" justifyContent="flex-end" mt={8} mb={2}>
           <Button type="button" color="inherit" size="large" onClick={onClose}>
-            Fermer
+            Close
           </Button>
           <LoadingButton
             type="submit"
@@ -24,7 +24,7 @@ const FilterWrapper: React.FC<FilterWrapperProps> = ({
             disabled={!isValid}
             sx={{ ml: 2 }}
           >
-            Appliquer
+            Apply
           </LoadingButton>
         </Box>
       </form>

@@ -92,8 +92,8 @@ export const FilterSelect: React.FC<FilterSelectProps> = ({
           <ListItemText
             primary={`${
               selected.length === Number(candidate.length)
-                ? 'Tout déselectionner'
-                : 'Tout selectionner'
+                ? 'Select all'
+                : 'Unselect all'
             } (${candidate.length})`}
           />
         </MenuItem>

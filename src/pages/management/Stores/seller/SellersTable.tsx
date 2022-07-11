@@ -96,9 +96,6 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
       },
       {
         Header: 'Actions',
-        align: 'center',
-        minWidth: 84,
-        maxWidth: 84,
         Cell: ({ row }) => (
           <>
             <Tooltip title="Modify seller" arrow>

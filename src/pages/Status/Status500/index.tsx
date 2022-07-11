@@ -97,7 +97,7 @@ function Status500() {
                   Actualiser la page
                 </LoadingButton>
                 <Button href="/overview" variant="contained" sx={{ ml: 1 }}>
-                  Retour en arrière
+                  Back en arrière
                 </Button>
               </Box>
             </Container>

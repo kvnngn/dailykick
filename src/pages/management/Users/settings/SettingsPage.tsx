@@ -57,9 +57,9 @@ function SettingsPage() {
                         Manage information about your account data
                       </Typography>
                     </Box>
-                    <Button variant="text" startIcon={<EditTwoToneIcon />}>
+                    {/* <Button variant="text" startIcon={<EditTwoToneIcon />}>
                       Update
-                    </Button>
+                    </Button> */}
                   </Box>
                   <Divider />
                   <CardContent sx={{ p: 4 }}>

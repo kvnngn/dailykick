@@ -35,6 +35,7 @@ const Pages: React.FC = () => {
           <Route path="products" element={<Products />} />
           <Route path="stores" element={<StoresPage />} />
           <Route path="stores/:id" element={<StoreDetailsPage />} />
+          <Route path="store/:id" element={<StoreDetailsPage />} />
         </Route>
         <Route path="profile">
           <Route path="/profile" element={<Navigate to="settings" replace />} />

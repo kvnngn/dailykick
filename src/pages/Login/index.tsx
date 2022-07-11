@@ -49,7 +49,7 @@ const Login = () => {
               window.location.href = `${window.location.origin}${externalCallback}`
             } else {
               if (body.store) {
-                navigate(`${ROUTES.MANAGEMENT.STORES}/${body.store}`)
+                navigate(`${ROUTES.MANAGEMENT.MY_STORE}/${body.store}`)
               } else {
                 navigate(ROUTES.DASHBOARD.ROOT)
               }

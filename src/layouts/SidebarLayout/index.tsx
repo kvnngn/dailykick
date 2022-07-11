@@ -24,7 +24,7 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
       case pathname === ROUTES.MANAGEMENT.WAREHOUSES:
         return 'Warehouses'
       case pathname === ROUTES.MANAGEMENT.STORES:
-        return 'Store'
+        return 'Stores'
       case pathname === ROUTES.MANAGEMENT.PRODUCTS:
         return 'Products'
       case includesPath(ROUTES.PROFILE, pathname):
@@ -35,14 +35,13 @@ const SidebarLayout: FC<SidebarLayoutProps> = () => {
   }, [pathname])
 
   const subTitle = useMemo<Array<string> | string | undefined>(() => {
-    console.log({ pathname })
     switch (true) {
       case pathname === ROUTES.MANAGEMENT.WAREHOUSES:
-        return 'Manage your different warehouses and their stocks'
+        return 'List'
       case pathname === ROUTES.MANAGEMENT.STORES:
-        return 'Manage stores and their inventory'
+        return 'List'
       case pathname === ROUTES.MANAGEMENT.PRODUCTS:
-        return 'Define the available products on your site'
+        return 'List'
       default:
         return undefined
     }

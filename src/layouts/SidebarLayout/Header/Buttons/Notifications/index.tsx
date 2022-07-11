@@ -8,13 +8,13 @@ import {
   ListItem,
   Popover,
   Tooltip,
-  Typography
-} from '@mui/material';
-import { useRef, useState } from 'react';
-import NotificationsActiveTwoToneIcon from '@mui/icons-material/NotificationsActiveTwoTone';
-import { styled } from '@mui/material/styles';
+  Typography,
+} from '@mui/material'
+import { useRef, useState } from 'react'
+import NotificationsActiveTwoToneIcon from '@mui/icons-material/NotificationsActiveTwoTone'
+import { styled } from '@mui/material/styles'
 
-import { formatDistance, subDays } from 'date-fns';
+import { formatDistance, subDays } from 'date-fns'
 
 const NotificationsBadge = styled(Badge)(
   ({ theme }) => `
@@ -37,20 +37,20 @@ const NotificationsBadge = styled(Badge)(
             content: "";
         }
     }
-`
-);
+`,
+)
 
 function HeaderNotifications() {
-  const ref = useRef<any>(null);
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const ref = useRef<any>(null)
+  const [isOpen, setOpen] = useState<boolean>(false)
 
   const handleOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <>
@@ -60,7 +60,7 @@ function HeaderNotifications() {
             badgeContent={1}
             anchorOrigin={{
               vertical: 'top',
-              horizontal: 'right'
+              horizontal: 'right',
             }}
           >
             <NotificationsActiveTwoToneIcon />
@@ -73,11 +73,11 @@ function HeaderNotifications() {
         open={isOpen}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'right'
+          horizontal: 'right',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right'
+          horizontal: 'right',
         }}
       >
         <Box
@@ -96,7 +96,7 @@ function HeaderNotifications() {
             <Box flex="1">
               <Box display="flex" justifyContent="space-between">
                 <Typography sx={{ fontWeight: 'bold' }}>
-                  Rupture de stock pour le product..
+                  No more stock for the product..
                 </Typography>
                 <Typography variant="caption" sx={{ textTransform: 'none' }}>
                   {formatDistance(subDays(new Date(), 3), new Date(), {
@@ -109,15 +109,14 @@ function HeaderNotifications() {
                 variant="body2"
                 color="text.secondary"
               >
-                {' '}
-                Fonctionnalité à venir
+                Feature in development..
               </Typography>
             </Box>
           </ListItem>
         </List>
       </Popover>
     </>
-  );
+  )
 }
 
-export default HeaderNotifications;
+export default HeaderNotifications

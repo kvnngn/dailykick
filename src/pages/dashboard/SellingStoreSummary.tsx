@@ -189,7 +189,7 @@ function SellingStoreSummary() {
           </Card>
         </Grid>
         <Grid xs={12} sm={6} md={3} item>
-          <Tooltip arrow title="Cliquez pour Adde vente">
+          <Tooltip arrow title="Click here to sell">
             <CardAddAction>
               <CardActionArea
                 sx={{

@@ -83,10 +83,10 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Modification de l'article</DialogTitle>
+        <DialogTitle>Editing the article</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Veuillez indiquer les informations de l'article.
+            Please fill in the article information.
           </DialogContentText>
           <TextField
             fullWidth

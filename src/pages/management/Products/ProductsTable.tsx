@@ -110,8 +110,12 @@ const ProductsTable: FC = () => {
         disableSortBy: true,
         Cell: ({ row }) => (
           <>
-            <Button type='button' variant='outlined' onClick={() => handleOpenViewImageModal(row.values)}>
-               Open
+            <Button
+              type="button"
+              variant="outlined"
+              onClick={() => handleOpenViewImageModal(row.values)}
+            >
+              Open
             </Button>
           </>
         ),
@@ -201,7 +205,10 @@ const ProductsTable: FC = () => {
           open={openViewImageModal}
           setOpen={setOpenViewImageModal}
         >
-          <img src={row.image_url} width={500} />
+          <img
+            src={row.image_url}
+            style={{ width: '100%' }}
+          />
         </InfoDialog>
       )}
     </Card>

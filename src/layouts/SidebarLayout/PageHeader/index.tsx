@@ -31,15 +31,6 @@ const SubTitleArrow = React.memo(() => (
   </SubTitleSvg>
 ))
 
-const SubTitleItem = React.memo(({ label }: { label: string }) => (
-  <>
-    <SubTitleArrow />
-    <Typography variant="h3" component="span" color="textSecondary" ml={3}>
-      {label}
-    </Typography>
-  </>
-))
-
 const PageHeader: React.FC<{
   title: string
   subTitle?: string | Array<string>
@@ -70,16 +61,34 @@ const PageHeader: React.FC<{
         mb={2}
       >
         <Box display="flex" alignItems="center">
-          <Typography variant="h2" sx={{ ml: 3 }}>
-            {title}
-          </Typography>
+          <Typography variant={!isMobile ? 'h2' : 'h4'}>{title}</Typography>
           {subTitle &&
             (typeof subTitle === 'string' ? (
-              <SubTitleItem label={subTitle} />
+              <>
+                <SubTitleArrow />
+                <Typography
+                  variant={!isMobile ? 'h3' : 'h4'}
+                  component="span"
+                  color="textSecondary"
+                  ml={3}
+                >
+                  {subTitle}
+                </Typography>
+              </>
             ) : (
               <>
                 {subTitle.map((s) => (
-                  <SubTitleItem key={`page_header_${s}`} label={s} />
+                  <Box key={`page_header_${s}`}>
+                    <SubTitleArrow />
+                    <Typography
+                      variant={!isMobile ? 'h3' : 'h4'}
+                      component="span"
+                      color="textSecondary"
+                      ml={3}
+                    >
+                      {s}
+                    </Typography>
+                  </Box>
                 ))}
               </>
             ))}

@@ -172,6 +172,19 @@ const sellArticle = async (
   return data
 }
 
+const cancelSellArticle = async (
+  articleId: string,
+  updatedBy: string,
+): Promise<Article> => {
+  const { data } = await axios.put(
+    `${API_URL.ARTICLE}/cancelsell/${articleId}`,
+    {
+      updatedBy,
+    },
+  )
+  return data
+}
+
 const deleteArticle = async (id: string): Promise<any> => {
   const { data } = await axios.delete(`${API_URL.ARTICLE}/id/${id}`)
   return data
@@ -201,5 +214,6 @@ export default {
   getStoreInventory,
   getWarehouseInventory,
   sellArticle,
+  cancelSellArticle,
   transferArticleToWarehouse,
 }

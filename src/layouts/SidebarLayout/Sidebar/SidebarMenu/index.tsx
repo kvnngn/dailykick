@@ -273,7 +273,7 @@ function SidebarMenu() {
                       to={`${ROUTES.MANAGEMENT.STORES}`}
                       startIcon={<TableChartTwoToneIcon />}
                     >
-                      Other stores
+                      All stores
                     </Button>
                   </ListItem>
                 </List>

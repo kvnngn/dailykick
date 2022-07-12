@@ -107,7 +107,7 @@ function AddArticleModal(props) {
                 }}
                 disablePortal
                 options={products.body.data}
-                getOptionLabel={(option: Product) => option.name}
+                getOptionLabel={(option: Product) => `${option.name} (${option.sku})`}
                 renderInput={(params) => (
                   <TextField
                     {...params}

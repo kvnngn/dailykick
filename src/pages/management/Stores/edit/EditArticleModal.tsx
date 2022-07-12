@@ -52,13 +52,13 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
     initialValues: {
       product: _.isObject(data.product) ? data.product._id : data.product,
       updatedBy: currentUser.data._id,
-      warehousePrice: data.warehousePrice,
+      storePrice: data.storePrice,
       size: data.size,
     },
     validationSchema: Yup.object({
       product: Yup.string().required('Product field is mandatory'),
       updatedBy: Yup.string().required('User ID field is mandatory'),
-      warehousePrice: Yup.number(),
+      storePrice: Yup.number(),
       size: Yup.number(),
     }),
 
@@ -83,7 +83,7 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Editing the article</DialogTitle>
+        <DialogTitle>Editing article</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please fill in the article information.
@@ -100,19 +100,21 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
             variant="outlined"
           />
           <TextField
-            error={Boolean(touched.warehousePrice && errors.warehousePrice)}
+            error={Boolean(touched.storePrice && errors.storePrice)}
             fullWidth
-            helperText={touched.warehousePrice && errors.warehousePrice}
+            helperText={touched.storePrice && errors.storePrice}
             label="Price"
             type="number"
             margin="normal"
-            name="warehousePrice"
+            name="storePrice"
             onBlur={handleBlur}
             onChange={handleChange}
             InputProps={{
-              startAdornment: <InputAdornment position="start">AED</InputAdornment>,
+              startAdornment: (
+                <InputAdornment position="start">AED</InputAdornment>
+              ),
             }}
-            value={values.warehousePrice}
+            value={values.storePrice}
             variant="outlined"
           />
           <TextField

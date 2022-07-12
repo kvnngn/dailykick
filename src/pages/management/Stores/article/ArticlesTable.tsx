@@ -1,25 +1,17 @@
 import { FC, useMemo, useState } from 'react'
 import { format } from 'date-fns'
-import {
-  Tooltip,
-  Divider,
-  Card,
-  IconButton,
-  useTheme,
-  Button,
-} from '@mui/material'
+import { Tooltip, Divider, Card, IconButton, useTheme } from '@mui/material'
 
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone'
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import { fr } from 'date-fns/locale'
 import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table'
-import { useNavigate } from 'react-router'
 import { ConfirmDialog } from '../../../../components/modal'
 import EditArticleModal from '../edit/EditArticleModal'
 import AddArticleModal from '../add/AddArticleModal'
 import useDeleteArticle from '../../../../hooks/api/management/article/mutation/useDeleteArticle'
 import {
+  useCancelSellArticle,
   useGetArticles,
   useTransferToWarehouseArticle,
 } from '../../../../hooks/api/management/article'
@@ -28,8 +20,9 @@ import SellIcon from '@mui/icons-material/Sell'
 import SellArticleModal from '../sell/SellArticleModal'
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { useCurrentInfo, useCurrentUser } from '../../../../hooks/api/common'
+import { useCurrentInfo } from '../../../../hooks/api/common'
 import TransferArticleToStoreModal from '../transfer/TransferArticleToStoreModal'
+import CancelIcon from '@mui/icons-material/Cancel'
 
 type ArticlesTableProps = {
   id: string
@@ -46,51 +39,46 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
   const [openTransferStoreModal, setOpenTransferStoreModal] =
     useState<boolean>(false)
   const [openSellModal, setOpenSellModal] = useState<boolean>(false)
+  const [openCancelSellModal, setOpenCancelSellModal] = useState<boolean>(false)
   const [articleId, setArticleId] = useState<string>(null)
   const { mutateAsync: deleteArticle } = useDeleteArticle()
   const { mutateAsync: transferToWarehouse } = useTransferToWarehouseArticle()
+  const { mutateAsync: cancelSelling } = useCancelSellArticle()
   const { currentUser } = useCurrentInfo()
 
   const handleOpen = (id: string) => {
-    if (!openModal) {
-      setArticleId(id)
-      setOpenModal(true)
-    }
+    setArticleId(id)
+    setOpenModal(true)
   }
 
   const handleOpenEditModal = (id: string) => {
-    if (!openEditModal) {
-      setArticleId(id)
-      setOpenEditModal(true)
-    }
+    setArticleId(id)
+    setOpenEditModal(true)
   }
 
   const handleOpenDeleteModal = (id: string) => {
-    if (!openDeleteModal) {
-      setArticleId(id)
-      setOpenDeleteModal(true)
-    }
+    setArticleId(id)
+    setOpenDeleteModal(true)
   }
 
   const handleOpenTransferWarehouseModal = (id: string) => {
-    if (!openTransferWarehouseModal) {
-      setArticleId(id)
-      setOpenTransferWarehouseModal(true)
-    }
+    setArticleId(id)
+    setOpenTransferWarehouseModal(true)
   }
 
   const handleOpenTransferStoreModal = (id: string) => {
-    if (!openTransferStoreModal) {
-      setArticleId(id)
-      setOpenTransferStoreModal(true)
-    }
+    setArticleId(id)
+    setOpenTransferStoreModal(true)
   }
 
   const handleOpenSellModal = (id: string) => {
-    if (!openSellModal) {
-      setArticleId(id)
-      setOpenSellModal(true)
-    }
+    setArticleId(id)
+    setOpenSellModal(true)
+  }
+
+  const handleOpenCancelSellModal = (id: string) => {
+    setArticleId(id)
+    setOpenCancelSellModal(true)
   }
 
   const handleDeleteWarehouse = async () => {
@@ -99,6 +87,13 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
 
   const handleTransferToWarehouse = async () => {
     await transferToWarehouse({
+      articleId: articleId,
+      updatedBy: currentUser._id,
+    })
+  }
+
+  const handleCancelPurchase = async () => {
+    await cancelSelling({
       articleId: articleId,
       updatedBy: currentUser._id,
     })
@@ -172,53 +167,55 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                     <EditTwoToneIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Delete l'article" arrow>
-                  <IconButton
-                    disabled={row.original.soldAt}
-                    sx={{
-                      '&:hover': { background: theme.colors.error.lighter },
-                      color: theme.palette.error.main,
-                    }}
-                    color="inherit"
-                    size="small"
-                    onClick={() => handleOpenDeleteModal(row.values._id)}
-                  >
-                    <DeleteTwoToneIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-
-                <Tooltip title="Transfer article to store" arrow>
-                  <IconButton
-                    disabled={row.original.soldAt}
-                    color="inherit"
-                    size="small"
-                    onClick={() => handleOpenTransferStoreModal(row.values._id)}
-                  >
-                    <ArrowForwardIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-
-                <Tooltip title="Return article to warehouse" arrow>
-                  <IconButton
-                    sx={{
-                      '&:hover': { background: theme.colors.error.lighter },
-                      color: theme.palette.error.main,
-                    }}
-                    color="inherit"
-                    size="small"
-                    onClick={() =>
-                      handleOpenTransferWarehouseModal(row.values._id)
-                    }
-                  >
-                    <SettingsBackupRestoreIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
+                {!row.original.soldAt && (
+                  <>
+                    <Tooltip title="Delete l'article" arrow>
+                      <IconButton
+                        sx={{
+                          '&:hover': { background: theme.colors.error.lighter },
+                          color: theme.palette.error.main,
+                        }}
+                        color="inherit"
+                        size="small"
+                        onClick={() => handleOpenDeleteModal(row.values._id)}
+                      >
+                        <DeleteTwoToneIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Transfer article to store" arrow>
+                      <IconButton
+                        color="inherit"
+                        size="small"
+                        onClick={() =>
+                          handleOpenTransferStoreModal(row.values._id)
+                        }
+                      >
+                        <ArrowForwardIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Return article to warehouse" arrow>
+                      <IconButton
+                        sx={{
+                          '&:hover': { background: theme.colors.error.lighter },
+                          color: theme.palette.error.main,
+                        }}
+                        color="inherit"
+                        size="small"
+                        onClick={() =>
+                          handleOpenTransferWarehouseModal(row.values._id)
+                        }
+                      >
+                        <SettingsBackupRestoreIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </>
+                )}
               </>
             )}
-            {(currentUser.roles === 'ADMIN' || currentUser.store === id) && (
-              <Tooltip title="Selling article" arrow>
+            {(currentUser.roles === 'ADMIN' || currentUser.store === id) &&
+            !row.original.soldAt ? (
+              <Tooltip title="Sell article" arrow>
                 <IconButton
-                  disabled={row.original.soldAt}
                   sx={{
                     '&:hover': { background: theme.colors.error.lighter },
                     color: theme.palette.error.main,
@@ -228,6 +225,20 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                   onClick={() => handleOpenSellModal(row.values._id)}
                 >
                   <SellIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Cancel article purchase" arrow>
+                <IconButton
+                  sx={{
+                    '&:hover': { background: theme.colors.error.lighter },
+                    color: theme.palette.error.main,
+                  }}
+                  color="inherit"
+                  size="small"
+                  onClick={() => handleOpenCancelSellModal(row.values._id)}
+                >
+                  <CancelIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
             )}
@@ -288,6 +299,17 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         >
           Are you sure you want to tranfer this article to the original
           warehouse?
+        </ConfirmDialog>
+      )}
+
+      {articleId && openCancelSellModal && (
+        <ConfirmDialog
+          title="Cancel purchase"
+          open={openCancelSellModal}
+          setOpen={setOpenCancelSellModal}
+          onConfirm={handleCancelPurchase}
+        >
+          Are you sure you want to cancel the purchase of this article?
         </ConfirmDialog>
       )}
       {articleId && openTransferStoreModal && (

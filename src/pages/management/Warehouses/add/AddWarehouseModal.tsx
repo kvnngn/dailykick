@@ -45,7 +45,7 @@ function AddWarehouseModal(props) {
       createdBy: currentUser.data._id,
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Lastname is mandatory'),
+      name: Yup.string().required('Name is mandatory'),
       createdBy: Yup.string().required('User ID field is mandatory'),
     }),
 

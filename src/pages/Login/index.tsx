@@ -25,7 +25,7 @@ const Login = () => {
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email('Email invalide')
+        .email('Email is invalid')
         .max(255)
         .required('Email is mandatory'),
       password: Yup.string().max(255).required('Password is mandatory'),

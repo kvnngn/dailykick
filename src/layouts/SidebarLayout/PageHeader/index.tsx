@@ -51,6 +51,7 @@ const PageHeader: React.FC<{
   }, [])
 
   const isMobile = width <= 1024
+  const isTablet = width <= 740
   return (
     <Box>
       <Box
@@ -61,13 +62,13 @@ const PageHeader: React.FC<{
         mb={2}
       >
         <Box display="flex" alignItems="center">
-          <Typography variant={!isMobile ? 'h2' : 'h4'}>{title}</Typography>
+          <Typography variant={!isTablet ? 'h2' : 'h4'}>{title}</Typography>
           {subTitle &&
             (typeof subTitle === 'string' ? (
               <>
                 <SubTitleArrow />
                 <Typography
-                  variant={!isMobile ? 'h3' : 'h4'}
+                  variant={!isTablet ? 'h3' : 'h4'}
                   component="span"
                   color="textSecondary"
                   ml={3}
@@ -81,7 +82,7 @@ const PageHeader: React.FC<{
                   <Box key={`page_header_${s}`}>
                     <SubTitleArrow />
                     <Typography
-                      variant={!isMobile ? 'h3' : 'h4'}
+                      variant={!isTablet ? 'h3' : 'h4'}
                       component="span"
                       color="textSecondary"
                       ml={3}

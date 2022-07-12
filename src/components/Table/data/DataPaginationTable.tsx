@@ -10,17 +10,16 @@ import {
   Backdrop,
   Box,
   Checkbox,
+  Dialog,
   Grid,
   IconButton,
   Pagination,
-  Popper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from '@mui/material'
 import { FormikValues } from 'formik'
 import * as PropTypes from 'prop-types'
@@ -195,20 +194,15 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
                     >
                       <FilterAltIcon />
                     </IconButton>
-                    <Popper
+                    <Dialog
                       open={Boolean(anchorEl)}
-                      anchorEl={anchorEl}
-                      placement="bottom-start"
                       container={filterContainerRef.current}
                       disablePortal
-                      style={{ zIndex: 10000 }}
                     >
                       <SuspensePaper
                         variant="elevation"
                         square={false}
                         sx={{
-                          width: 400,
-                          maxWidth: 400,
                           p: 3,
                         }}
                       >
@@ -218,7 +212,7 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
                           previousValues={rawFilterValue}
                         />
                       </SuspensePaper>
-                    </Popper>
+                    </Dialog>
                   </>
                 )}
               </Box>

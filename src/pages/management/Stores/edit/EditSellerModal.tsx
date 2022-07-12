@@ -110,7 +110,7 @@ const EditSellerModal: FC<EditSellerModalProps> = ({
             error={Boolean(touched.lastname && errors.lastname)}
             fullWidth
             helperText={touched.lastname && errors.lastname}
-            label="Prenom"
+            label="Lastname"
             margin="normal"
             name="lastname"
             onBlur={handleBlur}

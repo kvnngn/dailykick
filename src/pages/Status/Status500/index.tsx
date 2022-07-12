@@ -1,23 +1,16 @@
-import { useState } from 'react';
-import {
-  Box,
-  Typography,
-  Hidden,
-  Container,
-  Button,
-  Grid
-} from '@mui/material';
-import { Helmet } from 'react-helmet-async';
-import RefreshTwoToneIcon from '@mui/icons-material/RefreshTwoTone';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { useState } from 'react'
+import { Box, Typography, Hidden, Container, Button, Grid } from '@mui/material'
+import { Helmet } from 'react-helmet-async'
+import RefreshTwoToneIcon from '@mui/icons-material/RefreshTwoTone'
+import LoadingButton from '@mui/lab/LoadingButton'
 
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles'
 
 const GridWrapper = styled(Grid)(
   ({ theme }) => `
     background: ${theme.colors.gradients.black1};
-`
-);
+`,
+)
 
 const MainContent = styled(Box)(
   () => `
@@ -28,25 +21,25 @@ const MainContent = styled(Box)(
     flex-direction: column;
     align-items: center;
     justify-content: center;
-`
-);
+`,
+)
 
 const TypographyPrimary = styled(Typography)(
   ({ theme }) => `
       color: ${theme.colors.alpha.white[100]};
-`
-);
+`,
+)
 
 const TypographySecondary = styled(Typography)(
   ({ theme }) => `
       color: ${theme.colors.alpha.white[70]};
-`
-);
+`,
+)
 
 function Status500() {
-  const [pending, setPending] = useState(false);
+  const [pending, setPending] = useState(false)
   function handleClick() {
-    setPending(true);
+    setPending(true)
   }
 
   return (
@@ -77,7 +70,7 @@ function Status500() {
                   src="/static/images/status/500.svg"
                 />
                 <Typography variant="h2" sx={{ my: 2 }}>
-                Une erreur s'est producte, veuillez réessayer plus tard
+                  An error has occurred, please try again later{' '}
                 </Typography>
                 <Typography
                   variant="h4"
@@ -85,7 +78,8 @@ function Status500() {
                   fontWeight="normal"
                   sx={{ mb: 4 }}
                 >
-                  Le serveur a rencontré une erreur interne et n'a pas pu complétez votre demande
+                  The server encountered an internal error and was unable to
+                  complete your request
                 </Typography>
                 <LoadingButton
                   onClick={handleClick}
@@ -94,10 +88,10 @@ function Status500() {
                   color="primary"
                   startIcon={<RefreshTwoToneIcon />}
                 >
-                  Actualiser la page
+                  Refresh the page
                 </LoadingButton>
                 <Button href="/overview" variant="contained" sx={{ ml: 1 }}>
-                  Back en arrière
+                  Back
                 </Button>
               </Box>
             </Container>
@@ -121,7 +115,8 @@ function Status500() {
                     fontWeight="normal"
                     sx={{ mb: 4 }}
                   >
-                    L'application pour gérer vos stocks de product en quelques de clics.
+                    The application to manage your product stocks in a few
+                    clicks.
                   </TypographySecondary>
                   <Button href="/dashboards" size="large" variant="contained">
                     Overview
@@ -133,7 +128,7 @@ function Status500() {
         </Grid>
       </MainContent>
     </>
-  );
+  )
 }
 
-export default Status500;
+export default Status500

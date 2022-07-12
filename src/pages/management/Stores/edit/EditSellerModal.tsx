@@ -60,14 +60,12 @@ const EditSellerModal: FC<EditSellerModalProps> = ({
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email("Email has to be valid")
+        .email('Email has to be valid')
         .max(255)
-        .required("Email is mandatory"),
+        .required('Email is mandatory'),
       firstname: Yup.string().max(255).required('Firstname is mandatory'),
       lastname: Yup.string().max(255).required('Lastname is mandatory'),
-      password: Yup.string()
-        .max(255)
-        .required('Password is mandatory'),
+      password: Yup.string().max(255).required('Password is mandatory'),
     }),
 
     onSubmit: async (v) => {
@@ -94,7 +92,7 @@ const EditSellerModal: FC<EditSellerModalProps> = ({
         <DialogTitle>Update seller</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Veuillez indiquer les informations du seller.
+            Please provide seller information.
           </DialogContentText>
           <TextField
             error={Boolean(touched.firstname && errors.firstname)}

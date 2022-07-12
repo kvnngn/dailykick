@@ -97,55 +97,56 @@ const TransferArticleToStoreModal: FC<TransferArticleToStoreModalProps> = ({
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
         <DialogTitle>Transfer of article to another store</DialogTitle>
-        <Typography variant="subtitle2">
-          <Grid container spacing={0}>
-            <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
-              <Box pr={3} pb={2}>
-                Product:
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={8} md={9}>
-              <Text color="black">
-                <b>
-                  {_.isObject(data.product) ? data.product.name : data.product}
-                </b>
-              </Text>
-            </Grid>
-            <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
-              <Box pr={3} pb={2}>
-                Size:
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={8} md={9}>
-              <Text color="black">
-                <b>{data.size}</b>
-              </Text>
-            </Grid>
-            <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
-              <Box pr={3} pb={2}>
-                SKU:
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={8} md={9}>
-              <Text color="black">
-                <b>
-                  {typeof data.product === 'object' ? data.product.sku : '-'}
-                </b>
-              </Text>
-            </Grid>
-            <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
-              <Box pr={3} pb={2}>
-                Supplier price:
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={8} md={9}>
-              <Text color="black">
-                <b>AED {data.warehousePrice}</b>
-              </Text>
-            </Grid>
-          </Grid>
-        </Typography>
         <DialogContent>
+          <TextField
+            fullWidth
+            label="Product"
+            margin="normal"
+            name="product"
+            disabled={true}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={_.isObject(data.product) ? data.product.name : data.product}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="Size"
+            margin="normal"
+            name="size"
+            disabled={true}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={data.size}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="SKU"
+            margin="normal"
+            name="sku"
+            disabled={true}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={_.isObject(data.product) ? data.product.sku : data.product}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="Store price"
+            margin="normal"
+            name="storePrice"
+            disabled={true}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={data.storePrice}
+            variant="outlined"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">AED</InputAdornment>
+              ),
+            }}
+          />{' '}
           <DialogContentText>
             Please indicate the store recipient.
           </DialogContentText>

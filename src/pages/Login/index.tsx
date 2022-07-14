@@ -98,7 +98,11 @@ const Login = () => {
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
-              helperText={formik.touched.email && "Email field can't be empty"}
+              helperText={
+                formik.touched.email &&
+                formik.errors.email &&
+                "Email field can't be empty"
+              }
               label="Email address"
               margin="normal"
               name="email"
@@ -111,7 +115,11 @@ const Login = () => {
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
-              helperText={formik.touched.password && "Password field can't be empty"}
+              helperText={
+                formik.touched.password &&
+                formik.errors.password &&
+                "Password field can't be empty"
+              }
               label="Password"
               margin="normal"
               name="password"

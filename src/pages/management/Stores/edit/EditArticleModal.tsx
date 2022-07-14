@@ -102,7 +102,11 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
           <TextField
             error={Boolean(touched.storePrice && errors.storePrice)}
             fullWidth
-            helperText={touched.storePrice && errors.storePrice}
+            helperText={
+              touched.storePrice &&
+              errors.storePrice &&
+              "Store price field can't be empty"
+            }
             label="Price"
             type="number"
             margin="normal"
@@ -120,7 +124,9 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
           <TextField
             error={Boolean(touched.size && errors.size)}
             fullWidth
-            helperText={touched.size && errors.size}
+            helperText={
+              touched.size && errors.size && "Size field can't be empty"
+            }
             label="Size"
             type="number"
             margin="normal"

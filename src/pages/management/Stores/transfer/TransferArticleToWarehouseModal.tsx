@@ -149,7 +149,11 @@ const TransferArticleModal: FC<TransferArticleModalProps> = ({
           <TextField
             error={Boolean(touched.transferPrice && errors.transferPrice)}
             fullWidth
-            helperText={touched.transferPrice && errors.transferPrice}
+            helperText={
+              touched.transferPrice &&
+              errors.transferPrice &&
+              "Transfer price field can't be empty"
+            }
             label="Release price"
             type="number"
             margin="normal"
@@ -180,7 +184,9 @@ const TransferArticleModal: FC<TransferArticleModalProps> = ({
                 {...params}
                 error={Boolean(touched.store && errors.store)}
                 fullWidth
-                helperText={touched.store && errors.store}
+                helperText={
+                  touched.store && errors.store && "Store field can't be empty"
+                }
                 label="Store"
                 margin="normal"
                 name="store"

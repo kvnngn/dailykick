@@ -113,7 +113,9 @@ function AddArticleModal(props) {
                 {...params}
                 error={Boolean(touched.product && errors.product)}
                 fullWidth
-                helperText={touched.product && errors.product}
+                helperText={
+                  touched.product && errors.product && "Product field can't be empty"
+                }
                 label="Product"
                 margin="normal"
                 name="product"
@@ -134,7 +136,11 @@ function AddArticleModal(props) {
           <TextField
             error={Boolean(touched.storePrice && errors.storePrice)}
             fullWidth
-            helperText={touched.storePrice && errors.storePrice}
+            helperText={
+              touched.storePrice &&
+              errors.storePrice &&
+              "Store price field can't be empty"
+            }
             label="Price"
             type="number"
             margin="normal"

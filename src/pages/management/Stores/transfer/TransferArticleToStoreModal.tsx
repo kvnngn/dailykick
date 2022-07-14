@@ -166,7 +166,11 @@ const TransferArticleToStoreModal: FC<TransferArticleToStoreModalProps> = ({
                 {...params}
                 error={Boolean(touched.store && errors.store)}
                 fullWidth
-                helperText={touched.store && errors.store}
+                helperText={
+                  touched.store &&
+                  errors.store &&
+                  "Store recipient field can't be empty"
+                }
                 label="Store"
                 margin="normal"
                 name="store"

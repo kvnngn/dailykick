@@ -27,8 +27,8 @@ export default () => {
         queryClient.cancelMutations()
         queryClient.clear()
         showErrorSnackbar(
-          error.response.status === 401
-            ? 'Session has expired'
+          error.response.status === 403
+            ? 'Invalid credentials.'
             : 'The session has expired. Please log-in again.',
         )
         navigate('/login')

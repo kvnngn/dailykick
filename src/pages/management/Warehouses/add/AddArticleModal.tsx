@@ -107,13 +107,19 @@ function AddArticleModal(props) {
                 }}
                 disablePortal
                 options={products.body.data}
-                getOptionLabel={(option: Product) => `${option.name} (${option.sku})`}
+                getOptionLabel={(option: Product) =>
+                  `${option.name} (${option.sku})`
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     error={Boolean(touched.product && errors.product)}
                     fullWidth
-                    helperText={touched.product && errors.product}
+                    helperText={
+                      touched.product &&
+                      errors.product &&
+                      "Product field can't be empty"
+                    }
                     label="Product"
                     margin="normal"
                     name="product"
@@ -134,7 +140,11 @@ function AddArticleModal(props) {
               <TextField
                 error={Boolean(touched.warehousePrice && errors.warehousePrice)}
                 fullWidth
-                helperText={touched.warehousePrice && errors.warehousePrice}
+                helperText={
+                  touched.warehousePrice &&
+                  errors.warehousePrice &&
+                  "Warehouse price field can't be empty"
+                }
                 label="Supplier price"
                 type="number"
                 margin="normal"
@@ -152,7 +162,11 @@ function AddArticleModal(props) {
               <TextField
                 error={Boolean(touched.storePrice && errors.storePrice)}
                 fullWidth
-                helperText={touched.storePrice && errors.storePrice}
+                helperText={
+                  touched.storePrice &&
+                  errors.storePrice &&
+                  "Store price field can't be empty"
+                }
                 label="Store price"
                 type="number"
                 margin="normal"

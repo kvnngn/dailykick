@@ -96,8 +96,12 @@ const Register = () => {
             <TextField
               error={Boolean(touched.firstname && errors.firstname)}
               fullWidth
-              helperText={touched.firstname && errors.firstname}
-              label="Lastname"
+              helperText={
+                touched.firstname &&
+                errors.firstname &&
+                "Firstname field can't be empty"
+              }
+              label="Firstname"
               margin="normal"
               name="firstname"
               onBlur={handleBlur}
@@ -108,8 +112,10 @@ const Register = () => {
             <TextField
               error={Boolean(touched.lastname && errors.lastname)}
               fullWidth
-              helperText={touched.lastname && errors.lastname}
-              label="Firstname"
+              helperText={
+                touched.lastname && errors.lastname && "Lastname field can't be empty"
+              }
+              label="Lastname"
               margin="normal"
               name="lastname"
               onBlur={handleBlur}
@@ -120,7 +126,9 @@ const Register = () => {
             <TextField
               error={Boolean(touched.email && errors.email)}
               fullWidth
-              helperText={touched.email && errors.email}
+              helperText={
+                touched.email && errors.email && "Email field can't be empty"
+              }
               label="Email address"
               margin="normal"
               name="email"
@@ -133,7 +141,9 @@ const Register = () => {
             <TextField
               error={Boolean(touched.password && errors.password)}
               fullWidth
-              helperText={touched.password && errors.password}
+              helperText={
+                touched.password && errors.password && "Password field can't be empty"
+              }
               label="Password"
               margin="normal"
               name="password"

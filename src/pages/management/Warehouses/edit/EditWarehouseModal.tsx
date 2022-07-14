@@ -1,36 +1,36 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
-import { DialogContent, TextField, DialogActions, Button } from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useSnackbar } from 'src/hooks/common';
-import { useGetWarehouse } from 'src/hooks/api/management/warehouse';
-import { useCurrentUser } from 'src/hooks/api/common';
-import { Dispatch, FC, SetStateAction } from 'react';
-import useUpdateWarehouse from 'src/hooks/api/management/warehouse/mutation/useUpdateWarehouse';
-import { LoadingButton } from '@mui/lab';
+import DialogTitle from '@mui/material/DialogTitle'
+import Dialog from '@mui/material/Dialog'
+import { DialogContent, TextField, DialogActions, Button } from '@mui/material'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { useSnackbar } from 'src/hooks/common'
+import { useGetWarehouse } from 'src/hooks/api/management/warehouse'
+import { useCurrentUser } from 'src/hooks/api/common'
+import { Dispatch, FC, SetStateAction } from 'react'
+import useUpdateWarehouse from 'src/hooks/api/management/warehouse/mutation/useUpdateWarehouse'
+import { LoadingButton } from '@mui/lab'
 
 declare type EditWarehouseModalProps = {
-  onClose: Dispatch<SetStateAction<boolean>>;
-  open: boolean;
-  warehouseId: string;
-};
+  onClose: Dispatch<SetStateAction<boolean>>
+  open: boolean
+  warehouseId: string
+}
 
 const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
   onClose,
   open,
-  warehouseId
+  warehouseId,
 }) => {
   const handleClose = () => {
-    onClose(false);
-  };
+    onClose(false)
+  }
 
-  const { mutateAsync: updateWarehouse } = useUpdateWarehouse();
-  const { data } = useGetWarehouse(warehouseId);
-  const { showErrorSnackbar } = useSnackbar();
-  const currentUser = useCurrentUser();
+  const { mutateAsync: updateWarehouse } = useUpdateWarehouse()
+  const { data } = useGetWarehouse(warehouseId)
+  const { showErrorSnackbar } = useSnackbar()
+  const currentUser = useCurrentUser()
   const {
     values,
     handleChange,
@@ -40,35 +40,35 @@ const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
     touched,
     isValid,
     isSubmitting,
-    setFieldError
+    setFieldError,
   } = useFormik({
     initialValues: {
       name: data.name,
-      createdBy: currentUser.data._id
+      createdBy: currentUser.data._id,
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Name is mandatory'),
-      createdBy: Yup.string().required('User ID field is mandatory')
+      createdBy: Yup.string().required('User ID field is mandatory'),
     }),
 
     onSubmit: async (v) => {
       try {
         await updateWarehouse({
           original: data,
-          changes: v
-        });
-        handleClose();
+          changes: v,
+        })
+        handleClose()
       } catch (e: any) {
         if (e.response?.data?.message) {
           switch (e.response.data.message) {
             default:
-              showErrorSnackbar('An error occured');
-              break;
+              showErrorSnackbar('An error occured')
+              break
           }
         }
       }
-    }
-  });
+    },
+  })
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
@@ -77,7 +77,9 @@ const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
           <TextField
             error={Boolean(touched.name && errors.name)}
             fullWidth
-            helperText={touched.name && errors.name}
+            helperText={
+              touched.name && errors.name && "Warehouse name field can't be empty"
+            }
             label="Name"
             margin="normal"
             name="name"
@@ -99,13 +101,13 @@ const EditWarehouseModal: FC<EditWarehouseModalProps> = ({
         </DialogActions>
       </form>
     </Dialog>
-  );
-};
+  )
+}
 
 EditWarehouseModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  warehouseId: PropTypes.string.isRequired
-};
+  warehouseId: PropTypes.string.isRequired,
+}
 
-export default EditWarehouseModal;
+export default EditWarehouseModal

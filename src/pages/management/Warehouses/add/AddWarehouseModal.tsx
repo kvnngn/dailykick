@@ -77,7 +77,9 @@ function AddWarehouseModal(props) {
           <TextField
             error={Boolean(touched.name && errors.name)}
             fullWidth
-            helperText={touched.name && errors.name}
+            helperText={
+              touched.name && errors.name && "Warehouse name field can't be empty"
+            }
             label="Name"
             margin="normal"
             name="name"

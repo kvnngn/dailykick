@@ -64,7 +64,11 @@ function AddSellerModal(props) {
         handleClose()
       } catch (e: any) {
         if (e.response?.data?.message) {
+          console.log({ e })
           switch (e.response.data.message) {
+            case 'The account with the provided email currently exists. Please choose another one.':
+              showErrorSnackbar(e.response.data.message)
+              break
             default:
               showErrorSnackbar('An error occured')
               break
@@ -85,7 +89,11 @@ function AddSellerModal(props) {
           <TextField
             error={Boolean(touched.firstname && errors.firstname)}
             fullWidth
-            helperText={touched.firstname && errors.firstname}
+            helperText={
+              touched.firstname &&
+              errors.firstname &&
+              "Firstname field can't be empty"
+            }
             label="Name"
             margin="normal"
             name="firstname"
@@ -97,7 +105,11 @@ function AddSellerModal(props) {
           <TextField
             error={Boolean(touched.lastname && errors.lastname)}
             fullWidth
-            helperText={touched.lastname && errors.lastname}
+            helperText={
+              touched.lastname &&
+              errors.lastname &&
+              "Lastname field can't be empty"
+            }
             label="Lastname"
             margin="normal"
             name="lastname"
@@ -109,7 +121,9 @@ function AddSellerModal(props) {
           <TextField
             error={Boolean(touched.email && errors.email)}
             fullWidth
-            helperText={touched.email && errors.email}
+            helperText={
+              touched.email && errors.email && "Email field can't be empty"
+            }
             label="Email address"
             margin="normal"
             name="email"
@@ -122,7 +136,7 @@ function AddSellerModal(props) {
           <TextField
             error={Boolean(touched.password && errors.password)}
             fullWidth
-            helperText={touched.password && errors.password}
+            helperText={touched.password && "Password field can't be empty"}
             label="Password"
             margin="normal"
             name="password"

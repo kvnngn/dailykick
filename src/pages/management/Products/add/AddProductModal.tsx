@@ -89,12 +89,11 @@ function AddProductModal(props) {
         })
         handleClose()
       } catch (e: any) {
-        if (e.response?.data?.message) {
-          switch (e.response.data.message) {
-            default:
-              showErrorSnackbar('An error occured')
-              break
-          }
+        if (e.response?.data?.status) {
+          console.log(e.response?.data?.status)
+          showErrorSnackbar('A product with this SKU already exists.')
+        } else {
+          showErrorSnackbar('An error occured')
         }
       }
     },
@@ -140,7 +139,9 @@ function AddProductModal(props) {
                 {...params}
                 error={Boolean(touched.brand && errors.brand)}
                 fullWidth
-                helperText={touched.brand && errors.brand}
+                helperText={
+                  touched.brand && errors.brand && "Brand field can't be empty"
+                }
                 label="Brand"
                 margin="normal"
                 name="brand"
@@ -184,7 +185,11 @@ function AddProductModal(props) {
                 {...params}
                 error={Boolean(touched.brandModel && errors.brandModel)}
                 fullWidth
-                helperText={touched.brandModel && errors.brandModel}
+                helperText={
+                  touched.brandModel &&
+                  errors.brandModel &&
+                  "Model field can't be empty"
+                }
                 label="Model"
                 margin="normal"
                 name="brandModel"
@@ -198,7 +203,7 @@ function AddProductModal(props) {
           <TextField
             error={Boolean(touched.sku && errors.sku)}
             fullWidth
-            helperText={touched.sku && errors.sku}
+            helperText={touched.sku && errors.sku && "SKU field can't be empty"}
             label="SKU"
             margin="normal"
             name="sku"

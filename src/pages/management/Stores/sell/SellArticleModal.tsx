@@ -146,7 +146,11 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
           <TextField
             error={Boolean(touched.sellingPrice && errors.sellingPrice)}
             fullWidth
-            helperText={touched.sellingPrice && errors.sellingPrice}
+            helperText={
+              touched.sellingPrice &&
+              errors.sellingPrice &&
+              "Selling price field can't be empty"
+            }
             label="Selling price"
             type="number"
             margin="normal"

@@ -51,7 +51,7 @@ const Login = () => {
               if (body.store) {
                 navigate(`${ROUTES.MANAGEMENT.MY_STORE}/${body.store}`)
               } else {
-                navigate(ROUTES.DASHBOARD.ROOT)
+                navigate(ROUTES.MANAGEMENT.WAREHOUSES)
               }
             }
           }

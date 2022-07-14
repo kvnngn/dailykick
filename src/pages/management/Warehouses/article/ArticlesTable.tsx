@@ -134,7 +134,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                 }}
                 color="inherit"
                 size="small"
-                onClick={() => handleOpenEditModal(row.values._id)}
+                onClick={() => handleOpenEditModal(row.original._id)}
               >
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
@@ -148,7 +148,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                 }}
                 color="inherit"
                 size="small"
-                onClick={() => handleOpenDeleteModal(row.values._id)}
+                onClick={() => handleOpenDeleteModal(row.original._id)}
               >
                 <DeleteTwoToneIcon fontSize="small" />
               </IconButton>
@@ -162,7 +162,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                 }}
                 color="inherit"
                 size="small"
-                onClick={() => handleOpenTransferModal(row.values._id)}
+                onClick={() => handleOpenTransferModal(row.original._id)}
               >
                 <ArrowForwardIcon fontSize="small" />
               </IconButton>

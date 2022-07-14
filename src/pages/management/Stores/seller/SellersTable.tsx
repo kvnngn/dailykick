@@ -63,13 +63,6 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
       {
-        Header: 'ID',
-        accessor: '_id' as const,
-        minWidth: 130,
-        maxWidth: 130,
-        disableSortBy: true,
-      },
-      {
         Header: 'Added on',
         accessor: 'createdAt' as const,
         minWidth: 140,
@@ -108,7 +101,7 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
                 }}
                 color="inherit"
                 size="small"
-                onClick={() => handleOpenEditModal(row.values._id)}
+                onClick={() => handleOpenEditModal(row.original._id)}
               >
                 <EditTwoToneIcon fontSize="small" />
               </IconButton>
@@ -121,7 +114,7 @@ const SellersTable: FC<SellersTableProps> = ({ id }) => {
                 }}
                 color="inherit"
                 size="small"
-                onClick={() => handleOpenDeleteModal(row.values._id)}
+                onClick={() => handleOpenDeleteModal(row.original._id)}
               >
                 <DeleteTwoToneIcon fontSize="small" />
               </IconButton>

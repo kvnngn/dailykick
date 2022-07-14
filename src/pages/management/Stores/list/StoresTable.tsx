@@ -62,23 +62,6 @@ const StoresTable: FC = () => {
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
       {
-        Header: 'ID',
-        accessor: '_id' as const,
-        minWidth: 130,
-        maxWidth: 130,
-        disableSortBy: true,
-      },
-      {
-        Header: 'Added on',
-        accessor: 'createdAt' as const,
-        minWidth: 140,
-        maxWidth: 140,
-        disableSortBy: false,
-        Cell: ({ value }) => {
-          return format(new Date(value), 'dd/MM/yyyy HH:mm')
-        },
-      },
-      {
         Header: 'Store name',
         accessor: 'name' as const,
         disableSortBy: true,
@@ -87,7 +70,7 @@ const StoresTable: FC = () => {
             <Link
               onClick={(e) => {
                 e.preventDefault()
-                navigate(`${ROUTES.MANAGEMENT.STORES}/${row.values._id}`)
+                navigate(`${ROUTES.MANAGEMENT.STORES}/${row.original._id}`)
               }}
             >
               {value}
@@ -115,7 +98,7 @@ const StoresTable: FC = () => {
                   }}
                   color="inherit"
                   size="small"
-                  onClick={() => handleOpenEditModal(row.values._id)}
+                  onClick={() => handleOpenEditModal(row.original._id)}
                 >
                   <EditTwoToneIcon fontSize="small" />
                 </IconButton>
@@ -128,7 +111,7 @@ const StoresTable: FC = () => {
                   }}
                   color="inherit"
                   size="small"
-                  onClick={() => handleOpenDeleteModal(row.values._id)}
+                  onClick={() => handleOpenDeleteModal(row.original._id)}
                 >
                   <DeleteTwoToneIcon fontSize="small" />
                 </IconButton>

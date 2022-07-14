@@ -1,12 +1,19 @@
 import { FC, useMemo, useState } from 'react'
 import { format } from 'date-fns'
-import { Tooltip, Divider, Card, IconButton, useTheme } from '@mui/material'
+import {
+  Tooltip,
+  Divider,
+  Card,
+  IconButton,
+  useTheme,
+  Button,
+} from '@mui/material'
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone'
 import { fr } from 'date-fns/locale'
 import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table'
-import { ConfirmDialog } from '../../../../components/modal'
+import { ConfirmDialog, InfoDialog } from '../../../../components/modal'
 import EditArticleModal from '../edit/EditArticleModal'
 import AddArticleModal from '../add/AddArticleModal'
 import useDeleteArticle from '../../../../hooks/api/management/article/mutation/useDeleteArticle'
@@ -45,7 +52,13 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
   const { mutateAsync: transferToWarehouse } = useTransferToWarehouseArticle()
   const { mutateAsync: cancelSelling } = useCancelSellArticle()
   const { currentUser } = useCurrentInfo()
+  const [row, setRow] = useState<Product>(null)
+  const [openViewImageModal, setOpenViewImageModal] = useState<boolean>(false)
 
+  const handleOpenViewImageModal = (row) => {
+    setRow(row)
+    setOpenViewImageModal(true)
+  }
   const handleOpen = (id: string) => {
     setArticleId(id)
     setOpenModal(true)
@@ -102,23 +115,6 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
   const columnInfo = useMemo<Array<DKTableColumnInfo>>(
     () => [
       {
-        Header: 'ID',
-        accessor: '_id' as const,
-        minWidth: 130,
-        maxWidth: 130,
-        disableSortBy: true,
-      },
-      {
-        Header: 'Added on',
-        accessor: 'createdAt' as const,
-        minWidth: 140,
-        maxWidth: 140,
-        disableSortBy: false,
-        Cell: ({ value }) => {
-          return format(new Date(value), 'dd/MM/yyyy HH:mm')
-        },
-      },
-      {
         Header: 'Product',
         accessor: 'product' as const,
         disableSortBy: true,
@@ -134,6 +130,24 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
         Header: 'Size',
         accessor: 'size' as const,
         disableSortBy: true,
+      },
+      {
+        Header: 'Image',
+        disableSortBy: true,
+        Cell: ({ row }) => {
+          console.log(row)
+          return (
+            <>
+              <Button
+                type="button"
+                variant="outlined"
+                onClick={() => handleOpenViewImageModal(row.original.product)}
+              >
+                Open
+              </Button>
+            </>
+          )
+        },
       },
       {
         Header: 'Sold ?',
@@ -162,7 +176,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                     }}
                     color="inherit"
                     size="small"
-                    onClick={() => handleOpenEditModal(row.values._id)}
+                    onClick={() => handleOpenEditModal(row.original._id)}
                   >
                     <EditTwoToneIcon fontSize="small" />
                   </IconButton>
@@ -177,7 +191,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                         }}
                         color="inherit"
                         size="small"
-                        onClick={() => handleOpenDeleteModal(row.values._id)}
+                        onClick={() => handleOpenDeleteModal(row.original._id)}
                       >
                         <DeleteTwoToneIcon fontSize="small" />
                       </IconButton>
@@ -187,7 +201,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                         color="inherit"
                         size="small"
                         onClick={() =>
-                          handleOpenTransferStoreModal(row.values._id)
+                          handleOpenTransferStoreModal(row.original._id)
                         }
                       >
                         <ArrowForwardIcon fontSize="small" />
@@ -202,7 +216,7 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
                         color="inherit"
                         size="small"
                         onClick={() =>
-                          handleOpenTransferWarehouseModal(row.values._id)
+                          handleOpenTransferWarehouseModal(row.original._id)
                         }
                       >
                         <SettingsBackupRestoreIcon fontSize="small" />
@@ -213,35 +227,37 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
               </>
             )}
             {(currentUser.roles === 'ADMIN' || currentUser.store === id) &&
-            !row.original.soldAt ? (
-              <Tooltip title="Sell article" arrow>
-                <IconButton
-                  sx={{
-                    '&:hover': { background: theme.colors.error.lighter },
-                    color: theme.palette.error.main,
-                  }}
-                  color="inherit"
-                  size="small"
-                  onClick={() => handleOpenSellModal(row.values._id)}
-                >
-                  <SellIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            ) : (
-              <Tooltip title="Cancel article purchase" arrow>
-                <IconButton
-                  sx={{
-                    '&:hover': { background: theme.colors.error.lighter },
-                    color: theme.palette.error.main,
-                  }}
-                  color="inherit"
-                  size="small"
-                  onClick={() => handleOpenCancelSellModal(row.values._id)}
-                >
-                  <CancelIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            )}
+              !row.original.soldAt && (
+                <Tooltip title="Sell article" arrow>
+                  <IconButton
+                    sx={{
+                      '&:hover': { background: theme.colors.error.lighter },
+                      color: theme.palette.error.main,
+                    }}
+                    color="inherit"
+                    size="small"
+                    onClick={() => handleOpenSellModal(row.original._id)}
+                  >
+                    <SellIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              )}
+            {(currentUser.roles === 'ADMIN' || currentUser.store === id) &&
+              row.original.soldAt && (
+                <Tooltip title="Cancel article purchase" arrow>
+                  <IconButton
+                    sx={{
+                      '&:hover': { background: theme.colors.error.lighter },
+                      color: theme.palette.error.main,
+                    }}
+                    color="inherit"
+                    size="small"
+                    onClick={() => handleOpenCancelSellModal(row.original._id)}
+                  >
+                    <CancelIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              )}
           </>
         ),
       },
@@ -301,7 +317,6 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
           warehouse?
         </ConfirmDialog>
       )}
-
       {articleId && openCancelSellModal && (
         <ConfirmDialog
           title="Cancel purchase"
@@ -318,6 +333,15 @@ const ArticlesTable: FC<ArticlesTableProps> = ({ id }) => {
           onClose={setOpenTransferStoreModal}
           articleId={articleId}
         />
+      )}
+      {row && openViewImageModal && (
+        <InfoDialog
+          title={row.name}
+          open={openViewImageModal}
+          setOpen={setOpenViewImageModal}
+        >
+          <img src={row.image_url} style={{ width: '100%' }} />
+        </InfoDialog>
       )}
     </Card>
   )

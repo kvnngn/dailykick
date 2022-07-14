@@ -58,7 +58,7 @@ declare type Product = {
   createdBy: Profile | string
   createdAt: Date
   updatedAt: Date
-  updatedBy: Date
+  updatedBy: string
 }
 
 declare type Article = {

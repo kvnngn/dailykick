@@ -66,11 +66,13 @@ const EditProductModal: FC<EditProductModalProps> = ({
       brand: _.isObject(data.brand) ? data.brand.name : null,
       brandModel: _.isObject(data.brandModel) ? data.brandModel.name : null,
       image_url: data.image_url,
+      updatedBy: currentUser.data._id,
       sku: data.sku,
     },
     validationSchema: Yup.object({
       brand: Yup.string().required('Brand field is mandatory'),
       brandModel: Yup.string().required('Model field is mandatory'),
+      updatedBy: Yup.string().required('updatedBy field is mandatory'),
       sku: Yup.string().required('SKU field is mandatory'),
     }),
 

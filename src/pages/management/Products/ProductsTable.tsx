@@ -82,11 +82,11 @@ const ProductsTable: FC = () => {
           return format(new Date(value), 'dd/MM/yyyy HH:mm')
         },
       },
-      {
-        Header: 'Product name',
-        accessor: 'name' as const,
-        disableSortBy: true,
-      },
+      // {
+      //   Header: 'Product name',
+      //   accessor: 'name' as const,
+      //   disableSortBy: true,
+      // },
       {
         Header: 'Brand',
         accessor: 'brand' as const,

@@ -89,6 +89,7 @@ const updateProduct = async (
   )
   formData.append('image_url', product.image_url)
   formData.append('sku', product.sku)
+  formData.append('updatedBy', product.updatedBy)
   const { data } = await axios.put(
     `${API_URL.PRODUCT}/id/${original._id}`,
     formData,

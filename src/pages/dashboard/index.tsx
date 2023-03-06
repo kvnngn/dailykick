@@ -2,9 +2,9 @@ import { Helmet } from 'react-helmet-async'
 import { Container, Grid } from '@mui/material'
 import Footer from 'src/components/Footer'
 
-import AccountBalance from './AccountBalance'
-import SellingStoreSummary from './SellingStoreSummary'
-import SellingWarehouseSummary from './SellingWarehouseSummary'
+import AccountBalance from './account-balance'
+import SellingStoreSummary from './selling-store-summary'
+import SellingWarehouseSummary from './selling-warehouse-summary'
 
 function DashboardOverview() {
   return (

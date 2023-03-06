@@ -1,13 +1,13 @@
 import { Grid, Container } from '@mui/material'
 import { Helmet } from 'react-helmet-async'
-import Footer from 'src/components/Footer'
-import Products from './products'
+import { SuspenseBox } from '../../../../components/styled/suspense'
+import WarehousesTable from './warehouses-table'
 
-function ApplicationsProducts() {
+function WarehousesPage() {
   return (
     <>
       <Helmet>
-        <title>Products</title>
+        <title>Warehouses</title>
       </Helmet>
       <Container maxWidth="lg">
         <Grid
@@ -18,7 +18,9 @@ function ApplicationsProducts() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <Products />
+            <SuspenseBox>
+              <WarehousesTable />
+            </SuspenseBox>
           </Grid>
         </Grid>
       </Container>
@@ -26,4 +28,4 @@ function ApplicationsProducts() {
   )
 }
 
-export default ApplicationsProducts
+export default WarehousesPage

@@ -145,6 +145,9 @@ const TransferArticleToStoreModal: FC<TransferArticleToStoreModalProps> = ({
               startAdornment: (
                 <InputAdornment position="start">AED</InputAdornment>
               ),
+              inputProps: {
+                min: 0,
+              },
             }}
           />{' '}
           <DialogContentText>

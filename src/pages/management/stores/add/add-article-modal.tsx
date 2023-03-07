@@ -114,7 +114,9 @@ function AddArticleModal(props) {
                 error={Boolean(touched.product && errors.product)}
                 fullWidth
                 helperText={
-                  touched.product && errors.product && "Product field can't be empty"
+                  touched.product &&
+                  errors.product &&
+                  "Product field can't be empty"
                 }
                 label="Product"
                 margin="normal"
@@ -151,11 +153,19 @@ function AddArticleModal(props) {
               endAdornment: (
                 <InputAdornment position="start">AED</InputAdornment>
               ),
+              inputProps: {
+                min: 0,
+              },
             }}
             value={values.storePrice}
             variant="outlined"
           />
           <TextField
+            InputProps={{
+              inputProps: {
+                min: 0,
+              },
+            }}
             error={Boolean(touched.sizes && errors.sizes)}
             fullWidth
             helperText={touched.sizes && errors.sizes}

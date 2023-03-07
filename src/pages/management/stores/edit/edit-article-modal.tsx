@@ -114,6 +114,9 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
             onBlur={handleBlur}
             onChange={handleChange}
             InputProps={{
+              inputProps: {
+                min: 0,
+              },
               startAdornment: (
                 <InputAdornment position="start">AED</InputAdornment>
               ),
@@ -122,6 +125,11 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
             variant="outlined"
           />
           <TextField
+            InputProps={{
+              inputProps: {
+                min: 0,
+              },
+            }}
             error={Boolean(touched.size && errors.size)}
             fullWidth
             helperText={

@@ -155,6 +155,9 @@ function AddArticleModal(props) {
                   startAdornment: (
                     <InputAdornment position="start">AED</InputAdornment>
                   ),
+                  inputProps: {
+                    min: 0,
+                  },
                 }}
                 value={values.warehousePrice}
                 variant="outlined"
@@ -177,6 +180,9 @@ function AddArticleModal(props) {
                   startAdornment: (
                     <InputAdornment position="start">AED</InputAdornment>
                   ),
+                  inputProps: {
+                    min: 0,
+                  },
                 }}
                 value={values.storePrice}
                 variant="outlined"
@@ -214,6 +220,11 @@ function AddArticleModal(props) {
                           </Grid>
                           <Grid item xs>
                             <TextField
+                              InputProps={{
+                                inputProps: {
+                                  min: 0,
+                                },
+                              }}
                               type="number"
                               margin="normal"
                               variant="outlined"

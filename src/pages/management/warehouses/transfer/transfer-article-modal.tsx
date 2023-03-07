@@ -141,6 +141,9 @@ const TransferArticleModal: FC<TransferArticleModalProps> = ({
               startAdornment: (
                 <InputAdornment position="start">AED</InputAdornment>
               ),
+              inputProps: {
+                min: 0,
+              },
             }}
           />
           <DialogContentText>
@@ -164,6 +167,9 @@ const TransferArticleModal: FC<TransferArticleModalProps> = ({
               startAdornment: (
                 <InputAdornment position="start">AED</InputAdornment>
               ),
+              inputProps: {
+                min: 0,
+              },
             }}
             value={values.transferPrice}
             variant="outlined"

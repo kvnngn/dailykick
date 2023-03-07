@@ -117,15 +117,25 @@ const EditArticleModal: FC<EditArticleModalProps> = ({
               startAdornment: (
                 <InputAdornment position="start">AED</InputAdornment>
               ),
+              inputProps: {
+                min: 0,
+              },
             }}
             value={values.warehousePrice}
             variant="outlined"
           />
           <TextField
+            InputProps={{
+              inputProps: {
+                min: 0,
+              },
+            }}
             error={Boolean(touched.size && errors.size)}
             fullWidth
             helperText={
-              touched.size && errors.size && "Warehouse Price field can't be empty"
+              touched.size &&
+              errors.size &&
+              "Warehouse Price field can't be empty"
             }
             label="Size"
             type="number"

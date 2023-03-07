@@ -135,6 +135,9 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
             value={data.storePrice}
             variant="outlined"
             InputProps={{
+              inputProps: {
+                min: 0,
+              },
               startAdornment: (
                 <InputAdornment position="start">AED</InputAdornment>
               ),
@@ -161,6 +164,9 @@ const SellArticleModal: FC<SellArticleModalProps> = ({
               startAdornment: (
                 <InputAdornment position="start">AED</InputAdornment>
               ),
+              inputProps: {
+                min: 0,
+              },
             }}
             value={values.sellingPrice}
             variant="outlined"

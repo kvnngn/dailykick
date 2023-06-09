@@ -44,6 +44,7 @@ export default function usePaginatedQueryWithName<
     undefined,
   )
   const [sortOption, setSortOption] = useState<string | undefined>(undefined)
+
   const onPageChange = useCallback(
     (skip: number, limit: number, filter?: string, sort?: string) => {
       setSkipDocs(skip)

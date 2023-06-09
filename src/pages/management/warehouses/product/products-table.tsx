@@ -3,6 +3,7 @@ import { Divider, Card } from '@mui/material'
 
 import { DataPaginationTable, DKTableColumnInfo } from 'src/components/Table'
 import { useGetWarehouseInventory } from '../../../../hooks/api/management/article'
+import ProductsFilter from '../../products/products-filter'
 
 type ProductsTableProps = {
   id: string
@@ -41,6 +42,7 @@ const ProductsTable: FC<ProductsTableProps> = ({ id }) => {
         data={data.body.data}
         columnInfo={columnInfo}
         onPageChange={onPageChange}
+        FilterElement={ProductsFilter}
         totalCount={data.body.meta.itemCount}
         enableSort
         noDataText="No existing article."

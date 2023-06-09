@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import {
@@ -8,6 +8,10 @@ import {
   IconButton,
   useTheme,
   Button,
+  TextField,
+  Box,
+  Icon,
+  Stack,
 } from '@mui/material'
 
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone'
@@ -22,6 +26,11 @@ import {
 import { ConfirmDialog, InfoDialog } from 'src/components/modal'
 import AddProductModal from './add/add-product-modal'
 import EditProductModal from './edit/edit-product-modal'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { productNameState } from 'src/atoms/global'
+import SearchIcon from '@mui/icons-material/Search'
+import { debounce } from 'lodash'
+import ProductsFilter from './products-filter'
 
 export const ProductsTable: FC = () => {
   const theme = useTheme()
@@ -33,6 +42,8 @@ export const ProductsTable: FC = () => {
   const [row, setRow] = useState<Product>(null)
   const [productId, setProductId] = useState<string>(null)
   const { mutateAsync: deleteProduct } = useDeleteProduct()
+  const productName = useRecoilState(productNameState)
+  const setProductNameState = useSetRecoilState(productNameState)
 
   const handleOpen = () => {
     if (!openModal) {
@@ -152,15 +163,18 @@ export const ProductsTable: FC = () => {
         enableSort
         enableSelect
         noDataText="No existing article."
+        FilterElement={ProductsFilter}
         ExtraElement={
-          <Button
-            sx={{ mt: { xs: 2, md: 0 } }}
-            variant="contained"
-            startIcon={<AddTwoToneIcon fontSize="small" />}
-            onClick={() => handleOpen()}
-          >
-            Add product
-          </Button>
+          <Stack spacing={2} direction="row">
+            <Button
+              sx={{ mt: { xs: 2, md: 0 } }}
+              variant="contained"
+              startIcon={<AddTwoToneIcon fontSize="small" />}
+              onClick={() => handleOpen()}
+            >
+              Add product
+            </Button>
+          </Stack>
         }
       />
       {openModal && <AddProductModal open={openModal} onClose={setOpenModal} />}

@@ -72,7 +72,7 @@ function Sidebar() {
             background: theme.colors.alpha.trueWhite[10],
           }}
         />
-        <Box p={2}>Version 1.0.2</Box>
+        <Box p={2}>Version 1.0.3</Box>
       </SidebarWrapper>
       <Drawer
         sx={{

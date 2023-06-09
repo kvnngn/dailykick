@@ -153,7 +153,7 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
       {/* <Box flex={1} p={2}>
         <BulkActions />
       </Box> */}
-      {Boolean(ExtraElement) && (
+      {Boolean(ExtraElement || FilterElement) && (
         <>
           <Box
             display="flex"
@@ -162,61 +162,59 @@ const DataPaginationTable: React.FC<DataTableProps> = ({
             flex={1}
             p={2}
           >
-            {Boolean(ExtraElement) && (
-              <Box
-                display="flex"
-                flexGrow={1}
-                justifyContent="flex-end"
-                alignItems="center"
-                ref={filterContainerRef}
-              >
-                {Boolean(ExtraElement) && (
-                  <Box display="flex" alignItems="center">
-                    {ExtraElement}
-                  </Box>
-                )}
-                {Boolean(FilterElement) && (
-                  <>
-                    <Backdrop
-                      open={Boolean(anchorEl)}
-                      onClick={closeFilter}
-                      sx={{ bgcolor: 'transparent' }}
-                    />
-                    <IconButton
-                      onClick={toggleFilter}
-                      disabled={!data?.length && !rawFilterValue}
+            <Box
+              display="flex"
+              flexGrow={1}
+              justifyContent="flex-end"
+              alignItems="center"
+              ref={filterContainerRef}
+            >
+              {Boolean(ExtraElement) && (
+                <Box display="flex" alignItems="center">
+                  {ExtraElement}
+                </Box>
+              )}
+              {Boolean(FilterElement) && (
+                <>
+                  <Backdrop
+                    open={Boolean(anchorEl)}
+                    onClick={closeFilter}
+                    sx={{ bgcolor: 'transparent' }}
+                  />
+                  <IconButton
+                    onClick={toggleFilter}
+                    disabled={!data?.length && !rawFilterValue}
+                    sx={{
+                      width: '2.5rem',
+                      height: '2.5rem',
+                      border: '1px solid black',
+                      marginLeft: '10px',
+                    }}
+                  >
+                    <FilterAltIcon />
+                  </IconButton>
+                  <Dialog
+                    open={Boolean(anchorEl)}
+                    container={filterContainerRef.current}
+                    disablePortal
+                  >
+                    <SuspensePaper
+                      variant="elevation"
+                      square={false}
                       sx={{
-                        width: '2.5rem',
-                        height: '2.5rem',
-                        border: '1px solid black',
-                        marginLeft: '10px',
+                        p: 3,
                       }}
                     >
-                      <FilterAltIcon />
-                    </IconButton>
-                    <Dialog
-                      open={Boolean(anchorEl)}
-                      container={filterContainerRef.current}
-                      disablePortal
-                    >
-                      <SuspensePaper
-                        variant="elevation"
-                        square={false}
-                        sx={{
-                          p: 3,
-                        }}
-                      >
-                        <FilterElement
-                          onClose={closeFilter}
-                          onFilterChange={onFilterChange}
-                          previousValues={rawFilterValue}
-                        />
-                      </SuspensePaper>
-                    </Dialog>
-                  </>
-                )}
-              </Box>
-            )}
+                      <FilterElement
+                        onClose={closeFilter}
+                        onFilterChange={onFilterChange}
+                        previousValues={rawFilterValue}
+                      />
+                    </SuspensePaper>
+                  </Dialog>
+                </>
+              )}
+            </Box>
           </Box>
         </>
       )}

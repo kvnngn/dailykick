@@ -10,6 +10,7 @@ import {
   Button,
   Autocomplete,
   Grid,
+  debounce,
 } from '@mui/material'
 import { FieldArray, Form, Formik, getIn, useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -21,6 +22,7 @@ import { useSetRecoilState } from 'recoil'
 import { productNameState } from '../../../../atoms/global'
 import InputAdornment from '@mui/material/InputAdornment'
 import useCreateArticle from '../../../../hooks/api/management/article/mutation/useCreateArticle'
+import { useCallback } from 'react'
 
 function AddArticleModal(props) {
   const { onClose, open, warehouseId } = props
@@ -48,6 +50,13 @@ function AddArticleModal(props) {
       }),
     ),
   })
+
+  const handleUpdateProductName = useCallback(
+    debounce((value: string) => {
+      setProductNameState(value)
+    }, 500),
+    [],
+  )
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -124,14 +133,7 @@ function AddArticleModal(props) {
                     margin="normal"
                     name="product"
                     onBlur={handleBlur}
-                    onChange={(e) => {
-                      if (!e.target.value) {
-                        setProductNameState(undefined)
-                      } else {
-                        setProductNameState(e.target.value)
-                      }
-                      return handleChange
-                    }}
+                    onChange={(e) => handleUpdateProductName(e.target.value)}
                     value={values.product}
                     variant="outlined"
                   />
